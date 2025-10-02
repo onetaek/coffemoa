@@ -1,13 +1,13 @@
-package com.cafeerp;
+package com.coffemoa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CafeerpApplication {
+public class CoffemoaApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(CafeerpApplication.class, args);
+    SpringApplication.run(CoffemoaApplication.class, args);
   }
 
 }

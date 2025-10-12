@@ -15,32 +15,32 @@ const { required, lengthRange, notSpace, notSpecialCharacters } = useValidator()
 const formSchema = reactive<FormSchema[]>([
   {
     field: 'field1',
-    label: '必填',
+    label: 'Required',
     component: 'Input'
   },
   {
     field: 'field2',
-    label: '长度范围',
+    label: 'length range',
     component: 'Input'
   },
   {
     field: 'field3',
-    label: '不能有空格',
+    label: 'no spaces',
     component: 'Input'
   },
   {
     field: 'field4',
-    label: '不能有特殊字符',
+    label: 'No special characters allowed',
     component: 'Input'
   },
   {
     field: 'field5',
-    label: '是否相等-值1',
+    label: 'Is it equal -value 1',
     component: 'Input'
   },
   {
     field: 'field6',
-    label: '是否相等-值2',
+    label: 'Is it equal -value 2',
     component: 'Input'
   }
 ])
@@ -63,7 +63,7 @@ const rules = reactive<{
         const formData = await getFormData()
         const { field6 } = formData
         if (val !== field6) {
-          callback(new Error('两个值不相等'))
+          callback(new Error('Two values ​​are not equal'))
         } else {
           callback()
         }

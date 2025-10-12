@@ -12,75 +12,75 @@ export const useResize = (props?: {
     initHeight = 400,
     initWidth = window.innerWidth / 2
   } = props || {}
-  // 屏幕宽度的 50% 作为最小宽度
+  // screen widas minimum width as minimum width
   //   const minWidthPx = window.innerWidth / 2
-  // 固定的最小高度 400px
+  // fixed minimum height 400px
   //   const minHeightPx = 400
-  // 初始高度限制为 400px
+  // The initial height limit is 400px
   const maxHeight = ref(initHeight + 'px')
-  // 初始宽度限制为 50%
+  // The initial width is limited to 50%
   const minWidth = ref(initWidth + 'px')
   const setupDrag = (elDialog: any, el: any) => {
-    // 获取对话框元素
-    // 是否正在调整大小的标志
+    // Get dialog element
+    // Flag indicating whether resizing is in progress
     let isResizing = false
-    // 当前调整的方向
+    // Current adjustment direction
     let currentResizeDirection = ''
 
-    // 鼠标移动时的事件处理器，用于检测鼠标位置并设置相应的光标样式
+    // Event handler when the mouse moves, used to detect the mouse position and set the corresponding cursor style
     const handleMouseMove = (e: any) => {
       const rect = elDialog.getBoundingClientRect()
-      // 鼠标相对于对话框左侧的偏移量
+      // The offset of the mouse relative to the left side of the dialog box
       const offsetX = e.clientX - rect.left
-      // 鼠标相对于对话框顶部的偏移量
+      // The offset of the mouse relative to the top of the dialog box
       const offsetY = e.clientY - rect.top
       const width = elDialog.clientWidth
       const height = elDialog.clientHeight
 
-      // 获取对话框的内边距
+      // Get the padding of the dialog box
       const computedStyle = window.getComputedStyle(elDialog)
       const paddingLeft = parseFloat(computedStyle.paddingLeft)
       const paddingRight = parseFloat(computedStyle.paddingRight)
       const paddingBottom = parseFloat(computedStyle.paddingBottom)
       const paddingTop = parseFloat(computedStyle.paddingTop)
 
-      // 根据鼠标位置设置相应的光标样式和调整方向
+      // Set the corresponding cursor style and adjust the direction according to the mouse position
       if (!isResizing) {
         if (offsetX < paddingLeft && offsetY > paddingTop && offsetY < height - paddingBottom) {
-          elDialog.style.cursor = 'ew-resize' // 左右箭头
+          elDialog.style.cursor = 'ew-resize' // left and right arrows
           currentResizeDirection = 'left'
         } else if (
           offsetX > width - paddingRight &&
           offsetY > paddingTop &&
           offsetY < height - paddingBottom
         ) {
-          elDialog.style.cursor = 'ew-resize' // 左右箭头
+          elDialog.style.cursor = 'ew-resize' // left and right arrows
           currentResizeDirection = 'right'
         } else if (
           offsetY < paddingTop &&
           offsetX > paddingLeft &&
           offsetX < width - paddingRight
         ) {
-          elDialog.style.cursor = 'ns-resize' // 上下箭头
+          elDialog.style.cursor = 'ns-resize' // up and down arrows
           currentResizeDirection = 'top'
         } else if (
           offsetY > height - paddingBottom &&
           offsetX > paddingLeft &&
           offsetX < width - paddingRight
         ) {
-          elDialog.style.cursor = 'ns-resize' // 上下箭头
+          elDialog.style.cursor = 'ns-resize' // up and down arrows
           currentResizeDirection = 'bottom'
         } else if (offsetX < paddingLeft && offsetY < paddingTop) {
-          elDialog.style.cursor = 'nwse-resize' // 左上右下箭头
+          elDialog.style.cursor = 'nwse-resize' // left up right down arrow
           currentResizeDirection = 'top-left'
         } else if (offsetX > width - paddingRight && offsetY < paddingTop) {
-          elDialog.style.cursor = 'nesw-resize' // 右上左下箭头
+          elDialog.style.cursor = 'nesw-resize' // Right up left down arrow
           currentResizeDirection = 'top-right'
         } else if (offsetX < paddingLeft && offsetY > height - paddingBottom) {
-          elDialog.style.cursor = 'nesw-resize' // 右上左下箭头
+          elDialog.style.cursor = 'nesw-resize' // Right up left down arrow
           currentResizeDirection = 'bottom-left'
         } else if (offsetX > width - paddingRight && offsetY > height - paddingBottom) {
-          elDialog.style.cursor = 'nwse-resize' // 左上右下箭头
+          elDialog.style.cursor = 'nwse-resize' // left up right down arrow
           currentResizeDirection = 'bottom-right'
         } else {
           elDialog.style.cursor = 'default'
@@ -89,7 +89,7 @@ export const useResize = (props?: {
       }
     }
 
-    // 鼠标按下时的事件处理器，开始调整对话框大小
+    // Event handler when mouse is pressed to start resizing the dialog box
     const handleMouseDown = (e) => {
       if (currentResizeDirection) {
         isResizing = true
@@ -99,14 +99,14 @@ export const useResize = (props?: {
         const initialWidth = elDialog.clientWidth
         const initialHeight = el.querySelector('.el-dialog__body').clientHeight
 
-        // 调整大小的事件处理器
+        // resize event handler
         const handleResizing = (e: any) => {
           if (!isResizing) return
 
           let newWidth = initialWidth
           let newHeight = initialHeight
 
-          // 根据当前调整方向计算新的宽度和高度
+          // Calculate new width and height based on current resize direction
           if (currentResizeDirection.includes('right')) {
             newWidth = Math.max(minWidthPx, initialWidth + (e.clientX - initialX) * 2)
             minWidth.value = `${newWidth}px`
@@ -155,7 +155,7 @@ export const useResize = (props?: {
             maxHeight.value = `${Math.min(newHeight, window.innerHeight - 165)}px`
           }
         }
-        // 停止调整大小的事件处理器
+        // Stop resize event handler
         const stopResizing = () => {
           isResizing = false
           document.removeEventListener('mousemove', handleResizing)

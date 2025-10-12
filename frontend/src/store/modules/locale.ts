@@ -25,7 +25,7 @@ export const useLocaleStore = defineStore('locales', {
         lang: getStorage('lang') || 'ko',
         elLocale: elLocaleMap[getStorage('lang') || 'ko']
       },
-      // 多语言
+      // multilingual
       localeMap: [
         {
           lang: 'zh-CN',

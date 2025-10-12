@@ -4,7 +4,7 @@ import { MockMethod } from 'vite-plugin-mock'
 const timeout = 1000
 
 export default [
-  // 分析页统计接口
+  // Analysis page statistics interface
   {
     url: '/mock/analysis/total',
     method: 'get',
@@ -21,7 +21,7 @@ export default [
       }
     }
   },
-  // 用户来源
+  // User source
   {
     url: '/mock/analysis/userAccessSource',
     method: 'get',
@@ -39,7 +39,7 @@ export default [
       }
     }
   },
-  // 每周用户活跃量
+  // Weekly user activity
   {
     url: '/mock/analysis/weeklyUserActivity',
     method: 'get',
@@ -59,7 +59,7 @@ export default [
       }
     }
   },
-  // 每月销售额
+  // monthly sales
   {
     url: '/mock/analysis/monthlySales',
     method: 'get',

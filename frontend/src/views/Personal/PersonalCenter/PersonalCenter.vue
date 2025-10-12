@@ -10,7 +10,7 @@ import EditPassword from './components/EditPassword.vue'
 
 const userInfo = ref()
 const fetchDetailUserApi = async () => {
-  // 这里可以调用接口获取用户信息
+  // Here you can call the interface to obtain user information
   const data = {
     id: 1,
     username: 'admin',
@@ -18,7 +18,7 @@ const fetchDetailUserApi = async () => {
     phoneNumber: '18888888888',
     email: '502431556@qq.com',
     avatarUrl: '',
-    roleList: ['超级管理员']
+    roleList: ['super administrator']
   }
   userInfo.value = data
 }
@@ -35,9 +35,9 @@ const saveAvatar = async () => {
     avatarLoading.value = true
     const base64 = unref(uploadAvatarRef)?.getBase64()
     console.log(base64)
-    // 这里可以调用修改头像接口
+    // Here you can call the interface to modify the avatar
     fetchDetailUserApi()
-    ElMessage.success('修改成功')
+    ElMessage.success('Modification successful')
     dialogVisible.value = false
   } catch (error) {
     console.log(error)
@@ -49,7 +49,7 @@ const saveAvatar = async () => {
 
 <template>
   <div class="flex w-100% h-100%">
-    <ContentWrap title="个人信息" class="w-400px">
+    <ContentWrap title="personal information" class="w-400px">
       <div class="flex justify-center items-center">
         <div
           class="avatar w-[150px] h-[150px] relative cursor-pointer"
@@ -64,27 +64,27 @@ const saveAvatar = async () => {
       </div>
       <ElDivider />
       <div class="flex justify-between items-center">
-        <div>账号：</div>
+        <div>account: </div>
         <div>{{ userInfo?.username }}</div>
       </div>
       <ElDivider />
       <div class="flex justify-between items-center">
-        <div>昵称：</div>
+        <div>Nick name： </div>
         <div>{{ userInfo?.realName }}</div>
       </div>
       <ElDivider />
       <div class="flex justify-between items-center">
-        <div>手机号码：</div>
+        <div>phone number： </div>
         <div>{{ userInfo?.phoneNumber ?? '-' }}</div>
       </div>
       <ElDivider />
       <div class="flex justify-between items-center">
-        <div>用户邮箱：</div>
+        <div>User email： </div>
         <div>{{ userInfo?.email ?? '-' }}</div>
       </div>
       <ElDivider />
       <div class="flex justify-between items-center">
-        <div>所属角色：</div>
+        <div>Role： </div>
         <div>
           <template v-if="userInfo?.roleList?.length">
             <ElTag v-for="item in userInfo?.roleList || []" :key="item" class="ml-2 mb-w"
@@ -96,24 +96,24 @@ const saveAvatar = async () => {
       </div>
       <ElDivider />
     </ContentWrap>
-    <ContentWrap title="基本资料" class="flex-[3] ml-20px">
+    <ContentWrap title="Basic information" class="flex-[3] ml-20px">
       <ElTabs v-model="activeName">
-        <ElTabPane label="基本信息" name="first">
+        <ElTabPane label="Basic information" name="first">
           <EditInfo :user-info="userInfo" />
         </ElTabPane>
-        <ElTabPane label="修改密码" name="second">
+        <ElTabPane label="Change password" name="second">
           <EditPassword />
         </ElTabPane>
       </ElTabs>
     </ContentWrap>
   </div>
 
-  <Dialog v-model="dialogVisible" title="修改头像" width="800px">
+  <Dialog v-model="dialogVisible" title="Modify avatar" width="800px">
     <UploadAvatar ref="uploadAvatarRef" :url="userInfo?.avatarUrl || defaultAvatar" />
 
     <template #footer>
-      <ElButton type="primary" :loading="avatarLoading" @click="saveAvatar"> 保存 </ElButton>
-      <ElButton @click="dialogVisible = false">关闭</ElButton>
+      <ElButton type="primary" :loading="avatarLoading" @click="saveAvatar"> keep </ElButton>
+      <ElButton @click="dialogVisible = false">closure</ElButton>
     </template>
   </Dialog>
 </template>

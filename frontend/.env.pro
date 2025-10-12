@@ -1,41 +1,41 @@
-# 环境
+# environment
 VITE_NODE_ENV=production
 
-# 接口前缀
+# interface prefix
 VITE_API_BASE_PATH=
 
-# 打包路径
+# Packing path
 VITE_BASE_PATH=/
 
-# 是否删除debugger
+# Whether to delete the debugger
 VITE_DROP_DEBUGGER=true
 
-# 是否删除console.log
+# Whether to delete the console.log
 VITE_DROP_CONSOLE=true
 
-# 是否sourcemap
+# Whether sourcemap
 VITE_SOURCEMAP=false
 
-# 输出路径
+# Output path
 VITE_OUT_DIR=dist-pro
 
-# 标题
+# title
 VITE_APP_TITLE=ElementAdmin
 
-# 是否包分析
+# Whether to include analysis
 VITE_USE_BUNDLE_ANALYZER=true
 
-# 是否全量引入element-plus样式
+# Whether to fully introduce element-plus style
 VITE_USE_ALL_ELEMENT_PLUS_STYLE=false
 
-# 是否开启mock
+# Whether to enable mocking
 VITE_USE_MOCK=true
 
-# 是否切割css
+# Whether to cut css
 VITE_USE_CSS_SPLIT=true
 
-# 是否使用在线图标
+# Whether to use online icons
 VITE_USE_ONLINE_ICON=false
 
-# 是否隐藏全局设置按钮
+# Whether to hide the global settings button
 VITE_HIDE_GLOBAL_SETTING=false

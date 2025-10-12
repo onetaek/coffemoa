@@ -23,7 +23,7 @@ export const useUserStore = defineStore('user', {
       tokenKey: 'Authorization',
       token: '',
       roleRouters: undefined,
-      // 记住我
+      // remember me
       rememberMe: true,
       loginInfo: undefined
     }

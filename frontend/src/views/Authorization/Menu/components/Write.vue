@@ -23,14 +23,14 @@ const props = defineProps({
 
 const handleClose = async (tag: any) => {
   const formData = await getFormData()
-  // 删除对应的权限
+  // Delete the corresponding permissions
   setValues({
     permissionList: formData?.permissionList?.filter((v: any) => v.value !== tag.value)
   })
 }
 
 const handleEdit = async (row: any) => {
-  // 深拷贝当前行数据到编辑行
+  // Deep copy the current row data to the edit row
   permissionEditingRow.value = { ...row }
 }
 
@@ -39,18 +39,18 @@ const handleSave = async () => {
   const index = formData?.permissionList?.findIndex((x) => x.id === permissionEditingRow.value.id)
   if (index !== -1) {
     formData.permissionList[index] = { ...permissionEditingRow.value }
-    permissionEditingRow.value = null // 重置编辑状态
+    permissionEditingRow.value = null // Reset editing status
   }
 }
 
 const showDrawer = ref(false)
-// 存储正在编辑的行的数据
+// Stores data for the row being edited
 const permissionEditingRow = ref<any>(null)
 
 const formSchema = reactive<FormSchema[]>([
   {
     field: 'type',
-    label: '菜单类型',
+    label: 'Menu type',
     component: 'RadioButton',
     value: 0,
     colProps: {
@@ -59,11 +59,11 @@ const formSchema = reactive<FormSchema[]>([
     componentProps: {
       options: [
         {
-          label: '目录',
+          label: 'Table of contents',
           value: 0
         },
         {
-          label: '菜单',
+          label: 'menu',
           value: 1
         }
       ],
@@ -106,7 +106,7 @@ const formSchema = reactive<FormSchema[]>([
   },
   {
     field: 'parentId',
-    label: '父级菜单',
+    label: 'Parent menu',
     component: 'TreeSelect',
     componentProps: {
       nodeKey: 'id',
@@ -151,12 +151,12 @@ const formSchema = reactive<FormSchema[]>([
   },
   {
     field: 'component',
-    label: '组件',
+    label: 'components',
     component: 'Input',
     value: '#',
     componentProps: {
       disabled: true,
-      placeholder: '#为顶级目录，##为子目录',
+      placeholder: '#is the top-level directory,##as a subdirectory',
       on: {
         change: (val: string) => {
           cacheComponent.value = val
@@ -218,7 +218,7 @@ const formSchema = reactive<FormSchema[]>([
               size="small"
               onClick={() => (showDrawer.value = true)}
             >
-              添加权限
+              Add permissions
             </BaseButton>
             <ElTable data={data?.permissionList}>
               <ElTableColumn type="index" prop="id" />
@@ -255,12 +255,12 @@ const formSchema = reactive<FormSchema[]>([
                   default: ({ row }: any) =>
                     permissionEditingRow.value && permissionEditingRow.value.id === row.id ? (
                       <ElButton size="small" type="primary" onClick={handleSave}>
-                        确定
+                        Sure
                       </ElButton>
                     ) : (
                       <>
                         <ElButton size="small" type="primary" onClick={() => handleEdit(row)}>
-                          编辑
+                          edit
                         </ElButton>
                         <ElPopconfirm
                           title="Are you sure to delete this?"
@@ -269,7 +269,7 @@ const formSchema = reactive<FormSchema[]>([
                           {{
                             reference: () => (
                               <ElButton size="small" type="danger">
-                                删除
+                                delete
                               </ElButton>
                             )
                           }}

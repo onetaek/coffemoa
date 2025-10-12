@@ -1,16 +1,16 @@
-// 引入vue模版的eslint
+// Introducing eslint of vue template
 import pluginVue from 'eslint-plugin-vue'
 import eslint from '@eslint/js'
-// ts-eslint解析器，使 eslint 可以解析 ts 语法
+// ts-eslint parser, which enables eslint to parse ts grammar
 import tseslint from 'typescript-eslint'
-// vue文件解析器
+// vue file parser
 import vueParser from 'vue-eslint-parser'
 import prettier from 'eslint-plugin-prettier'
 
 export default tseslint.config({
   // ignores: ['node_modules', 'prettier.config.cjs', 'dist*'],
   files: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue'],
-  // tseslint.config添加了extends扁平函数，直接用。否则是eslint9.0版本是没有extends的
+  // tseslint.config adds the extends flat function, which can be used directly. Otherwise, the eslint9.0 version does not have extends.
   extends: [
     eslint.configs.recommended,
     ...tseslint.configs.recommended,
@@ -20,9 +20,9 @@ export default tseslint.config({
     prettier
   },
   languageOptions: {
-    parser: vueParser, // 使用vue解析器，这个可以识别vue文件
+    parser: vueParser, // Use the vue parser, which can identify vue files
     parserOptions: {
-      parser: tseslint.parser, // 在vue文件上使用ts解析器
+      parser: tseslint.parser, // Using ts parser on vue files
       sourceType: 'module',
       ecmaVersion: 2020,
       ecmaFeatures: {

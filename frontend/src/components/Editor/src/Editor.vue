@@ -25,7 +25,7 @@ const props = defineProps({
 
 const emit = defineEmits(['change', 'update:modelValue'])
 
-// 编辑器实例，必须用 shallowRef
+// Editor instance, must be used shallowRef
 const editorRef = shallowRef<IDomEditor>()
 
 const valueHtml = ref('')
@@ -38,7 +38,7 @@ watch(
   }
 )
 
-// 监听
+// monitor
 watch(
   () => valueHtml.value,
   (val: string) => {
@@ -51,7 +51,7 @@ const handleCreated = (editor: IDomEditor) => {
   valueHtml.value = props.modelValue
 }
 
-// 编辑器配置
+// Editor configuration
 const editorConfig = computed((): IEditorConfig => {
   return Object.assign(
     {
@@ -89,16 +89,16 @@ const editorStyle = computed(() => {
   }
 })
 
-// 回调函数
+// callback function
 const handleChange = (editor: IDomEditor) => {
   emit('change', editor)
 }
 
-// 组件销毁时，及时销毁编辑器
+// When the component is destroyed, destroy the editor in time
 onBeforeUnmount(() => {
   const editor = unref(editorRef.value)
 
-  // 销毁，并移除 editor
+  // Destroy and remove editor
   editor?.destroy()
 })
 
@@ -114,13 +114,13 @@ defineExpose({
 
 <template>
   <div class="border-1 border-solid border-[var(--el-border-color)] z-10">
-    <!-- 工具栏 -->
+    <!-- Toolbar -->
     <Toolbar
       :editor="editorRef"
       :editorId="editorId"
       class="border-0 b-b-1 border-solid border-[var(--el-border-color)]"
     />
-    <!-- 编辑器 -->
+    <!-- Editor -->
     <Editor
       v-model="valueHtml"
       :editorId="editorId"

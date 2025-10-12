@@ -78,7 +78,7 @@ const tableColumns = reactive<TableColumn[]>([
     slots: {
       default: (data: any) => {
         const component = data.row.component
-        return <>{component === '#' ? '顶级目录' : component === '##' ? '子目录' : component}</>
+        return <>{component === '#' ? 'top level directory' : component === '##' ? 'subdirectory' : component}</>
       }
     }
   },

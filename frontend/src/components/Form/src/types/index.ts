@@ -129,7 +129,7 @@ export interface SelectOption {
 
 export interface SelectComponentProps extends Omit<Partial<ISelectProps>, 'options'> {
   /**
-   * 数据源的字段别名
+   * Field alias for the data source
    */
   props?: {
     key?: string
@@ -286,7 +286,7 @@ export interface RadioOption {
 export interface RadioGroupComponentProps extends Partial<RadioGroupProps> {
   options?: RadioOption[]
   /**
-   * 数据源的字段别名
+   * Field alias for the data source
    */
   props?: {
     label?: string
@@ -305,7 +305,7 @@ export interface RadioGroupComponentProps extends Partial<RadioGroupProps> {
 export interface RadioButtonComponentProps extends Partial<RadioButtonProps> {
   options?: RadioOption[]
   /**
-   * 数据源的字段别名
+   * Field alias for the data source
    */
   props?: {
     label?: string
@@ -342,7 +342,7 @@ export interface CheckboxOption {
 export interface CheckboxGroupComponentProps extends Partial<CheckboxGroupProps> {
   options?: CheckboxOption[]
   /**
-   * 数据源的字段别名
+   * Field alias for the data source
    */
   props?: {
     label?: string
@@ -588,22 +588,22 @@ export interface TreeSelectComponentProps
 
 export interface FormSchema {
   /**
-   * 唯一标识
+   * unique identifier
    */
   field: string
 
   /**
-   * 标题
+   * title
    */
   label?: string
 
   /**
-   * col组件属性
+   * col component attribute
    */
   colProps?: ColProps
 
   /**
-   * 表单组件属性，具体可以查看element-plus文档
+   * Form component properties, please view the element-plus documentation for details
    */
   componentProps?:
     | InputComponentProps
@@ -630,32 +630,32 @@ export interface FormSchema {
     | any
 
   /**
-   * formItem组件属性，具体可以查看element-plus文档
+   * formItem component attributes, please view the element-plus documentation for details
    */
   formItemProps?: FormItemProps
 
   /**
-   * 渲染的组件名称
+   * Rendered component name
    */
   component?: ComponentName
 
   /**
-   * 初始值
+   * initial value
    */
   value?: any
 
   /**
-   * 是否隐藏，如果为true，会连同值一同删除，类似v-if
+   * Whether to hide, if true, it will be deleted together with the value, similar to v-if
    */
   remove?: boolean
 
   /**
-   * 样式隐藏，不会把值一同删掉，类似v-show
+   * The style is hidden and the value will not be deleted together, similar to v-show
    */
   hidden?: boolean
 
   /**
-   * @returns 远程加载下拉项
+   * @returns Load dropdown remotely
    */
   optionApi?: any
 }

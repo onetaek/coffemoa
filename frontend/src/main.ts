@@ -1,33 +1,33 @@
 import 'vue/jsx'
 
-// 引入windi css
+// Introduce windi css
 import '@/plugins/unocss'
 
-// 导入全局的svg图标
+// Import global svg icon
 import '@/plugins/svgIcon'
 
-// 初始化多语言
+// Initialize multiple languages
 import { setupI18n } from '@/plugins/vueI18n'
 
-// 引入状态管理
+// Introducing state management
 import { setupStore } from '@/store'
 
-// 全局组件
+// global components
 import { setupGlobCom } from '@/components'
 
-// 引入element-plus
+// Introduce element-plus
 import { setupElementPlus } from '@/plugins/elementPlus'
 
-// 引入全局样式
+// Introduce global styles
 import '@/styles/index.less'
 
-// 引入动画
+// Introduce animation
 import '@/plugins/animate.css'
 
-// 路由
+// routing
 import { setupRouter } from './router'
 
-// 权限
+// Permissions
 import { setupPermission } from './directives'
 
 import { createApp } from 'vue'
@@ -36,7 +36,7 @@ import App from './App.vue'
 
 import './permission'
 
-// 创建实例
+// Create instance
 const setupAll = async () => {
   const app = createApp(App)
 

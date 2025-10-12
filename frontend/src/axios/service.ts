@@ -29,7 +29,7 @@ axiosInstance.interceptors.response.use(
   (res: AxiosResponse) => {
     const url = res.config.url || ''
     abortControllerMap.delete(url)
-    // 这里不能做任何处理，否则后面的 interceptors 拿不到完整的上下文了
+    // No processing can be done herI can't get the full context.se the following interceptors I can't get the full context.
     return res
   },
   (error: AxiosError) => {

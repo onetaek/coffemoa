@@ -4,7 +4,7 @@ import { SUCCESS_CODE } from '@/constants'
 const timeout = 1000
 
 export default [
-  // 列表接口
+  // List interface
   {
     url: '/mock/menu/list',
     method: 'get',
@@ -23,9 +23,9 @@ export default [
               id: 1,
               type: 0,
               parentId: undefined,
-              title: '首页',
+              title: 'front page',
               meta: {
-                title: '首页',
+                title: 'front page',
                 icon: 'vi-ant-design:dashboard-filled',
                 alwaysShow: true
               },
@@ -38,21 +38,21 @@ export default [
                   id: 2,
                   type: 1,
                   parentId: 1,
-                  title: '分析页',
+                  title: 'Analysis page',
                   permissionList: [
                     {
                       id: 1,
-                      label: '新增',
+                      label: 'New',
                       value: 'add'
                     },
                     {
                       id: 2,
-                      label: '编辑',
+                      label: 'edit',
                       value: 'edit'
                     }
                   ],
                   meta: {
-                    title: '分析页',
+                    title: 'Analysis page',
                     noCache: true,
                     permission: ['add', 'edit']
                   }
@@ -65,26 +65,26 @@ export default [
                   id: 3,
                   type: 1,
                   parentId: 1,
-                  title: '工作台',
+                  title: 'workbench',
                   permissionList: [
                     {
                       id: 1,
-                      label: '新增',
+                      label: 'New',
                       value: 'add'
                     },
                     {
                       id: 2,
-                      label: '编辑',
+                      label: 'edit',
                       value: 'edit'
                     },
                     {
                       id: 3,
-                      label: '删除',
+                      label: 'delete',
                       value: 'delete'
                     }
                   ],
                   meta: {
-                    title: '工作台',
+                    title: 'workbench',
                     noCache: true
                   }
                 }
@@ -94,7 +94,7 @@ export default [
               path: '/external-link',
               component: '#',
               meta: {
-                title: '文档',
+                title: 'document',
                 icon: 'vi-clarity:document-solid'
               },
               name: 'ExternalLink',
@@ -102,7 +102,7 @@ export default [
               id: 4,
               type: 0,
               parentId: undefined,
-              title: '文档',
+              title: 'document',
               children: [
                 {
                   path: 'https://element-plus-admin-doc.cn/',
@@ -111,9 +111,9 @@ export default [
                   id: 5,
                   type: 1,
                   parentId: 4,
-                  title: '文档',
+                  title: 'document',
                   meta: {
-                    title: '文档'
+                    title: 'document'
                   }
                 }
               ]
@@ -127,9 +127,9 @@ export default [
               id: 6,
               type: 0,
               parentId: undefined,
-              title: '菜单',
+              title: 'menu',
               meta: {
-                title: '菜单',
+                title: 'menu',
                 icon: 'vi-carbon:skill-level-advanced'
               },
               children: [
@@ -141,10 +141,10 @@ export default [
                   id: 7,
                   type: 0,
                   parentId: 6,
-                  title: '菜单1',
+                  title: 'Menu 1',
                   redirect: '/level/menu1/menu1-1/menu1-1-1',
                   meta: {
-                    title: '菜单1'
+                    title: 'Menu 1'
                   },
                   children: [
                     {
@@ -155,10 +155,10 @@ export default [
                       id: 8,
                       type: 0,
                       parentId: 7,
-                      title: '菜单1-1',
+                      title: 'Menu 1-1',
                       redirect: '/level/menu1/menu1-1/menu1-1-1',
                       meta: {
-                        title: '菜单1-1',
+                        title: 'Menu 1-1',
                         alwaysShow: true
                       },
                       children: [
@@ -170,9 +170,9 @@ export default [
                           id: 9,
                           type: 1,
                           parentId: 8,
-                          title: '菜单1-1-1',
+                          title: 'Menu 1-1-1',
                           meta: {
-                            title: '菜单1-1-1'
+                            title: 'Menu 1-1-1'
                           }
                         }
                       ]
@@ -185,9 +185,9 @@ export default [
                       id: 10,
                       type: 1,
                       parentId: 7,
-                      title: '菜单1-2',
+                      title: 'Menu 1-2',
                       meta: {
-                        title: '菜单1-2'
+                        title: 'Menu 1-2'
                       }
                     }
                   ]
@@ -200,9 +200,9 @@ export default [
                   id: 11,
                   type: 1,
                   parentId: 6,
-                  title: '菜单2',
+                  title: 'Menu 2',
                   meta: {
-                    title: '菜单2'
+                    title: 'Menu 2'
                   }
                 }
               ]
@@ -216,9 +216,9 @@ export default [
               id: 12,
               type: 0,
               parentId: undefined,
-              title: '综合示例',
+              title: 'Comprehensive example',
               meta: {
-                title: '综合示例',
+                title: 'Comprehensive example',
                 icon: 'vi-ep:management',
                 alwaysShow: true
               },
@@ -231,31 +231,31 @@ export default [
                   id: 13,
                   type: 1,
                   parentId: 12,
-                  title: '综合示例-弹窗',
+                  title: 'Comprehensive example-pop-up window',
                   permissionList: [
                     {
                       id: 1,
-                      label: '新增',
+                      label: 'New',
                       value: 'add'
                     },
                     {
                       id: 2,
-                      label: '编辑',
+                      label: 'edit',
                       value: 'edit'
                     },
                     {
                       id: 3,
-                      label: '删除',
+                      label: 'delete',
                       value: 'delete'
                     },
                     {
                       id: 4,
-                      label: '查看',
+                      label: 'Check',
                       value: 'view'
                     }
                   ],
                   meta: {
-                    title: '综合示例-弹窗'
+                    title: 'Comprehensive example-pop-up window'
                   }
                 },
                 {
@@ -266,31 +266,31 @@ export default [
                   id: 14,
                   type: 1,
                   parentId: 12,
-                  title: '综合示例-页面',
+                  title: 'Comprehensive example -page',
                   permissionList: [
                     {
                       id: 1,
-                      label: '新增',
+                      label: 'New',
                       value: 'add'
                     },
                     {
                       id: 2,
-                      label: '编辑',
+                      label: 'edit',
                       value: 'edit'
                     },
                     {
                       id: 3,
-                      label: '删除',
+                      label: 'delete',
                       value: 'delete'
                     },
                     {
                       id: 4,
-                      label: '查看',
+                      label: 'Check',
                       value: 'view'
                     }
                   ],
                   meta: {
-                    title: '综合示例-页面'
+                    title: 'Comprehensive example -page'
                   }
                 },
                 {
@@ -301,9 +301,9 @@ export default [
                   id: 15,
                   type: 1,
                   parentId: 12,
-                  title: '综合示例-新增',
+                  title: 'Comprehensive Example -New',
                   meta: {
-                    title: '综合示例-新增',
+                    title: 'Comprehensive Example -New',
                     noTagsView: true,
                     noCache: true,
                     hidden: true,
@@ -319,9 +319,9 @@ export default [
                   id: 16,
                   type: 1,
                   parentId: 12,
-                  title: '综合示例-编辑',
+                  title: 'Comprehensive Example -Editor',
                   meta: {
-                    title: '综合示例-编辑',
+                    title: 'Comprehensive Example -Editor',
                     noTagsView: true,
                     noCache: true,
                     hidden: true,
@@ -337,9 +337,9 @@ export default [
                   id: 17,
                   type: 1,
                   parentId: 12,
-                  title: '综合示例-详情',
+                  title: 'Comprehensive example -details',
                   meta: {
-                    title: '综合示例-详情',
+                    title: 'Comprehensive example -details',
                     noTagsView: true,
                     noCache: true,
                     hidden: true,

@@ -3,7 +3,7 @@ import { SUCCESS_CODE } from '@/constants'
 const timeout = 1000
 
 export default [
-  // 获取统计
+  // Get statistics
   {
     url: '/mock/workplace/total',
     method: 'get',
@@ -19,7 +19,7 @@ export default [
       }
     }
   },
-  // 获取项目
+  // Get project
   {
     url: '/mock/workplace/project',
     method: 'get',
@@ -74,7 +74,7 @@ export default [
       }
     }
   },
-  // 获取动态
+  // Get updates
   {
     url: '/mock/workplace/dynamic',
     method: 'get',
@@ -111,7 +111,7 @@ export default [
       }
     }
   },
-  // 获取团队信息
+  // Get team information
   {
     url: '/mock/workplace/team',
     method: 'get',
@@ -148,7 +148,7 @@ export default [
       }
     }
   },
-  // 获取指数
+  // Get index
   {
     url: '/mock/workplace/radar',
     method: 'get',

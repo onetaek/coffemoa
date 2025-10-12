@@ -1,4 +1,4 @@
-// 获取传入的值的类型
+// Get the type of the value passed in
 const getValueType = (value: any) => {
   const type = Object.prototype.toString.call(value)
   return type.slice(8, -1)
@@ -25,12 +25,12 @@ export const useStorage = (type: 'sessionStorage' | 'localStorage' = 'sessionSto
   }
 
   const clear = (excludes?: string[]) => {
-    // 获取排除项
+    // Get exclusions
     const keys = Object.keys(window[type])
     const defaultExcludes = ['dynamicRouter', 'serverDynamicRouter']
     const excludesArr = excludes ? [...excludes, ...defaultExcludes] : defaultExcludes
     const excludesKeys = excludesArr ? keys.filter((key) => !excludesArr.includes(key)) : keys
-    // 排除项不清除
+    // Exclusions are not cleared
     excludesKeys.forEach((key) => {
       window[type].removeItem(key)
     })

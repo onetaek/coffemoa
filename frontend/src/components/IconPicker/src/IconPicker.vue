@@ -13,9 +13,9 @@ const init = async (icon?: string) => {
   const iconInfo = icon.split(':')
   iconName.value = iconInfo[0]
   const wrapIndex = icons.findIndex((item) => item.prefix === iconInfo[0])
-  // 查询当前icon的索引
+  // Query the index of the current icon
   const index = filterItemIcons(icons[wrapIndex].icons).findIndex((item) => item === icon)
-  // 计算当前icon的页码
+  // Calculate the page number of the current icon
   await nextTick()
   currentPage.value = Math.ceil((index + 1) / unref(pageSize))
 }
@@ -91,7 +91,7 @@ const popoverShow = () => {
 }
 
 const iconSelect = (icon: string) => {
-  // 如果是同一个icon则不做处理，则相当于点击了清空按钮
+  // If it is the same icon, no processing will be done, which is equivalent to clicking the clear button.
   if (icon === unref(modelValue)) {
     modelValue.value = ''
     return
@@ -130,7 +130,7 @@ const inputClear = () => {
           v-model="search"
           class="mb-20px"
           clearable
-          placeholder="搜索图标"
+          placeholder="search icon"
           @clear="inputClear"
         />
         <ElTabs tab-position="left" v-model="iconName" @tab-change="tabChange">

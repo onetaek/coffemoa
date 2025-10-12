@@ -17,7 +17,7 @@ const { required, phone, maxlength, email } = useValidator()
 const formSchema = reactive<FormSchema[]>([
   {
     field: 'realName',
-    label: '昵称',
+    label: 'Nick name',
     component: 'Input',
     colProps: {
       span: 24
@@ -25,7 +25,7 @@ const formSchema = reactive<FormSchema[]>([
   },
   {
     field: 'phoneNumber',
-    label: '手机号码',
+    label: 'phone number',
     component: 'Input',
     colProps: {
       span: 24
@@ -33,7 +33,7 @@ const formSchema = reactive<FormSchema[]>([
   },
   {
     field: 'email',
-    label: '邮箱',
+    label: 'Mail',
     component: 'Input',
     colProps: {
       span: 24
@@ -68,16 +68,16 @@ const save = async () => {
     console.log(err)
   })
   if (valid) {
-    ElMessageBox.confirm('是否确认修改?', '提示', {
-      confirmButtonText: '确认',
-      cancelButtonText: '取消',
+    ElMessageBox.confirm('Do you want to confirm the modification?', 'hint', {
+      confirmButtonText: 'confirm',
+      cancelButtonText: 'Cancel',
       type: 'warning'
     })
       .then(async () => {
         try {
           saveLoading.value = true
-          // 这里可以调用修改用户信息接口
-          ElMessage.success('修改成功')
+          // Here you can call the modify user information interface
+          ElMessage.success('Modification successful')
         } catch (error) {
           console.log(error)
         } finally {
@@ -92,5 +92,5 @@ const save = async () => {
 <template>
   <Form :rules="rules" @register="formRegister" :schema="formSchema" />
   <ElDivider />
-  <BaseButton type="primary" @click="save">保存</BaseButton>
+  <BaseButton type="primary" @click="save">keep</BaseButton>
 </template>

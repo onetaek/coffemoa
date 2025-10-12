@@ -7,6 +7,6 @@ const { online } = useNetwork()
 
 <template>
   <ContentWrap title="useNetwork">
-    当前网络状态: <code>{{ online ? '已连接' : '已断开' }}</code>
+    Current network status: <code>{{ online ? 'Connected' : 'Disconnected' }}</code>
   </ContentWrap>
 </template>

@@ -18,7 +18,7 @@ const CrescentMoon = useIcon({ icon: 'vi-emojione-monotone:crescent-moon', color
 
 const appStore = useAppStore()
 
-// 初始化获取是否是暗黑主题
+// Initialize to get whether it is a dark theme
 const isDark = computed({
   get() {
     return appStore.getIsDark
@@ -32,7 +32,7 @@ const isDark = computed({
   }
 })
 
-// 设置switch的背景颜色
+// Set the background color of switch
 const blackColor = 'var(--el-color-black)'
 </script>
 

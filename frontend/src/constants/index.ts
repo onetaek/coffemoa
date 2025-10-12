@@ -1,39 +1,39 @@
 /**
- * 请求成功状态码
+ * Request success status code
  */
 export const SUCCESS_CODE = 0
 
 /**
- * 请求contentType
+ * Request contentType
  */
 export const CONTENT_TYPE: AxiosContentType = 'application/json'
 
 /**
- * 请求超时时间
+ * Request timeout
  */
 export const REQUEST_TIMEOUT = 60000
 
 /**
- * 不重定向白名单
+ * Do not redirect whitelist
  */
 export const NO_REDIRECT_WHITE_LIST = ['/login']
 
 /**
- * 不重置路由白名单
+ * Do not reset routing whitelist
  */
 export const NO_RESET_WHITE_LIST = ['Redirect', 'RedirectWrap', 'Login', 'NoFind', 'Root']
 
 /**
- * 表格默认过滤列设置字段
+ * Table default filter column setting field
  */
 export const DEFAULT_FILTER_COLUMN = ['expand', 'selection']
 
 /**
- * 是否根据headers->content-type自动转换数据格式
+ * Whether to automatically convert data format according to headers->content-type
  */
 export const TRANSFORM_REQUEST_DATA = true
 
 /**
- * 全局图标前缀
+ * Global icon prefix
  */
 export const ICON_PREFIX = 'vi-'

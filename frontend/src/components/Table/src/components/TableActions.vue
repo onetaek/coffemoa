@@ -44,7 +44,7 @@ export default defineComponent({
     return () => (
       <>
         <div class="text-right h-28px flex items-center justify-end">
-          <div title="刷新" class="w-30px h-20px flex items-center justify-end" onClick={refresh}>
+          <div title="refresh" class="w-30px h-20px flex items-center justify-end" onClick={refresh}>
             <Icon
               icon="vi-ant-design:sync-outlined"
               class="cursor-pointer"
@@ -56,7 +56,7 @@ export default defineComponent({
             {{
               default: () => {
                 return (
-                  <div title="尺寸" class="w-30px h-20px flex items-center justify-end">
+                  <div title="size" class="w-30px h-20px flex items-center justify-end">
                     <Icon
                       icon="vi-ant-design:column-height-outlined"
                       class="cursor-pointer"
@@ -86,7 +86,7 @@ export default defineComponent({
           </ElDropdown>
 
           <div
-            title="列设置"
+            title="Column settings"
             class="w-30px h-20px flex items-center justify-end"
             onClick={showColumnSetting}
           >

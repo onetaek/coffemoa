@@ -29,7 +29,7 @@ const loginOut = () => {
 
 const dialogVisible = ref<boolean>(false)
 
-// 锁定屏幕
+// lock screen
 const lockScreen = () => {
   dialogVisible.value = true
 }

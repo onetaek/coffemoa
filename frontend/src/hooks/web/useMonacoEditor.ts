@@ -25,51 +25,51 @@ self.MonacoEnvironment = {
 }
 
 export function useMonacoEditor(language: string = 'javascript') {
-  // 编辑器示例
+  // Editor example
   let monacoEditor: monaco.editor.IStandaloneCodeEditor | null = null
-  // 目标元素
+  // target element
   const monacoEditorRef = ref<HTMLElement>()
 
-  // 创建实例
+  // Create instance
   function createEditor(editorOption: monaco.editor.IStandaloneEditorConstructionOptions = {}) {
     if (!monacoEditorRef.value) return
     monacoEditor = monaco.editor.create(monacoEditorRef.value, {
-      // 初始模型
+      // initial model
       model: monaco.editor.createModel('', language),
-      // 是否启用预览图
+      // Whether to enable preview images
       minimap: { enabled: true },
-      // 圆角
+      // rounded corners
       roundedSelection: true,
-      // 主题
+      // theme
       theme: 'vs-dark',
-      // 主键
+      // primary key
       multiCursorModifier: 'ctrlCmd',
-      // 滚动条
+      // scroll bar
       scrollbar: {
         verticalScrollbarSize: 8,
         horizontalScrollbarSize: 8
       },
-      // 行号
+      // Line number
       lineNumbers: 'on',
-      // tab大小
+      // tab size
       tabSize: 2,
-      //字体大小
+      //font size
       fontSize: 14,
-      // 控制编辑器在用户键入、粘贴、移动或缩进行时是否应自动调整缩进
+      // Controls whether the editor should automatically adjust indentation when the user types, pastes, moves, or indents a line
       autoIndent: 'advanced',
-      // 自动布局
+      // autolayout
       automaticLayout: true,
       ...editorOption
     })
     return monacoEditor
   }
 
-  // 格式化
+  // format
   async function formatDoc() {
     await monacoEditor?.getAction('editor.action.formatDocument')?.run()
   }
 
-  // 数据更新
+  // Data update
   function updateVal(val: string) {
     nextTick(() => {
       if (getOption(monaco.editor.EditorOption.readOnly)) {
@@ -82,17 +82,17 @@ export function useMonacoEditor(language: string = 'javascript') {
     })
   }
 
-  // 配置更新
+  // Configuration update
   function updateOptions(opt: monaco.editor.IStandaloneEditorConstructionOptions) {
     monacoEditor?.updateOptions(opt)
   }
 
-  // 获取配置
+  // Get configuration
   function getOption(name: monaco.editor.EditorOption) {
     return monacoEditor?.getOption(name)
   }
 
-  // 获取实例
+  // Get instance
   function getEditor() {
     return monacoEditor
   }
@@ -108,7 +108,7 @@ export function useMonacoEditor(language: string = 'javascript') {
     monaco.editor.setTheme(newTheme)
   }
 
-  // 页面离开 销毁
+  // Page left destroyed
   onBeforeUnmount(() => {
     if (monacoEditor) {
       monacoEditor.dispose()

@@ -26,12 +26,12 @@ const vResize = {
       const elDialog = el.querySelector('.el-dialog')
 
       if (elDialog) {
-        // 在确认 `elDialog` 已渲染后进行处理
+        // Confirming `elDProcess after Processing after rendering
         setupDrag(elDialog, el)
-        // observer.disconnect() // 一旦获取到元素，停止观察
+        // observer.disconnect() // Once the element is obtained, stop observing
       }
     })
-    // 开始观察子节点的变化
+    // Start observing changes in child nodes
     observer.observe(el, { childList: true, subtree: true })
   }
 }
@@ -52,7 +52,7 @@ const instance = getCurrentInstance()
 const initDirective = () => {
   const directives = instance?.appContext?.app._context?.directives
 
-  // 检查指令是否已经注册
+  // Check if the command has been registered
   if (!directives || !directives['resize']) {
     instance?.appContext?.app.directive('resize', vResize)
   }

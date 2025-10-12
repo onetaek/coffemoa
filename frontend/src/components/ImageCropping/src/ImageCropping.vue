@@ -72,7 +72,7 @@ const getCropBoxStyle = computed(() => {
   }
 })
 
-// 获取对应的缩小倍数的宽高
+// Get the width and height of the corresponding reduction factor
 const getScaleSize = (scale: number) => {
   return {
     width: props.cropBoxWidth * scale + 'px',
@@ -110,13 +110,13 @@ const intiCropper = () => {
 }
 
 const uploadChange = (uploadFile: UploadFile) => {
-  // 判断是否是图片
+  // Determine whether it is a picture
   if (uploadFile?.raw?.type.indexOf('image') === -1) {
-    ElMessage.error('请上传图片格式的文件')
+    ElMessage.error('Please upload files in image format')
     return
   }
   if (!uploadFile.raw) return
-  // 获取图片的访问地址
+  // Get the access address of the image
   const url = URL.createObjectURL(uploadFile.raw)
   unref(cropperRef)?.replace(url)
 }
@@ -190,7 +190,7 @@ defineExpose({
       </div>
       <div v-if="showActions" class="mt-10px flex items-center">
         <div class="flex items-center">
-          <ElTooltip content="选择文件" placement="bottom">
+          <ElTooltip content="Select file" placement="bottom">
             <ElUpload
               action="''"
               accept="image/*"
@@ -205,37 +205,37 @@ defineExpose({
           </ElTooltip>
         </div>
         <div class="flex items-center justify-end flex-1">
-          <ElTooltip content="重置" placement="bottom">
+          <ElTooltip content="reset" placement="bottom">
             <BaseButton size="small" type="primary" @click="reset"
               ><Icon icon="vi-ep:refresh"
             /></BaseButton>
           </ElTooltip>
-          <ElTooltip content="逆时针旋转" placement="bottom">
+          <ElTooltip content="Counterclockwise" placement="bottom">
             <BaseButton size="small" type="primary" @click="rotate(-45)"
               ><Icon icon="vi-ant-design:rotate-left-outlined"
             /></BaseButton>
           </ElTooltip>
-          <ElTooltip content="顺时针旋转" placement="bottom">
+          <ElTooltip content="Rotate clockwise" placement="bottom">
             <BaseButton size="small" type="primary" @click="rotate(45)"
               ><Icon icon="vi-ant-design:rotate-right-outlined"
             /></BaseButton>
           </ElTooltip>
-          <ElTooltip content="水平翻转" placement="bottom">
+          <ElTooltip content="Flip horizontally" placement="bottom">
             <BaseButton size="small" type="primary" @click="scale('scaleX')"
               ><Icon icon="vi-vaadin:arrows-long-h"
             /></BaseButton>
           </ElTooltip>
-          <ElTooltip content="垂直翻转" placement="bottom">
+          <ElTooltip content="flip vertically" placement="bottom">
             <BaseButton size="small" type="primary" @click="scale('scaleY')"
               ><Icon icon="vi-vaadin:arrows-long-v"
             /></BaseButton>
           </ElTooltip>
-          <ElTooltip content="放大" placement="bottom">
+          <ElTooltip content="enlarge" placement="bottom">
             <BaseButton size="small" type="primary" @click="zoom(0.1)"
               ><Icon icon="vi-ant-design:zoom-in-outlined"
             /></BaseButton>
           </ElTooltip>
-          <ElTooltip content="缩小" placement="bottom">
+          <ElTooltip content="zoom out" placement="bottom">
             <BaseButton size="small" type="primary" @click="zoom(-0.1)"
               ><Icon icon="vi-ant-design:zoom-out-outlined"
             /></BaseButton>

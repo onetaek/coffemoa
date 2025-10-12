@@ -32,7 +32,7 @@ const { hour, month, minute, meridiem, year, day, week } = useNow(true)
 
 const { t } = useI18n()
 
-// 解锁
+// Unlock
 async function unLock() {
   if (!password.value) {
     return
@@ -47,13 +47,13 @@ async function unLock() {
   }
 }
 
-// 返回登录
+// Return to login
 async function goLogin() {
   const res = await loginOutApi().catch(() => {})
   if (res) {
     clear()
     tagsViewStore.delAllViews()
-    resetRouter() // 重置静态路由表
+    resetRouter() // Reset static routing table
     lockStore.resetLockInfo()
     replace('/login')
   }

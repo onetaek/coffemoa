@@ -67,7 +67,7 @@ export default defineComponent({
       }
     }
 
-    // 折叠
+    // fold
     const show = ref(true)
 
     const toggleClick = () => {

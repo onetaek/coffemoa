@@ -11,9 +11,9 @@ const { params } = useRoute()
 
 const val = ref(params.id as string)
 
-setTitle(`详情页-${val.value}`)
+setTitle(`Details page-${val.value}`)
 </script>
 
 <template>
-  <ContentWrap> 获取参数： <ElInput v-model="val" /> </ContentWrap>
+  <ContentWrap> Get parameters: <ElInput v-model="val" /> </ContentWrap>
 </template>

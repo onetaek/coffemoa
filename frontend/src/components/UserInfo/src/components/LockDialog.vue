@@ -35,7 +35,7 @@ const dialogVisible = computed({
   }
 })
 
-//  自动聚焦输入框
+//  Auto focus input box
 watch(
   dialogVisible,
   async (val) => {
@@ -63,7 +63,7 @@ const schema: FormSchema[] = reactive([
     componentProps: {
       type: 'password',
       showPassword: true,
-      // 按下enter键触发登录
+      // Press enter key to trigger login
       onKeydown: (_e: any) => {
         if (_e.key === 'Enter') {
           handleLock()

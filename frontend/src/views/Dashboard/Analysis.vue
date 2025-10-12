@@ -23,7 +23,7 @@ const isDark = computed(() => appStore.getIsDark)
 
 const pieOptionsData = reactive<EChartsOption>(pieOptions) as EChartsOption
 
-// 用户来源
+// User source
 const getUserAccessSource = async () => {
   const res = await getUserAccessSourceApi().catch(() => {})
   if (res) {
@@ -43,7 +43,7 @@ const getUserAccessSource = async () => {
 
 const barOptionsData = reactive<EChartsOption>(barOptions) as EChartsOption
 
-// 周活跃量
+// Weekly active volume
 const getWeeklyUserActivity = async () => {
   const res = await getWeeklyUserActivityApi().catch(() => {})
   if (res) {
@@ -64,7 +64,7 @@ const getWeeklyUserActivity = async () => {
 
 const lineOptionsData = reactive<EChartsOption>(lineOptions) as EChartsOption
 
-// 每月销售总额
+// Total monthly sales
 const getMonthlySales = async () => {
   const res = await getMonthlySalesApi().catch(() => {})
   if (res) {
@@ -96,7 +96,7 @@ const getMonthlySales = async () => {
 }
 
 /**
- * 更新 legend.textStyle
+ * renew legend.textStyle
  */
 const updateLegendTextStyle = (options) => {
   const newTextStyle = {
@@ -118,7 +118,7 @@ const getAllApi = async () => {
 
 getAllApi()
 
-// 监听暗黑模式变化并重新更新样式
+// Monitor dark mode changes and re-update styles
 watch(isDark, () => {
   updateLegendTextStyle(pieOptionsData)
   updateLegendTextStyle(barOptionsData)

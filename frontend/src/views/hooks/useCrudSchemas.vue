@@ -89,15 +89,15 @@ const crudSchemas = reactive<CrudSchema[]>([
         },
         options: [
           {
-            label: '重要',
+            label: 'important',
             value: 3
           },
           {
-            label: '良好',
+            label: 'good',
             value: 2
           },
           {
-            label: '一般',
+            label: 'generally',
             value: 1
           }
         ]
@@ -157,27 +157,27 @@ const { allSchemas } = useCrudSchemas(crudSchemas)
   <ContentWrap title="useCrudSchemas">
     <ElRow :gutter="20">
       <ElCol :span="24">
-        <ContentWrap title="原始数据数据" class="mt-20px">
+        <ContentWrap title="raw data data" class="mt-20px">
           <JsonEditor v-model="crudSchemas" />
         </ContentWrap>
       </ElCol>
       <ElCol :span="24">
-        <ContentWrap title="查询组件数据结构" class="mt-20px">
+        <ContentWrap title="Query component data structure" class="mt-20px">
           <JsonEditor v-model="allSchemas.searchSchema" />
         </ContentWrap>
       </ElCol>
       <ElCol :span="24">
-        <ContentWrap title="表单组件数据结构" class="mt-20px">
+        <ContentWrap title="form component data structure" class="mt-20px">
           <JsonEditor v-model="allSchemas.formSchema" />
         </ContentWrap>
       </ElCol>
       <ElCol :span="24">
-        <ContentWrap title="表格组件数据结构" class="mt-20px">
+        <ContentWrap title="Table component data structure" class="mt-20px">
           <JsonEditor v-model="allSchemas.tableColumns" />
         </ContentWrap>
       </ElCol>
       <ElCol :span="24">
-        <ContentWrap title="详情组件数据结构" class="mt-20px">
+        <ContentWrap title="Details component data structure" class="mt-20px">
           <JsonEditor v-model="allSchemas.detailSchema" />
         </ContentWrap>
       </ElCol>

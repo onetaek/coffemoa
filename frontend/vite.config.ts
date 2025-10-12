@@ -35,7 +35,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     plugins: [
       Vue({
         script: {
-          // 开启defineModel
+          // start defineModel open
           defineModel: true
         }
       }),
@@ -63,7 +63,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         cache: false,
         failOnWarning: false,
         failOnError: false,
-        include: ['src/**/*.vue', 'src/**/*.ts', 'src/**/*.tsx'] // 检查的文件
+        include: ['src/**/*.vue', 'src/**/*.ts', 'src/**/*.tsx'] // Documents to check
       }),
       VueI18nPlugin({
         runtimeOnly: true,
@@ -127,7 +127,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       // brotliSize: false,
       rollupOptions: {
         plugins: env.VITE_USE_BUNDLE_ANALYZER === 'true' ? [visualizer()] : undefined,
-        // 拆包
+        // unpacking
         output: {
           manualChunks: {
             'vue-chunks': ['vue', 'vue-router', 'pinia', 'vue-i18n'],
@@ -143,7 +143,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     server: {
       port: 4000,
       proxy: {
-        // 选项写法
+        // option writing
         '/api': {
           target: 'http://127.0.0.1:8000',
           changeOrigin: true,

@@ -14,7 +14,7 @@ const MonacoEditRef = ref<InstanceType<typeof CodeEditor>>()
 </script>
 <template>
   <ContentWrap :title="t('richText.codeEditor')" :message="t('richText.codeEditorDes')">
-    <BaseButton @click="console.log(content)">控制台打印内容</BaseButton>
+    <BaseButton @click="console.log(content)">Console print content</BaseButton>
     <ElDivider />
     <div class="edit-container h-60vh">
       <CodeEditor ref="MonacoEditRef" v-model="content" language="java" />

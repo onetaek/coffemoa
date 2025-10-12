@@ -8,9 +8,9 @@ const { t } = useI18n()
 
 /**
  *
- * @param schema 对应组件数据
- * @returns 返回提示信息对象
- * @description 用于自动设置placeholder
+ * @param schema Corresponding component data
+ * @returns Return prompt information object
+ * @description Used to automatically set placeholder
  */
 export const setTextPlaceholder = (schema: FormSchema): PlaceholderModel => {
   const textMap = [
@@ -32,7 +32,7 @@ export const setTextPlaceholder = (schema: FormSchema): PlaceholderModel => {
     }
   }
   if (selectMap.includes(schema?.component as ComponentNameEnum)) {
-    // 一些范围选择器
+    // some range selectors
     const twoTextMap = ['datetimerange', 'daterange', 'monthrange', 'datetimerange', 'daterange']
     if (
       twoTextMap.includes(
@@ -56,13 +56,13 @@ export const setTextPlaceholder = (schema: FormSchema): PlaceholderModel => {
 
 /**
  *
- * @param col 内置栅格
- * @returns 返回栅格属性
- * @description 合并传入进来的栅格属性
+ * @param col Built-in grid
+ * @returns Return raster properties
+ * @description Merge incoming raster attributes
  */
 export const setGridProp = (col: ColProps = {}): ColProps => {
   const colProps: ColProps = {
-    // 如果有span，代表用户优先级更高，所以不需要默认栅格
+    // If there is span, it means that the user has higher priority, so there is no need for a default raster.
     ...(col.span
       ? {}
       : {
@@ -79,12 +79,12 @@ export const setGridProp = (col: ColProps = {}): ColProps => {
 
 /**
  *
- * @param item 传入的组件属性
- * @returns 默认添加 clearable 属性
+ * @param item Incoming component properties
+ * @returns The clearable attribute is added by default
  */
 export const setComponentProps = (item: FormSchema): Recordable => {
   // const notNeedClearable = ['ColorPicker']
-  // 拆分事件并组合
+  // Split events and combine
   const onEvents = (item?.componentProps as any)?.on || {}
   const newOnEvents: Recordable = {}
 
@@ -101,7 +101,7 @@ export const setComponentProps = (item: FormSchema): Recordable => {
     ...item.componentProps,
     ...newOnEvents
   }
-  // 需要删除额外的属性
+  // Additional attributes need to be removed
   if (componentProps.slots) {
     delete componentProps.slots
   }
@@ -113,8 +113,8 @@ export const setComponentProps = (item: FormSchema): Recordable => {
 
 /**
  *
- * @param formModel 表单数据
- * @param slotsProps 插槽属性
+ * @param formModel form data
+ * @param slotsProps Slot properties
  */
 export const setItemComponentSlots = (slotsProps: Recordable = {}): Recordable => {
   const slotObj: Recordable = {}
@@ -136,10 +136,10 @@ export const setItemComponentSlots = (slotsProps: Recordable = {}): Recordable =
 
 /**
  *
- * @param schema Form表单结构化数组
+ * @param schema Form form structured array
  * @param formModel FormMoel
  * @returns FormMoel
- * @description 生成对应的formModel
+ * @description Generate the corresponding formModel
  */
 export const initModel = (schema: FormSchema[], formModel: Recordable) => {
   const model: Recordable = { ...formModel }
@@ -149,7 +149,7 @@ export const initModel = (schema: FormSchema[], formModel: Recordable) => {
     } else if (v.component !== 'Divider') {
       // const hasField = Reflect.has(model, v.field)
       const hasField = get(model, v.field)
-      // 如果先前已经有值存在，则不进行重新赋值，而是采用现有的值
+      // If a value already exists before, no reassignment is performed, but the existing value is used.
       set(
         model,
         v.field,
@@ -158,7 +158,7 @@ export const initModel = (schema: FormSchema[], formModel: Recordable) => {
       // model[v.field] = hasField ? model[v.field] : v.value !== void 0 ? v.value : undefined
     }
   })
-  // 如果 schema 对应的 field 不存在，则删除 model 中的对应的 field
+  // If the field corresponding to the schema does not exist, delete the corresponding field in the model.
   for (let i = 0; i < schema.length; i++) {
     const key = schema[i].field
     if (!Object.prototype.hasOwnProperty.call(model, key)) {

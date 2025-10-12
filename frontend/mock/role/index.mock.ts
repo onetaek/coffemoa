@@ -758,7 +758,7 @@ const testList: string[] = [
 
 const List: any[] = []
 
-const roleNames = ['超级管理员', '管理员', '普通用户', '游客']
+const roleNames = ['super administrator', 'administrator', 'Ordinary user', 'tourists']
 const menus = [
   [
     {
@@ -769,7 +769,7 @@ const menus = [
       status: Mock.Random.integer(0, 1),
       id: 1,
       meta: {
-        title: '首页',
+        title: 'front page',
         icon: 'vi-ant-design:dashboard-filled',
         alwaysShow: true
       },
@@ -781,7 +781,7 @@ const menus = [
           status: Mock.Random.integer(0, 1),
           id: 2,
           meta: {
-            title: '分析页',
+            title: 'Analysis page',
             noCache: true
           }
         },
@@ -792,7 +792,7 @@ const menus = [
           status: Mock.Random.integer(0, 1),
           id: 3,
           meta: {
-            title: '工作台',
+            title: 'workbench',
             noCache: true
           }
         }
@@ -802,7 +802,7 @@ const menus = [
       path: '/external-link',
       component: '#',
       meta: {
-        title: '文档',
+        title: 'document',
         icon: 'vi-clarity:document-solid'
       },
       name: 'ExternalLink',
@@ -815,7 +815,7 @@ const menus = [
           status: Mock.Random.integer(0, 1),
           id: 5,
           meta: {
-            title: '文档'
+            title: 'document'
           }
         }
       ]
@@ -828,7 +828,7 @@ const menus = [
       status: Mock.Random.integer(0, 1),
       id: 6,
       meta: {
-        title: '菜单',
+        title: 'menu',
         icon: 'vi-carbon:skill-level-advanced'
       },
       children: [
@@ -840,7 +840,7 @@ const menus = [
           id: 7,
           redirect: '/level/menu1/menu1-1/menu1-1-1',
           meta: {
-            title: '菜单1'
+            title: 'Menu 1'
           },
           children: [
             {
@@ -851,7 +851,7 @@ const menus = [
               id: 8,
               redirect: '/level/menu1/menu1-1/menu1-1-1',
               meta: {
-                title: '菜单1-1',
+                title: 'Menu 1-1',
                 alwaysShow: true
               },
               children: [
@@ -863,7 +863,7 @@ const menus = [
                   id: 9,
                   permission: ['edit', 'add', 'delete'],
                   meta: {
-                    title: '菜单1-1-1',
+                    title: 'Menu 1-1-1',
                     permission: ['edit', 'add', 'delete']
                   }
                 }
@@ -877,7 +877,7 @@ const menus = [
               id: 10,
               permission: ['edit', 'add', 'delete'],
               meta: {
-                title: '菜单1-2',
+                title: 'Menu 1-2',
                 permission: ['edit', 'add', 'delete']
               }
             }
@@ -891,7 +891,7 @@ const menus = [
           id: 11,
           permission: ['edit', 'add', 'delete'],
           meta: {
-            title: '菜单2',
+            title: 'Menu 2',
             permission: ['edit', 'add', 'delete']
           }
         }
@@ -905,7 +905,7 @@ const menus = [
       status: Mock.Random.integer(0, 1),
       id: 12,
       meta: {
-        title: '综合示例',
+        title: 'Comprehensive example',
         icon: 'vi-ep:management',
         alwaysShow: true
       },
@@ -918,7 +918,7 @@ const menus = [
           id: 13,
           permission: ['edit', 'add', 'delete'],
           meta: {
-            title: '综合示例-弹窗',
+            title: 'Comprehensive example-pop-up window',
             permission: ['edit', 'add', 'delete']
           }
         },
@@ -930,7 +930,7 @@ const menus = [
           id: 14,
           permission: ['edit', 'add', 'delete'],
           meta: {
-            title: '综合示例-页面',
+            title: 'Comprehensive example -page',
             permission: ['edit', 'add', 'delete']
           }
         },
@@ -942,7 +942,7 @@ const menus = [
           id: 15,
           permission: ['edit', 'add', 'delete'],
           meta: {
-            title: '综合示例-新增',
+            title: 'Comprehensive Example -New',
             noTagsView: true,
             noCache: true,
             hidden: true,
@@ -959,7 +959,7 @@ const menus = [
           id: 16,
           permission: ['edit', 'add', 'delete'],
           meta: {
-            title: '综合示例-编辑',
+            title: 'Comprehensive Example -Editor',
             noTagsView: true,
             noCache: true,
             hidden: true,
@@ -976,7 +976,7 @@ const menus = [
           id: 17,
           permission: ['edit', 'add', 'delete'],
           meta: {
-            title: '综合示例-详情',
+            title: 'Comprehensive example -details',
             noTagsView: true,
             noCache: true,
             hidden: true,
@@ -997,7 +997,7 @@ const menus = [
       status: Mock.Random.integer(0, 1),
       id: 1,
       meta: {
-        title: '首页',
+        title: 'front page',
         icon: 'vi-ant-design:dashboard-filled',
         alwaysShow: true
       },
@@ -1009,7 +1009,7 @@ const menus = [
           status: Mock.Random.integer(0, 1),
           id: 2,
           meta: {
-            title: '分析页',
+            title: 'Analysis page',
             noCache: true
           }
         },
@@ -1020,7 +1020,7 @@ const menus = [
           status: Mock.Random.integer(0, 1),
           id: 3,
           meta: {
-            title: '工作台',
+            title: 'workbench',
             noCache: true
           }
         }
@@ -1032,7 +1032,7 @@ const menus = [
       path: '/external-link',
       component: '#',
       meta: {
-        title: '文档',
+        title: 'document',
         icon: 'vi-clarity:document-solid'
       },
       name: 'ExternalLink',
@@ -1045,7 +1045,7 @@ const menus = [
           status: Mock.Random.integer(0, 1),
           id: 5,
           meta: {
-            title: '文档'
+            title: 'document'
           }
         }
       ]
@@ -1058,7 +1058,7 @@ const menus = [
       status: Mock.Random.integer(0, 1),
       id: 6,
       meta: {
-        title: '菜单',
+        title: 'menu',
         icon: 'vi-carbon:skill-level-advanced'
       },
       children: [
@@ -1070,7 +1070,7 @@ const menus = [
           id: 7,
           redirect: '/level/menu1/menu1-1/menu1-1-1',
           meta: {
-            title: '菜单1'
+            title: 'Menu 1'
           },
           children: [
             {
@@ -1081,7 +1081,7 @@ const menus = [
               id: 8,
               redirect: '/level/menu1/menu1-1/menu1-1-1',
               meta: {
-                title: '菜单1-1',
+                title: 'Menu 1-1',
                 alwaysShow: true
               },
               children: [
@@ -1093,7 +1093,7 @@ const menus = [
                   id: 9,
                   permission: ['edit', 'add', 'delete'],
                   meta: {
-                    title: '菜单1-1-1',
+                    title: 'Menu 1-1-1',
                     permission: ['edit', 'add', 'delete']
                   }
                 }
@@ -1107,7 +1107,7 @@ const menus = [
               id: 10,
               permission: ['edit', 'add', 'delete'],
               meta: {
-                title: '菜单1-2',
+                title: 'Menu 1-2',
                 permission: ['edit', 'add', 'delete']
               }
             }
@@ -1121,7 +1121,7 @@ const menus = [
           id: 11,
           permission: ['edit', 'add', 'delete'],
           meta: {
-            title: '菜单2',
+            title: 'Menu 2',
             permission: ['edit', 'add', 'delete']
           }
         }
@@ -1137,7 +1137,7 @@ const menus = [
       status: Mock.Random.integer(0, 1),
       id: 12,
       meta: {
-        title: '综合示例',
+        title: 'Comprehensive example',
         icon: 'vi-ep:management',
         alwaysShow: true
       },
@@ -1150,7 +1150,7 @@ const menus = [
           id: 17,
           permission: ['edit', 'add', 'delete'],
           meta: {
-            title: '综合示例-详情',
+            title: 'Comprehensive example -details',
             noTagsView: true,
             noCache: true,
             hidden: true,
@@ -1180,7 +1180,7 @@ for (let i = 0; i < 4; i++) {
 }
 
 export default [
-  // 列表接口
+  // List interface
   {
     url: '/mock/role/list',
     method: 'get',
@@ -1206,7 +1206,7 @@ export default [
       }
     }
   },
-  // 列表接口
+  // List interface
   {
     url: '/mock/role/list2',
     method: 'get',

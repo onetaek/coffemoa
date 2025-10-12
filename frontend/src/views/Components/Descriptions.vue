@@ -14,12 +14,12 @@ const { t } = useI18n()
 
 const data = reactive({
   username: 'chenkl',
-  nickName: '梦似花落。',
+  nickName: 'Dreams are like falling flowers.',
   age: 26,
   phone: '13655971xxxx',
   email: '502431556@qq.com',
-  addr: '这是一个很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的地址',
-  sex: '男',
+  addr: 'It\'s a long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long, long. Address',
+  sex: 'male',
   certy: '3505831994xxxxxxxx'
 })
 

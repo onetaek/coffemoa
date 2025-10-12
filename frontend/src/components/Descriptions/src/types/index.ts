@@ -1,7 +1,7 @@
 export interface DescriptionsSchema {
-  span?: number // 占多少分
-  field: string // 字段名
-  label?: string // label名
+  span?: number // How many points does it account for?
+  field: string // Field name
+  label?: string // label name
   width?: string | number
   minWidth?: string | number
   align?: 'left' | 'center' | 'right'

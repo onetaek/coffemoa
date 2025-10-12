@@ -25,7 +25,7 @@ const { t } = useI18n()
 
 const drawer = ref(false)
 
-// 主题色相关
+// Theme color related
 const systemTheme = ref(appStore.getTheme.elColorPrimary)
 
 const setSystemTheme = (color: string) => {
@@ -35,21 +35,21 @@ const setSystemTheme = (color: string) => {
   setMenuTheme(trim(unref(leftMenuBgColor) as string))
 }
 
-// 头部主题相关
+// Header theme related
 const headerTheme = ref(appStore.getTheme.topHeaderBgColor || '')
 
 const setHeaderTheme = (color: string) => {
   appStore.setHeaderTheme(color)
 }
 
-// 菜单主题相关
+// Menu theme related
 const menuTheme = ref(appStore.getTheme.leftMenuBgColor || '')
 
 const setMenuTheme = (color: string) => {
   appStore.setMenuTheme(color)
 }
 
-// 监听layout变化，重置一些主题色
+// Monitor layout changes and reset some theme colors
 // watch(
 //   () => layout.value,
 //   (n) => {
@@ -62,71 +62,71 @@ const setMenuTheme = (color: string) => {
 //   }
 // )
 
-// 拷贝
+// copy
 const copyConfig = async () => {
   const { copy, copied, isSupported } = useClipboard({
     source: `
-      // 面包屑
+      // bread crumbs
       breadcrumb: ${appStore.getBreadcrumb},
-      // 面包屑图标
+      // Breadcrumbs icon
       breadcrumbIcon: ${appStore.getBreadcrumbIcon},
-      // 折叠图标
+      // fold icon
       hamburger: ${appStore.getHamburger},
-      // 全屏图标
+      // full screen icon
       screenfull: ${appStore.getScreenfull},
-      // 尺寸图标
+      // size icon
       size: ${appStore.getSize},
-      // 多语言图标
+      // Multilingual icon
       locale: ${appStore.getLocale},
-      // 标签页
+      // tab page
       tagsView: ${appStore.getTagsView},
-      // 标签页图标
+      // tab icon
       getTagsViewIcon: ${appStore.getTagsViewIcon},
       // logo
       logo: ${appStore.getLogo},
-      // 菜单手风琴
+      // menu accordion
       uniqueOpened: ${appStore.getUniqueOpened},
-      // 固定header
+      // Fixed header
       fixedHeader: ${appStore.getFixedHeader},
-      // 页脚
+      // footer
       footer: ${appStore.getFooter},
-      // 灰色模式
+      // gray mode
       greyMode: ${appStore.getGreyMode},
-      // layout布局
+      // layout layout
       layout: '${appStore.getLayout}',
-      // 暗黑模式
+      // dark mode
       isDark: ${appStore.getIsDark},
-      // 组件尺寸
+      // Component size
       currentSize: '${appStore.getCurrentSize}',
-      // 主题相关
+      // Topic related
       theme: {
-        // 主题色
+        // theme color
         elColorPrimary: '${appStore.getTheme.elColorPrimary}',
-        // 左侧菜单边框颜色
+        // Left menu border color
         leftMenuBorderColor: '${appStore.getTheme.leftMenuBorderColor}',
-        // 左侧菜单背景颜色
+        // Left menu background color
         leftMenuBgColor: '${appStore.getTheme.leftMenuBgColor}',
-        // 左侧菜单浅色背景颜色
+        // Left menu light background color
         leftMenuBgLightColor: '${appStore.getTheme.leftMenuBgLightColor}',
-        // 左侧菜单选中背景颜色
+        // Select the background color from the left menu
         leftMenuBgActiveColor: '${appStore.getTheme.leftMenuBgActiveColor}',
-        // 左侧菜单收起选中背景颜色
+        // Left menu collapses selected background color
         leftMenuCollapseBgActiveColor: '${appStore.getTheme.leftMenuCollapseBgActiveColor}',
-        // 左侧菜单字体颜色
+        // Left menu font color
         leftMenuTextColor: '${appStore.getTheme.leftMenuTextColor}',
-        // 左侧菜单选中字体颜色
+        // Select the font color from the left menu
         leftMenuTextActiveColor: '${appStore.getTheme.leftMenuTextActiveColor}',
-        // logo字体颜色
+        // logo font color
         logoTitleTextColor: '${appStore.getTheme.logoTitleTextColor}',
-        // logo边框颜色
+        // logo border color
         logoBorderColor: '${appStore.getTheme.logoBorderColor}',
-        // 头部背景颜色
+        // Head background color
         topHeaderBgColor: '${appStore.getTheme.topHeaderBgColor}',
-        // 头部字体颜色
+        // Header font color
         topHeaderTextColor: '${appStore.getTheme.topHeaderTextColor}',
-        // 头部悬停颜色
+        // Head hover color
         topHeaderHoverColor: '${appStore.getTheme.topHeaderHoverColor}',
-        // 头部边框颜色
+        // Header border color
         topToolBorderColor: '${appStore.getTheme.topToolBorderColor}'
       }
     `,
@@ -142,7 +142,7 @@ const copyConfig = async () => {
   }
 }
 
-// 清空缓存
+// Clear cache
 const clear = () => {
   storageClear()
   window.location.reload()
@@ -164,15 +164,15 @@ const clear = () => {
     </template>
 
     <div class="text-center">
-      <!-- 主题 -->
+      <!-- theme -->
       <ElDivider>{{ t('setting.theme') }}</ElDivider>
       <ThemeSwitch />
 
-      <!-- 布局 -->
+      <!-- layout -->
       <ElDivider>{{ t('setting.layout') }}</ElDivider>
       <LayoutRadioPicker />
 
-      <!-- 系统主题 -->
+      <!-- System theme -->
       <ElDivider>{{ t('setting.systemTheme') }}</ElDivider>
       <ColorRadioPicker
         v-model="systemTheme"
@@ -189,7 +189,7 @@ const clear = () => {
         @change="setSystemTheme"
       />
 
-      <!-- 头部主题 -->
+      <!-- Header theme -->
       <ElDivider>{{ t('setting.headerTheme') }}</ElDivider>
       <ColorRadioPicker
         v-model="headerTheme"
@@ -206,7 +206,7 @@ const clear = () => {
         @change="setHeaderTheme"
       />
 
-      <!-- 菜单主题 -->
+      <!-- Menu theme -->
       <ElDivider>{{ t('setting.menuTheme') }}</ElDivider>
       <ColorRadioPicker
         v-model="menuTheme"
@@ -224,7 +224,7 @@ const clear = () => {
       />
     </div>
 
-    <!-- 界面显示 -->
+    <!-- Interface display -->
     <ElDivider>{{ t('setting.interfaceDisplay') }}</ElDivider>
     <InterfaceDisplay />
 

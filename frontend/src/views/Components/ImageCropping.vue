@@ -22,15 +22,15 @@ const getBase642 = () => {
 </script>
 
 <template>
-  <ContentWrap title="图片裁剪">
-    <BaseButton type="primary" class="mb-20px" @click="getBase64">裁剪</BaseButton>
+  <ContentWrap title="Image cropping">
+    <BaseButton type="primary" class="mb-20px" @click="getBase64">Crop</BaseButton>
     <ElInput v-model="base64" class="mb-20px" type="textarea" />
     <ImageCropping
       ref="cropperExpose"
       image-url="https://hips.hearstapps.com/hmg-prod/images/%E5%AE%8B%E6%99%BA%E5%AD%9D-1597774015.jpg?crop=0.500xw:1.00xh;0.500xw,0&resize=640:*"
     />
     <ElDivider />
-    <BaseButton type="primary" class="mb-20px" @click="getBase642">裁剪</BaseButton>
+    <BaseButton type="primary" class="mb-20px" @click="getBase642">Crop</BaseButton>
     <ElInput v-model="base642" class="mb-20px" type="textarea" />
     <ImageCropping
       ref="cropperExpose2"

@@ -84,7 +84,7 @@ const treeSelectData = [
   }
 ]
 
-// 模拟远程加载
+// Simulate remote loading
 const getTreeSelectData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -181,7 +181,7 @@ const schema = reactive<FormSchema[]>([
     field: 'field7',
     label: `${t('formDemo.treeSelect')}`,
     component: 'TreeSelect',
-    // 远程加载option
+    // Remote loading option
     optionApi: async () => {
       const res = await getTreeSelectData()
       return res
@@ -456,7 +456,7 @@ const getData = async () => {
     <BaseButton @click="inoutValidation">
       {{ `${t('formDemo.input')} ${t('formDemo.formValidation')}` }}
     </BaseButton>
-    <BaseButton @click="getData"> 获取值 </BaseButton>
+    <BaseButton @click="getData"> Get value </BaseButton>
   </ContentWrap>
   <ContentWrap :title="`UseForm ${t('formDemo.example')}`">
     <Form :schema="schema" @register="formRegister" @validate="formValidate" />

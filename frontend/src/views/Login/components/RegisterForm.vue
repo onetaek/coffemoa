@@ -129,10 +129,10 @@ const schema = reactive<FormSchema[]>([
             <>
               <IAgree
                 v-model={formData.iAgree}
-                text="我同意《用户协议》"
+                text="I agree《User Agreement》"
                 link={[
                   {
-                    text: '《用户协议》',
+                    text: '《User Agreement》',
                     url: 'https://element-plus.org/'
                   }
                 ]}

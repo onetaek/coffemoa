@@ -10,65 +10,65 @@ const { t } = useI18n()
 const treeData = ref([
   {
     id: 1,
-    name: '北京',
+    name: 'Beijing',
     children: [
       {
         id: 5,
-        name: '朝阳',
+        name: 'Chaoyang',
         children: [
           {
             id: 17,
-            name: '双塔',
+            name: 'twin towers',
             children: []
           },
           {
             id: 18,
-            name: '龙城',
+            name: 'dragon city',
             children: []
           }
         ]
       },
       {
         id: 6,
-        name: '丰台',
+        name: 'Fengtai',
         children: [
           {
             id: 19,
-            name: '新村',
+            name: 'new village',
             children: []
           },
           {
             id: 20,
-            name: '大红门',
+            name: 'Dahongmen',
             children: []
           },
           {
             id: 21,
-            name: '长辛店',
+            name: 'Changxindian',
             children: [
               {
                 id: 22,
-                name: '东山坡',
+                name: 'dongshanshan',
                 children: []
               },
               {
                 id: 23,
-                name: '北关',
+                name: 'Beiguan',
                 children: []
               },
               {
                 id: 24,
-                name: '光明里',
+                name: 'Guangmingli',
                 children: []
               },
               {
                 id: 25,
-                name: '赵辛店',
+                name: 'Zhao Xindian',
                 children: []
               },
               {
                 id: 26,
-                name: '西峰寺',
+                name: 'Xifeng Temple',
                 children: []
               }
             ]
@@ -77,59 +77,59 @@ const treeData = ref([
       },
       {
         id: 7,
-        name: '海淀',
+        name: 'Haidian',
         children: []
       },
       {
         id: 8,
-        name: '房山',
+        name: 'Fangshan',
         children: []
       },
       {
         id: 10,
-        name: '顺义',
+        name: 'Shunyi',
         children: []
       }
     ]
   },
   {
     id: 2,
-    name: '上海',
+    name: 'Shanghai',
     children: [
       {
         id: 11,
-        name: '黄埔',
+        name: 'Huangpu',
         children: []
       },
       {
         id: 12,
-        name: '徐汇',
+        name: 'Xuhui',
         children: []
       }
     ]
   },
   {
     id: 3,
-    name: '广州',
+    name: 'Guangzhou',
     children: [
       {
         id: 13,
-        name: '荔湾',
+        name: 'Liwan',
         children: []
       },
       {
         id: 14,
-        name: '白云',
+        name: 'Baiyun',
         children: []
       },
       {
         id: 15,
-        name: '越秀',
+        name: 'Yuexiu',
         children: []
       },
       {
         id: 16,
-        name: '南沙',
+        name: 'Nansha',
         children: []
       }
     ]
@@ -141,43 +141,43 @@ const handleNodeClick = (data: any) => {
 }
 
 const addOrg = (node: any) => {
-  ElMessageBox.prompt('请输入分组名称', '添加子分组', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+  ElMessageBox.prompt('Please enter a group name', 'Add subgroup', {
+    confirmButtonText: 'Sure',
+    cancelButtonText: 'Cancel',
     inputPattern: /\S/,
-    inputErrorMessage: '分组名称不能为空'
+    inputErrorMessage: 'Group name cannot be empty'
   }).then(({ value }) => {
     node.children.push({
       id: node.children.length + 1,
       name: value,
       children: []
     })
-    ElMessage.success('添加成功')
+    ElMessage.success('Added successfully')
   })
 }
 const editOrg = (node: any) => {
-  ElMessageBox.prompt('请输入新的分组名称', '修改分组名称', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+  ElMessageBox.prompt('Please enter a new group name', 'Modify group name', {
+    confirmButtonText: 'Sure',
+    cancelButtonText: 'Cancel',
     inputValue: node.name,
     inputPattern: /\S/,
-    inputErrorMessage: '分组名称不能为空'
+    inputErrorMessage: 'Group name cannot be empty'
   }).then(({ value }) => {
     node.name = value
-    ElMessage.success('修改成功')
+    ElMessage.success('Modification successful')
   })
 }
 
 const deleteOrg = (node: any) => {
-  ElMessageBox.confirm(`删除 [${node.name}] 分组、下级子分组 <br>是否继续?`, '提示', {
+  ElMessageBox.confirm(`delete [${node.name}] Groups, lower-level subgroups <br>Continue?`, 'Prompt', {
     dangerouslyUseHTMLString: true,
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+    confirmButtonText: 'Sure',
+    cancelButtonText: 'Cancel',
     type: 'warning',
     center: true
   }).then(() => {
     const id = node.id
-    // 查找 treeData 中对应的节点，并删除
+    // Find the corresponding node in treeData and delete it
     const deleteNode = (data: any) => {
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === id) {
@@ -190,7 +190,7 @@ const deleteOrg = (node: any) => {
       }
     }
     deleteNode(treeData.value)
-    ElMessage.success('删除成功')
+    ElMessage.success('Delete successfully')
   })
 }
 </script>
@@ -211,23 +211,23 @@ const deleteOrg = (node: any) => {
       height="400px"
       @node-click="handleNodeClick"
     >
-      <!-- 自定义右键菜单 -->
+      <!-- Customize right-click menu -->
       <template #context-menu="{ node }">
         <div class="menuItem" @click="addOrg(node)">
           <Icon icon="ep:plus" style="color: #1e9fff" />
-          <span>添加子分组</span>
+          <span>Add subgroup</span>
         </div>
         <div class="menuItem" @click="editOrg(node)">
           <Icon icon="ep:edit-pen" style="color: #1e9fff" />
-          修改分组名称
+          Modify group name
         </div>
         <div class="menuItem" @click="deleteOrg(node)">
           <Icon icon="ep:delete" style="color: #1e9fff" />
-          删除分组及子分组
+          Delete groups and subgroups
         </div>
       </template>
 
-      <!-- 自定义节点显示 -->
+      <!-- Custom node display -->
       <!-- <template #render-node="{ node }">
       <span v-if="node.isLeaf">[FILE] {{ node.label }}</span>
       <span v-else>[FOLDER] {{ node.label }}</span>
@@ -241,8 +241,8 @@ const deleteOrg = (node: any) => {
   padding: 2px 10px;
   text-align: left;
   box-sizing: border-box;
-  align-items: center; /* 垂直居中 */
-  gap: 5px; /* 图标和文字之间的间距，可根据需要调整 */
+  align-items: center; /* Center vertically */
+  gap: 5px; /* The spacing between icons and text can be adjusted as needed */
 }
 
 .menuItem:hover {

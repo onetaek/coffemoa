@@ -11,7 +11,7 @@ const data = ref<any>([])
 const getList = () => {
   const list: any = []
   for (let i = 0; i < 20; i++) {
-    // 随机 100, 500 之间的整数
+    // random 100, integer integer between
     const height = Mock.Random.integer(100, 500)
     const width = Mock.Random.integer(100, 500)
     list.push(
@@ -19,7 +19,7 @@ const getList = () => {
         width,
         height,
         id: toAnyString(),
-        // http更换为https
+        // Replace http with https
         image_uri: Mock.Random.image(`${width}x${height}`).replace('http://', 'https://')
       })
     )

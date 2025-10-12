@@ -18,14 +18,14 @@ const props = defineProps({
 
 provide('configGlobal', props)
 
-// 初始化所有主题色
+// Initialize all theme colors
 onMounted(() => {
   appStore.setCssVarTheme()
 })
 
 const { width } = useWindowSize()
 
-// 监听窗口变化
+// Listen for window changes
 watch(
   () => width.value,
   (width: number) => {
@@ -44,7 +44,7 @@ watch(
   }
 )
 
-// 多语言相关
+// Multilingual related
 const localeStore = useLocaleStore()
 
 const currentLocale = computed(() => localeStore.currentLocale)

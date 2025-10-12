@@ -1,7 +1,7 @@
 {
   "name": "vue-element-plus-admin",
   "version": "2.9.0",
-  "description": "一套基于vue3、element-plus、typesScript、vite4的后台集成方案。",
+  "description": "A set of backend integration solutions based on vue3, element-plus, typesScript, and vite4.",
   "author": "Archer <502431556@qq.com>",
   "private": false,
   "type": "module",

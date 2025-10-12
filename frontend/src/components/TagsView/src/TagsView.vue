@@ -45,7 +45,7 @@ const tagsViewIcon = computed(() => appStore.getTagsViewIcon)
 
 const isDark = computed(() => appStore.getIsDark)
 
-// 初始化tag
+// initialize tag
 const initTags = () => {
   affixTagArr.value = filterAffixTags(unref(routers))
   for (const tag of unref(affixTagArr)) {
@@ -56,7 +56,7 @@ const initTags = () => {
   }
 }
 
-// 新增tag
+// Add new tag
 const addTags = () => {
   const { name } = unref(currentRoute)
   if (name) {
@@ -65,7 +65,7 @@ const addTags = () => {
   }
 }
 
-// 关闭选中的tag
+// Close selected tag
 const closeSelectedTag = (view: RouteLocationNormalizedLoaded) => {
   closeCurrent(view, () => {
     if (isActive(view)) {
@@ -74,7 +74,7 @@ const closeSelectedTag = (view: RouteLocationNormalizedLoaded) => {
   })
 }
 
-// 去最后一个
+// Go to the last one
 const toLastView = () => {
   const visitedViews = tagsViewStore.getVisitedViews
   const latestView = visitedViews.slice(-1)[0]
@@ -93,34 +93,34 @@ const toLastView = () => {
   }
 }
 
-// 关闭全部
+// Close all
 const closeAllTags = () => {
   closeAll(() => {
     toLastView()
   })
 }
 
-// 关闭其它
+// Close other
 const closeOthersTags = () => {
   closeOther()
 }
 
-// 重新加载
+// reload
 const refreshSelectedTag = async (view?: RouteLocationNormalizedLoaded) => {
   refreshPage(view)
 }
 
-// 关闭左侧
+// close left
 const closeLeftTags = () => {
   closeLeft()
 }
 
-// 关闭右侧
+// close right
 const closeRightTags = () => {
   closeRight()
 }
 
-// 滚动到选中的tag
+// Scroll to selected tag
 const moveToCurrentTag = async () => {
   await nextTick()
   for (const v of unref(visitedViews)) {
@@ -149,7 +149,7 @@ const moveToTarget = (currentTag: RouteLocationNormalizedLoaded) => {
     lastTag = tagList[tagList.length - 1]
   }
   if ((firstTag?.to as RouteLocationNormalizedLoaded).fullPath === currentTag.fullPath) {
-    // 直接滚动到0的位置
+    // Scroll directly to position 0
     const { start } = useScrollTo({
       el: wrap$!,
       position: 'scrollLeft',
@@ -158,7 +158,7 @@ const moveToTarget = (currentTag: RouteLocationNormalizedLoaded) => {
     })
     start()
   } else if ((lastTag?.to as RouteLocationNormalizedLoaded).fullPath === currentTag.fullPath) {
-    // 滚动到最后的位置
+    // Scroll to last position
     const { start } = useScrollTo({
       el: wrap$!,
       position: 'scrollLeft',
@@ -202,15 +202,15 @@ const moveToTarget = (currentTag: RouteLocationNormalizedLoaded) => {
   }
 }
 
-// 是否是当前tag
+// Is it the current tag?
 const isActive = (route: RouteLocationNormalizedLoaded): boolean => {
   return route.path === unref(currentRoute).path
 }
 
-// 所有右键菜单组件的元素
+// All elements of right-click menu components
 const itemRefs = useTemplateRefsList<ComponentRef<typeof ContextMenu & ContextMenuExpose>>()
 
-// 右键菜单状态改变的时候
+// When the right-click menu status changes
 const visibleChange = (visible: boolean, tagItem: RouteLocationNormalizedLoaded) => {
   if (visible) {
     for (const v of unref(itemRefs)) {
@@ -223,17 +223,17 @@ const visibleChange = (visible: boolean, tagItem: RouteLocationNormalizedLoaded)
   }
 }
 
-// elscroll 实例
+// elscroll Example
 const scrollbarRef = ref<ComponentRef<typeof ElScrollbar>>()
 
-// 保存滚动位置
+// Save scroll position
 const scrollLeftNumber = ref(0)
 
 const scroll = ({ scrollLeft }) => {
   scrollLeftNumber.value = scrollLeft as number
 }
 
-// 移动到某个位置
+// move to a location
 const move = (to: number) => {
   const wrap$ = unref(scrollbarRef)?.wrapRef
   const { start } = useScrollTo({

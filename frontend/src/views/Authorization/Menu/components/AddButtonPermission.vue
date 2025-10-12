@@ -54,14 +54,14 @@ const confirm = async () => {
 </script>
 
 <template>
-  <ElDrawer v-model="modelValue" title="新增按钮权限">
+  <ElDrawer v-model="modelValue" title="Add button permissions">
     <template #default>
       <Form :rules="rules" @register="formRegister" :schema="formSchema" />
     </template>
     <template #footer>
       <div>
-        <BaseButton @click="() => (modelValue = false)">取消</BaseButton>
-        <BaseButton type="primary" @click="confirm">确认</BaseButton>
+        <BaseButton @click="() => (modelValue = false)">cancel</BaseButton>
+        <BaseButton type="primary" @click="confirm">confirm</BaseButton>
       </div>
     </template>
   </ElDrawer>

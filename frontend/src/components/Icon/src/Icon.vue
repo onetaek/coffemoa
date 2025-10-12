@@ -26,7 +26,7 @@ const symbolId = computed(() => {
   return unref(isLocal) ? `#icon-${props.icon.split('svg-icon:')[1]}` : props.icon
 })
 
-// 是否使用在线图标
+// Whether to use online icons
 const isUseOnline = computed(() => {
   return import.meta.env.VITE_USE_ONLINE_ICON === 'true'
 })

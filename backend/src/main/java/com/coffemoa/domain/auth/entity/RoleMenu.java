@@ -13,31 +13,32 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
 @Table(
-    name = "auth_user_role",
-    uniqueConstraints = @UniqueConstraint(name = "uk_user_role", columnNames = {"user_id","role_id"}),
+    name = "auth_role_menu",
+    uniqueConstraints = @UniqueConstraint(name = "uk_role_menu", columnNames = {"role_id","menu_id"}),
     indexes = {
-        @Index(name = "ix_user_role_user", columnList = "user_id"),
-        @Index(name = "ix_user_role_role", columnList = "role_id")
+        @Index(name = "ix_role_menu_role", columnList = "role_id"),
+        @Index(name = "ix_role_menu_menu", columnList = "menu_id")
     }
 )
-@SQLDelete(sql = "UPDATE auth_user_role SET is_active=false, deleted_at=now() WHERE id=?")
+@SQLDelete(sql = "UPDATE auth_role_menu SET is_active=false, deleted_at=now() WHERE id=?")
 @Where(clause = "is_active = true")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public final class UserRole extends BaseAuditEntity {
-
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+public class RoleMenu extends BaseAuditEntity {
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "role_id", nullable = false)
   private Role role;
+
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "menu_id", nullable = false)
+  private Menu menu;
 }

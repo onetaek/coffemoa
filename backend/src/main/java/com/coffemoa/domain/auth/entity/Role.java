@@ -1,41 +1,41 @@
 package com.coffemoa.domain.auth.entity;
 
-import jakarta.persistence.CascadeType;
+import com.coffemoa.global.BaseAuditEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
-/**
- * 권한 그룹 (역할)
- */
 @Entity
+@Table(
+    name = "auth_role",
+    uniqueConstraints = @UniqueConstraint(name = "uk_role_name", columnNames = {"role_name"})
+)
+@SQLDelete(sql = "UPDATE auth_role SET is_active=false, deleted_at=now() WHERE id=?")
+@Where(clause = "is_active = true")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(name = "roles")
-public class Role {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+public class Role extends BaseAuditEntity {
 
-  @Column(nullable = false, unique = true, length = 50)
-  private String name; // ex) ADMIN, MANAGER, STAFF
+  @Column(name = "role_code", length = 50, nullable = false) // 내부 식별자
+  private String code;
 
-  @Column(length = 200)
-  private String description;
+  @Column(name = "role_name", length = 100, nullable = false) // 표시명
+  private String name;
 
-  @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<RoleMenuPermission> roleMenuPermissions = new HashSet<>();
+  /** 0/1 */
+  @Column(name = "status", nullable = false)
+  private Integer status = 1;
+
+  @Column(name = "remark", length = 500)
+  private String remark;
 }

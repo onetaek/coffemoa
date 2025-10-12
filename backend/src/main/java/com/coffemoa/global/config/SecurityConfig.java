@@ -1,4 +1,4 @@
-package com.coffemoa.domain.auth.config;
+package com.coffemoa.global.config;
 
 import com.coffemoa.domain.auth.jwt.JwtAuthenticationFilter;
 import com.coffemoa.domain.auth.jwt.JwtTokenProvider;

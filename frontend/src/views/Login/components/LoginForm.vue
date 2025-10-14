@@ -134,61 +134,62 @@ const schema = reactive<FormSchema[]>([
         }
       }
     }
-  },
-  {
-    field: 'other',
-    component: 'Divider',
-    label: t('login.otherLogin'),
-    componentProps: {
-      contentPosition: 'center'
-    }
-  },
-  {
-    field: 'otherIcon',
-    colProps: {
-      span: 24
-    },
-    formItemProps: {
-      slots: {
-        default: () => {
-          return (
-            <>
-              <div class="flex justify-between w-[100%]">
-                <Icon
-                  icon="vi-ant-design:github-filled"
-                  size={iconSize}
-                  class="cursor-pointer ant-icon"
-                  color={iconColor}
-                  hoverColor={hoverColor}
-                />
-                <Icon
-                  icon="vi-ant-design:wechat-filled"
-                  size={iconSize}
-                  class="cursor-pointer ant-icon"
-                  color={iconColor}
-                  hoverColor={hoverColor}
-                />
-                <Icon
-                  icon="vi-ant-design:alipay-circle-filled"
-                  size={iconSize}
-                  color={iconColor}
-                  hoverColor={hoverColor}
-                  class="cursor-pointer ant-icon"
-                />
-                <Icon
-                  icon="vi-ant-design:weibo-circle-filled"
-                  size={iconSize}
-                  color={iconColor}
-                  hoverColor={hoverColor}
-                  class="cursor-pointer ant-icon"
-                />
-              </div>
-            </>
-          )
-        }
-      }
-    }
   }
+  // SNS 로그인 구현시 아래 주석 해제해서 개발하기
+  // {
+  //   field: 'other',
+  //   component: 'Divider',
+  //   label: t('login.otherLogin'),
+  //   componentProps: {
+  //     contentPosition: 'center'
+  //   }
+  // },
+  // {
+  //   field: 'otherIcon',
+  //   colProps: {
+  //     span: 24
+  //   },
+  //   formItemProps: {
+  //     slots: {
+  //       default: () => {
+  //         return (
+  //           <>
+  //             <div class="flex justify-between w-[100%]">
+  //               <Icon
+  //                 icon="vi-ant-design:github-filled"
+  //                 size={iconSize}
+  //                 class="cursor-pointer ant-icon"
+  //                 color={iconColor}
+  //                 hoverColor={hoverColor}
+  //               />
+  //               <Icon
+  //                 icon="vi-ant-design:wechat-filled"
+  //                 size={iconSize}
+  //                 class="cursor-pointer ant-icon"
+  //                 color={iconColor}
+  //                 hoverColor={hoverColor}
+  //               />
+  //               <Icon
+  //                 icon="vi-ant-design:alipay-circle-filled"
+  //                 size={iconSize}
+  //                 color={iconColor}
+  //                 hoverColor={hoverColor}
+  //                 class="cursor-pointer ant-icon"
+  //               />
+  //               <Icon
+  //                 icon="vi-ant-design:weibo-circle-filled"
+  //                 size={iconSize}
+  //                 color={iconColor}
+  //                 hoverColor={hoverColor}
+  //                 class="cursor-pointer ant-icon"
+  //               />
+  //             </div>
+  //           </>
+  //         )
+  //       }
+  //     }
+  //   }
+  // }
 ])
 
 const iconSize = 30

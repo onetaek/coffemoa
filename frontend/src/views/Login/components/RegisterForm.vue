@@ -1,17 +1,19 @@
 <script setup lang="tsx">
 import { Form, FormSchema } from '@/components/Form'
+import { signupApi } from '@/api/login'
 import { reactive, ref, unref } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useForm } from '@/hooks/web/useForm'
-import { ElInput, FormRules } from 'element-plus'
+import { ElInput, ElNotification, FormRules } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
+import { UserSignup } from '@/api/login/types'
 import { BaseButton } from '@/components/Button'
 import { IAgree } from '@/components/IAgree'
 
 const emit = defineEmits(['to-login'])
 
 const { formRegister, formMethods } = useForm()
-const { getElFormExpose } = formMethods
+const { getFormData, getElFormExpose } = formMethods
 
 const { t } = useI18n()
 
@@ -89,60 +91,61 @@ const schema = reactive<FormSchema[]>([
       placeholder: t('login.passwordPlaceholder')
     }
   },
-  {
-    field: 'code',
-    label: t('login.code'),
-    colProps: {
-      span: 24
-    },
-    formItemProps: {
-      slots: {
-        default: (formData) => {
-          return (
-            <div class="w-[100%] flex">
-              <ElInput v-model={formData.code} placeholder={t('login.codePlaceholder')} />
-              <BaseButton
-                type="primary"
-                disabled={unref(getCodeLoading)}
-                class="ml-10px"
-                onClick={getCode}
-              >
-                {t('login.getCode')}
-                {unref(getCodeLoading) ? `(${unref(getCodeTime)})` : ''}
-              </BaseButton>
-            </div>
-          )
-        }
-      }
-    }
-  },
+  // 이메일 인증 구현할 경우 아래 주석 해제
+  // {
+  //   field: 'code',
+  //   label: t('login.code'),
+  //   colProps: {
+  //     span: 24
+  //   },
+  //   formItemProps: {
+  //     slots: {
+  //       default: (formData) => {
+  //         return (
+  //           <div class="w-[100%] flex">
+  //             <ElInput v-model={formData.code} placeholder={t('login.codePlaceholder')} />
+  //             <BaseButton
+  //               type="primary"
+  //               disabled={unref(getCodeLoading)}
+  //               class="ml-10px"
+  //               onClick={getCode}
+  //             >
+  //               {t('login.getCode')}
+  //               {unref(getCodeLoading) ? `(${unref(getCodeTime)})` : ''}
+  //             </BaseButton>
+  //           </div>
+  //         )
+  //       }
+  //     }
+  //   }
+  // },
 
-  {
-    field: 'iAgree',
-    colProps: {
-      span: 24
-    },
-    formItemProps: {
-      slots: {
-        default: (formData: any) => {
-          return (
-            <>
-              <IAgree
-                v-model={formData.iAgree}
-                text="I agree《User Agreement》"
-                link={[
-                  {
-                    text: '《User Agreement》',
-                    url: 'https://element-plus.org/'
-                  }
-                ]}
-              />
-            </>
-          )
-        }
-      }
-    }
-  },
+  // {
+  //   field: 'iAgree',
+  //   colProps: {
+  //     span: 24
+  //   },
+  //   formItemProps: {
+  //     slots: {
+  //       default: (formData: any) => {
+  //         return (
+  //           <>
+  //             <IAgree
+  //               v-model={formData.iAgree}
+  //               text="I agree《User Agreement》"
+  //               link={[
+  //                 {
+  //                   text: '《User Agreement》',
+  //                   url: 'https://element-plus.org/'
+  //                 }
+  //               ]}
+  //             />
+  //           </>
+  //         )
+  //       }
+  //     }
+  //   }
+  // },
   {
     field: 'register',
     colProps: {
@@ -179,9 +182,9 @@ const schema = reactive<FormSchema[]>([
 const rules: FormRules = {
   username: [required()],
   password: [required()],
-  check_password: [required()],
-  code: [required()],
-  iAgree: [required(), check()]
+  check_password: [required()]
+  // code: [required()],
+  // iAgree: [required(), check()]
 }
 
 const toLogin = () => {
@@ -196,7 +199,18 @@ const loginRegister = async () => {
     if (valid) {
       try {
         loading.value = true
-        toLogin()
+        const formData = await getFormData<UserSignup>()
+
+        const res = await signupApi(formData)
+
+        if (res) {
+          ElNotification({
+            title: 'Success',
+            message: '회원가입에 성공하였습니다!\n로그인을 진행해주세요.',
+            type: 'success'
+          })
+          toLogin()
+        }
       } finally {
         loading.value = false
       }

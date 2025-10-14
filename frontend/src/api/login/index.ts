@@ -1,5 +1,5 @@
 import request from '@/axios'
-import type { UserType } from './types'
+import type { UserType, UserSignup } from './types'
 
 interface RoleParams {
   roleName: string
@@ -32,4 +32,8 @@ export const getAdminRoleApi = (
 
 export const getTestRoleApi = (params: RoleParams): Promise<IResponse<string[]>> => {
   return request.get({ url: '/mock/role/list2', params })
+}
+
+export const signupApi = (data: UserSignup): Promise<IResponse<any>> => {
+  return request.post({ url: '/api/auth/signup', data })
 }

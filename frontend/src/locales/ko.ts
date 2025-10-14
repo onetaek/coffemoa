@@ -105,8 +105,8 @@ export default {
     small: '작게'
   },
   login: {
-    welcome: '시스템에 오신 것을 환영합니다',
-    message: '백오피스 관리 시스템',
+    welcome: 'Coffemoa에 오신 것을 환영합니다',
+    message: '카페관리시스템',
     username: '사용자명',
     password: '비밀번호',
     register: '회원가입',

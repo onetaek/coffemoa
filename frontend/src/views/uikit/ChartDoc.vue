@@ -79,8 +79,16 @@ function setColorOptions() {
         datasets: [
             {
                 data: [540, 325, 702],
-                backgroundColor: [documentStyle.getPropertyValue('--p-indigo-500'), documentStyle.getPropertyValue('--p-purple-500'), documentStyle.getPropertyValue('--p-teal-500')],
-                hoverBackgroundColor: [documentStyle.getPropertyValue('--p-indigo-400'), documentStyle.getPropertyValue('--p-purple-400'), documentStyle.getPropertyValue('--p-teal-400')]
+                backgroundColor: [
+                    documentStyle.getPropertyValue('--p-indigo-500'),
+                    documentStyle.getPropertyValue('--p-purple-500'),
+                    documentStyle.getPropertyValue('--p-teal-500')
+                ],
+                hoverBackgroundColor: [
+                    documentStyle.getPropertyValue('--p-indigo-400'),
+                    documentStyle.getPropertyValue('--p-purple-400'),
+                    documentStyle.getPropertyValue('--p-teal-400')
+                ]
             }
         ]
     };
@@ -152,7 +160,12 @@ function setColorOptions() {
         datasets: [
             {
                 data: [11, 16, 7, 3],
-                backgroundColor: [documentStyle.getPropertyValue('--p-indigo-500'), documentStyle.getPropertyValue('--p-purple-500'), documentStyle.getPropertyValue('--p-teal-500'), documentStyle.getPropertyValue('--p-orange-500')],
+                backgroundColor: [
+                    documentStyle.getPropertyValue('--p-indigo-500'),
+                    documentStyle.getPropertyValue('--p-purple-500'),
+                    documentStyle.getPropertyValue('--p-teal-500'),
+                    documentStyle.getPropertyValue('--p-orange-500')
+                ],
                 label: 'My dataset'
             }
         ],

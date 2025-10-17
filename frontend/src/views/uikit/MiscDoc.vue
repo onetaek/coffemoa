@@ -69,7 +69,13 @@ onBeforeUnmount(() => {
                 <div class="font-semibold my-4">Button</div>
                 <div class="flex gap-2">
                     <Button label="Emails" badge="8" class="mr-2"></Button>
-                    <Button label="Messages" icon="pi pi-users" severity="warn" badge="8" badgeClass="p-badge-danger"></Button>
+                    <Button
+                        label="Messages"
+                        icon="pi pi-users"
+                        severity="warn"
+                        badge="8"
+                        badgeClass="p-badge-danger"
+                    ></Button>
                 </div>
 
                 <div class="font-semibold my-4">Sizes</div>
@@ -84,18 +90,54 @@ onBeforeUnmount(() => {
                 <div class="font-semibold text-xl mb-4">Avatar</div>
                 <div class="font-semibold mb-4">Group</div>
                 <AvatarGroup>
-                    <Avatar :image="'https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png'" size="large" shape="circle"></Avatar>
-                    <Avatar :image="'https://primefaces.org/cdn/primevue/images/avatar/asiyajavayant.png'" size="large" shape="circle"></Avatar>
-                    <Avatar :image="'https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png'" size="large" shape="circle"></Avatar>
-                    <Avatar :image="'https://primefaces.org/cdn/primevue/images/avatar/ionibowcher.png'" size="large" shape="circle"></Avatar>
-                    <Avatar :image="'https://primefaces.org/cdn/primevue/images/avatar/xuxuefeng.png'" size="large" shape="circle"></Avatar>
-                    <Avatar label="+2" shape="circle" size="large" :style="{ 'background-color': '#9c27b0', color: '#ffffff' }"></Avatar>
+                    <Avatar
+                        :image="'https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png'"
+                        size="large"
+                        shape="circle"
+                    ></Avatar>
+                    <Avatar
+                        :image="'https://primefaces.org/cdn/primevue/images/avatar/asiyajavayant.png'"
+                        size="large"
+                        shape="circle"
+                    ></Avatar>
+                    <Avatar
+                        :image="'https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png'"
+                        size="large"
+                        shape="circle"
+                    ></Avatar>
+                    <Avatar
+                        :image="'https://primefaces.org/cdn/primevue/images/avatar/ionibowcher.png'"
+                        size="large"
+                        shape="circle"
+                    ></Avatar>
+                    <Avatar
+                        :image="'https://primefaces.org/cdn/primevue/images/avatar/xuxuefeng.png'"
+                        size="large"
+                        shape="circle"
+                    ></Avatar>
+                    <Avatar
+                        label="+2"
+                        shape="circle"
+                        size="large"
+                        :style="{ 'background-color': '#9c27b0', color: '#ffffff' }"
+                    ></Avatar>
                 </AvatarGroup>
 
                 <div class="font-semibold my-4">Label - Circle</div>
                 <Avatar label="P" class="mr-2" size="xlarge" shape="circle"></Avatar>
-                <Avatar label="V" class="mr-2" size="large" :style="{ 'background-color': '#2196F3', color: '#ffffff' }" shape="circle"></Avatar>
-                <Avatar label="U" class="mr-2" :style="{ 'background-color': '#9c27b0', color: '#ffffff' }" shape="circle"></Avatar>
+                <Avatar
+                    label="V"
+                    class="mr-2"
+                    size="large"
+                    :style="{ 'background-color': '#2196F3', color: '#ffffff' }"
+                    shape="circle"
+                ></Avatar>
+                <Avatar
+                    label="U"
+                    class="mr-2"
+                    :style="{ 'background-color': '#9c27b0', color: '#ffffff' }"
+                    shape="circle"
+                ></Avatar>
 
                 <div class="font-semibold my-4">Icon - Badge</div>
                 <OverlayBadge value="4" severity="danger" class="inline-flex">
@@ -107,11 +149,17 @@ onBeforeUnmount(() => {
                 <div class="font-semibold text-xl mb-4">ScrollTop</div>
                 <ScrollPanel :style="{ width: '250px', height: '200px' }">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae et leo duis ut diam. Ultricies mi quis hendrerit dolor magna eget est lorem. Amet consectetur
-                        adipiscing elit ut. Nam libero justo laoreet sit amet. Pharetra massa massa ultricies mi quis hendrerit dolor magna. Est ultricies integer quis auctor elit sed vulputate. Consequat ac felis donec et. Tellus orci ac auctor
-                        augue mauris. Semper feugiat nibh sed pulvinar proin gravida hendrerit lectus a. Tincidunt arcu non sodales neque sodales. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices. Sodales ut etiam sit amet
-                        nisl purus. Cursus sit amet dictum sit amet. Tristique senectus et netus et malesuada fames ac turpis egestas. Et tortor consequat id porta nibh venenatis cras sed. Diam maecenas ultricies mi eget mauris. Eget egestas purus
-                        viverra accumsan in nisl nisi. Suscipit adipiscing bibendum est ultricies integer. Mattis aliquam faucibus purus in massa tempor nec.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Vitae et leo duis ut diam. Ultricies mi quis hendrerit dolor
+                        magna eget est lorem. Amet consectetur adipiscing elit ut. Nam libero justo laoreet sit amet.
+                        Pharetra massa massa ultricies mi quis hendrerit dolor magna. Est ultricies integer quis auctor
+                        elit sed vulputate. Consequat ac felis donec et. Tellus orci ac auctor augue mauris. Semper
+                        feugiat nibh sed pulvinar proin gravida hendrerit lectus a. Tincidunt arcu non sodales neque
+                        sodales. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices. Sodales ut
+                        etiam sit amet nisl purus. Cursus sit amet dictum sit amet. Tristique senectus et netus et
+                        malesuada fames ac turpis egestas. Et tortor consequat id porta nibh venenatis cras sed. Diam
+                        maecenas ultricies mi eget mauris. Eget egestas purus viverra accumsan in nisl nisi. Suscipit
+                        adipiscing bibendum est ultricies integer. Mattis aliquam faucibus purus in massa tempor nec.
                     </p>
                     <ScrollTop target="parent" :threshold="100" icon="pi pi-arrow-up"></ScrollTop>
                 </ScrollPanel>
@@ -168,9 +216,21 @@ onBeforeUnmount(() => {
 
                 <div class="font-semibold my-4">Image</div>
                 <div class="flex items-center flex-col sm:flex-row">
-                    <Chip label="Amy Elsner" :image="'https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png'" class="mr-2 mb-2"></Chip>
-                    <Chip label="Asiya Javayant" :image="'https://primefaces.org/cdn/primevue/images/avatar/asiyajavayant.png'" class="mr-2 mb-2"></Chip>
-                    <Chip label="Onyama Limba" :image="'https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png'" class="mr-2 mb-2"></Chip>
+                    <Chip
+                        label="Amy Elsner"
+                        :image="'https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png'"
+                        class="mr-2 mb-2"
+                    ></Chip>
+                    <Chip
+                        label="Asiya Javayant"
+                        :image="'https://primefaces.org/cdn/primevue/images/avatar/asiyajavayant.png'"
+                        class="mr-2 mb-2"
+                    ></Chip>
+                    <Chip
+                        label="Onyama Limba"
+                        :image="'https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png'"
+                        class="mr-2 mb-2"
+                    ></Chip>
                 </div>
             </div>
 

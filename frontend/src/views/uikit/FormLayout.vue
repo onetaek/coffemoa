@@ -54,7 +54,9 @@ const dropdownItem = ref(null);
                         </div>
                     </div>
                     <div class="grid grid-cols-12 gap-2">
-                        <label for="email3" class="flex items-center col-span-12 mb-2 md:col-span-2 md:mb-0">Email</label>
+                        <label for="email3" class="flex items-center col-span-12 mb-2 md:col-span-2 md:mb-0"
+                            >Email</label
+                        >
                         <div class="col-span-12 md:col-span-10">
                             <InputText id="email3" type="text" />
                         </div>
@@ -108,7 +110,14 @@ const dropdownItem = ref(null);
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="flex flex-wrap gap-2 w-full">
                         <label for="state">State</label>
-                        <Select id="state" v-model="dropdownItem" :options="dropdownItems" optionLabel="name" placeholder="Select One" class="w-full"></Select>
+                        <Select
+                            id="state"
+                            v-model="dropdownItem"
+                            :options="dropdownItems"
+                            optionLabel="name"
+                            placeholder="Select One"
+                            class="w-full"
+                        ></Select>
                     </div>
                     <div class="flex flex-wrap gap-2 w-full">
                         <label for="zip">Zip</label>

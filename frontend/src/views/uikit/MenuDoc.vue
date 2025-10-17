@@ -81,7 +81,13 @@ const nestedMenuitems = ref([
     }
 ]);
 const breadcrumbHome = ref({ icon: 'pi pi-home', to: '/' });
-const breadcrumbItems = ref([{ label: 'Computer' }, { label: 'Notebook' }, { label: 'Accessories' }, { label: 'Backpacks' }, { label: 'Item' }]);
+const breadcrumbItems = ref([
+    { label: 'Computer' },
+    { label: 'Notebook' },
+    { label: 'Accessories' },
+    { label: 'Backpacks' },
+    { label: 'Item' }
+]);
 const tieredMenuItems = ref([
     {
         label: 'Customers',

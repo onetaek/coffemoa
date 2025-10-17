@@ -19,7 +19,14 @@ function onUpload() {
         <div class="col-span-full lg:col-span-6">
             <div class="card">
                 <div class="font-semibold text-xl mb-4">Advanced</div>
-                <FileUpload name="demo[]" @uploader="onUpload" :multiple="true" accept="image/*" :maxFileSize="1000000" customUpload />
+                <FileUpload
+                    name="demo[]"
+                    @uploader="onUpload"
+                    :multiple="true"
+                    accept="image/*"
+                    :maxFileSize="1000000"
+                    customUpload
+                />
             </div>
         </div>
         <div class="col-span-full lg:col-span-6">
@@ -27,7 +34,15 @@ function onUpload() {
                 <div class="font-semibold text-xl mb-4">Basic</div>
                 <div class="card flex flex-col gap-6 items-center justify-center">
                     <Toast />
-                    <FileUpload ref="fileupload" mode="basic" name="demo[]" accept="image/*" :maxFileSize="1000000" @uploader="onUpload" customUpload />
+                    <FileUpload
+                        ref="fileupload"
+                        mode="basic"
+                        name="demo[]"
+                        accept="image/*"
+                        :maxFileSize="1000000"
+                        @uploader="onUpload"
+                        customUpload
+                    />
                     <Button label="Upload" @click="upload" severity="secondary" />
                 </div>
             </div>

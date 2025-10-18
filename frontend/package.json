@@ -2,14 +2,18 @@
     "name": "sakai-vue",
     "version": "4.3.0",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview",
-        "lint": "eslint --fix . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+        "dev": "vite --mode development",
+        "build": "vite build --mode production",
+        "prod": "vite preview --port 4173 --mode production"
     },
     "dependencies": {
         "@primeuix/themes": "^1.0.0",
+        "axios": "^1.13.2",
         "chart.js": "3.3.2",
+        "dayjs": "^1.11.19",
+        "jwt-decode": "^4.0.0",
+        "pinia": "^3.0.4",
+        "pinia-plugin-persistedstate": "^4.7.1",
         "primeicons": "^7.0.0",
         "primevue": "^4.3.1",
         "tailwindcss-primeui": "^0.5.0",

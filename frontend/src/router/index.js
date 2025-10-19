@@ -1,4 +1,5 @@
 import AppLayout from '@/layout/AppLayout.vue';
+import { useAuthStore } from '@/stores/authStore';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -141,6 +142,19 @@ const router = createRouter({
             component: () => import('@/views/pages/auth/Error.vue')
         }
     ]
+});
+
+// =========================
+// 전역 라우터 가드
+// =========================
+router.beforeEach((to, from, next) => {
+    const auth = useAuthStore();
+
+    if (to.meta.requiresAuth && !auth.token) {
+        return next('/login');
+    }
+
+    next();
 });
 
 export default router;

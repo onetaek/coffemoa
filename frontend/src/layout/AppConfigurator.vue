@@ -25,6 +25,22 @@ const menuModeOptions = ref([
 const primaryColors = ref([
     { name: 'noir', palette: {} },
     {
+        name: 'coffee',
+        palette: {
+            50: '#f7f4f0',
+            100: '#e8dfd6',
+            200: '#d6c7b8',
+            300: '#bfa88e',
+            400: '#a98861',
+            500: '#8b5e34',
+            600: '#704a2a',
+            700: '#573a22',
+            800: '#3e2919',
+            900: '#261a10',
+            950: '#120d08'
+        }
+    },
+    {
         name: 'emerald',
         palette: {
             50: '#ecfdf5',

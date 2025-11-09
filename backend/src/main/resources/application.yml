@@ -28,3 +28,6 @@ jwt:
   public-key-path: ""    # ?? ????? ?? ??
   expiration: 3600000
 
+mybatis:
+  mapper-locations: classpath:/mappers/*.xml
+  type-aliases-package: com.coffemoa.domain

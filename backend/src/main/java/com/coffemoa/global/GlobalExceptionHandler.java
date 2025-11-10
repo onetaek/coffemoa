@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
   @ExceptionHandler(BusinessException.class)
-  public ResponseEntity<ApiErrorResponse> handleBusiness(BusinessException ex, HttpServletRequest req) {
+  public ResponseEntity<ApiErrorResponse> handleBusiness(BusinessException ex,
+      HttpServletRequest req) {
     var code = ex.getErrorCode();
     return ResponseEntity
         .status(code.getHttpStatus())
@@ -57,7 +58,8 @@ public class GlobalExceptionHandler {
 
   // Spring Security/DB 예외를 도메인 에러코드로 매핑
   @ExceptionHandler({BadCredentialsException.class, UsernameNotFoundException.class})
-  public ResponseEntity<ApiErrorResponse> handleBadCredentials(RuntimeException ex, HttpServletRequest req) {
+  public ResponseEntity<ApiErrorResponse> handleBadCredentials(RuntimeException ex,
+      HttpServletRequest req) {
     var code = ErrorCode.INVALID_LOGIN;
     return ResponseEntity
         .status(code.getHttpStatus())
@@ -79,7 +81,7 @@ public class GlobalExceptionHandler {
     var code = ErrorCode.INTERNAL_ERROR;
     return ResponseEntity
         .status(code.getHttpStatus())
-        .body(ApiErrorResponse.of(code, req.getRequestURI(), null, code.getMessage()));
+        .body(ApiErrorResponse.of(code, req.getRequestURI(), null, ex.getMessage()));
   }
 
   // --- 표준 에러 응답 DTO ---
@@ -91,6 +93,7 @@ public class GlobalExceptionHandler {
       Instant timestamp,
       Map<String, String> errors
   ) {
+
     public static ApiErrorResponse of(ErrorCode errorCode, String path,
         Map<String, String> errors, String overrideMessage) {
       return new ApiErrorResponse(

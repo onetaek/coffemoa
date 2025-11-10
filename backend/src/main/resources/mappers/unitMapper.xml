@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.coffemoa.domain.standard.mapper.unitMapper">
-  <insert id="insertMenu">
-    INSERT INTO 메뉴 (메뉴명)
-    VALUES (#{name})
+
+<mapper namespace="com.coffemoa.domain.standard.mapper.UnitMapper">
+
+  <!-- ✅ 단위 등록 -->
+  <insert id="insert" parameterType="map">
+    INSERT INTO `단위` (
+    `단위명`,
+    `설명`
+    )
+    VALUES (
+    #{unitName},
+    #{description}
+    )
   </insert>
+
+  <!-- ✅ 단위 조회 -->
+  <select id="select" parameterType="map" resultType="com.coffemoa.domain.standard.entity.Unit">
+    SELECT
+    `단위명` AS unitName,
+    `설명` AS description
+    FROM `단위`
+    <where>
+      <if test="unitName != null and unitName != ''">
+        AND `단위명` = #{unitName}
+      </if>
+    </where>
+  </select>
+
+  <!-- ✅ 단위 수정 -->
+  <update id="update" parameterType="map">
+    UPDATE `단위`
+    SET `설명` = #{description}
+    WHERE `단위명` = #{unitName}
+  </update>
+
+  <!-- ✅ 단위 삭제 -->
+  <delete id="delete" parameterType="map">
+    DELETE FROM `단위`
+    <where>
+      <if test="unitName != null and unitName != ''">
+        `단위명` = #{unitName}
+      </if>
+    </where>
+  </delete>
+
 </mapper>

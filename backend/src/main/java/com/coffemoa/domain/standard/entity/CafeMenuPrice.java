@@ -1,21 +1,16 @@
 package com.coffemoa.domain.standard.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Entity
-@Table(
-    name = "메뉴종류"
-)
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Builder
 public class CafeMenuPrice {
+
+  private String cafeMenuName;//메뉴명
+  private String temperature;//온도구분
+  private String size;//사이즈구분
+  private BigDecimal price;//판매가
 
 }

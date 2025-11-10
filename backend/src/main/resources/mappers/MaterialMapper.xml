@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coffemoa.domain.standard.mapper.MaterialMapper">
+
+  <!-- ✅ 원재료 등록 -->
+  <insert id="insert" parameterType="map">
+    INSERT INTO `원재료` (
+    `원재료명`,
+    `구매단위명`,
+    `구매단위수량`,
+    `구매단위가격`
+    )
+    VALUES (
+    #{materialName},
+    #{unitName},
+    #{quantity},
+    #{price}
+    )
+  </insert>
+
+  <!-- ✅ 원재료 조회 -->
+  <select id="select" parameterType="map" resultType="com.coffemoa.domain.standard.entity.Material">
+    SELECT
+    `원재료명` AS materialName,
+    `구매단위수량` AS quantity,
+    `구매단위명` AS unitName,
+    `구매단위가격` AS price
+    FROM `원재료`
+    <where>
+      <if test="materialName != null and materialName != ''">
+        AND `원재료명` = #{materialName}
+      </if>
+      <if test="unitName != null and unitName != ''">
+        AND `구매단위명` = #{unitName}
+      </if>
+    </where>
+  </select>
+
+  <!-- ✅ 원재료 수정 -->
+  <update id="update" parameterType="map">
+    UPDATE `원재료`
+    SET
+    `구매단위명` = #{unitName},
+    `구매단위수량` = #{quantity},
+    `구매단위가격` = #{price}
+    WHERE `원재료명` = #{materialName}
+  </update>
+
+  <!-- ✅ 원재료 삭제 -->
+  <delete id="delete" parameterType="map">
+    DELETE FROM `원재료`
+    <where>
+      <if test="materialName != null and materialName != ''">
+        AND `원재료명` = #{materialName}
+      </if>
+    </where>
+  </delete>
+
+</mapper>

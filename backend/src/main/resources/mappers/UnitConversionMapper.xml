@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coffemoa.domain.standard.mapper.UnitConversionMapper">
+
+  <!-- ✅ 단위 환산 등록 -->
+  <insert id="insert" parameterType="map">
+    INSERT INTO `단위환산` (
+    `기준단위명`,
+    `변환단위명`,
+    `환산값`
+    )
+    VALUES (
+    #{standardUnitName},
+    #{conversionUnitName},
+    #{conversionQuantity}
+    )
+  </insert>
+
+  <!-- ✅ 단위 환산 조회 -->
+  <select id="select" parameterType="map"
+    resultType="com.coffemoa.domain.standard.entity.UnitConversion">
+    SELECT
+    `기준단위명` AS standardUnitName,
+    `변환단위명` AS conversionUnitName,
+    `환산값` AS conversionQuantity
+    FROM `단위환산`
+    <where>
+      <if test="standardUnitName != null and standardUnitName != ''">
+        AND `기준단위명` = #{standardUnitName}
+      </if>
+      <if test="conversionUnitName != null and conversionUnitName != ''">
+        AND `변환단위명` = #{conversionUnitName}
+      </if>
+    </where>
+  </select>
+
+  <!-- ✅ 단위 환산 수정 -->
+  <update id="update" parameterType="map">
+    UPDATE `단위환산`
+    SET `환산값` = #{conversionQuantity}
+    WHERE `기준단위명` = #{standardUnitName}
+    AND `변환단위명` = #{conversionUnitName}
+  </update>
+
+  <!-- ✅ 단위 환산 삭제 -->
+  <delete id="delete" parameterType="map">
+    DELETE FROM `단위환산`
+    <where>
+      <if test="standardUnitName != null and standardUnitName != ''">
+        AND `기준단위명` = #{standardUnitName}
+      </if>
+      <if test="conversionUnitName != null and conversionUnitName != ''">
+        AND `변환단위명` = #{conversionUnitName}
+      </if>
+    </where>
+  </delete>
+
+</mapper>

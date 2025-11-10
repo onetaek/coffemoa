@@ -2,9 +2,8 @@ package com.coffemoa.domain.auth.service;
 
 import com.coffemoa.domain.auth.entity.User;
 import com.coffemoa.domain.auth.repository.UserRepository;
-import java.util.stream.Collectors;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,9 +23,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     return new org.springframework.security.core.userdetails.User(
         user.getUsername(),
         user.getPassword(),
-        user.getUserRoles().stream()
-            .map(userRole -> new SimpleGrantedAuthority(userRole.getRole().getName()))
-            .collect(Collectors.toSet())
+        List.of()
+//        user.getUserRoles().stream()
+//            .map(userRole -> new SimpleGrantedAuthority(userRole.getRole().getName()))
+//            .collect(Collectors.toSet())
     );
   }
 }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coffemoa.domain.standard.mapper.CafeMenuMaterialMapper">
+
+  <!-- ✅ 메뉴 원재료 등록 -->
+  <insert id="insert" parameterType="map">
+    INSERT INTO `메뉴원재료` (
+    `메뉴명`,
+    `온도구분`,
+    `사이즈구분`,
+    `원재료명`,
+    `사용량`,
+    `단위명`
+    )
+    VALUES (
+    #{cafeMenuName},
+    #{temperature},
+    #{size},
+    #{materialName},
+    #{quantity},
+    #{unitName}
+    )
+  </insert>
+
+  <!-- ✅ 메뉴 원재료 조회 -->
+  <select id="select" parameterType="map"
+    resultType="com.coffemoa.domain.standard.entity.CafeMenuMaterial">
+    SELECT
+    `메뉴명` AS cafeMenuName,
+    `온도구분` AS temperature,
+    `사이즈구분` AS size,
+    `원재료명` AS materialName,
+    `사용량` AS quantity,
+    `단위명` AS unitName
+    FROM `메뉴원재료`
+    <where>
+      <if test="cafeMenuName != null and cafeMenuName != ''">
+        AND `메뉴명` = #{cafeMenuName}
+      </if>
+      <if test="temperature != null and temperature != ''">
+        AND `온도구분` = #{temperature}
+      </if>
+      <if test="size != null and size != ''">
+        AND `사이즈구분` = #{size}
+      </if>
+      <if test="materialName != null and materialName != ''">
+        AND `원재료명` = #{materialName}
+      </if>
+    </where>
+  </select>
+
+  <!-- ✅ 메뉴 원재료 수정 -->
+  <update id="update" parameterType="map">
+    UPDATE `메뉴원재료`
+    SET
+    `사용량` = #{quantity},
+    `단위명` = #{unitName}
+    WHERE `메뉴명` = #{cafeMenuName}
+    AND `온도구분` = #{temperature}
+    AND `사이즈구분` = #{size}
+    AND `원재료명` = #{materialName}
+  </update>
+
+  <!-- ✅ 메뉴 원재료 삭제 -->
+  <delete id="delete" parameterType="map">
+    DELETE FROM `메뉴원재료`
+    <where>
+      <if test="cafeMenuName != null and cafeMenuName != ''">
+        AND `메뉴명` = #{cafeMenuName}
+      </if>
+      <if test="temperature != null and temperature != ''">
+        AND `온도구분` = #{temperature}
+      </if>
+      <if test="size != null and size != ''">
+        AND `사이즈구분` = #{size}
+      </if>
+      <if test="materialName != null and materialName != ''">
+        AND `원재료명` = #{materialName}
+      </if>
+    </where>
+  </delete>
+
+</mapper>

@@ -1,21 +1,16 @@
 package com.coffemoa.domain.standard.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Entity
-@Table(
-    name = "원재료"
-)
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Builder
 public class Material {
+
+  private String materialName;//원재료명
+  private BigDecimal quantity;//구매단위수량
+  private String unitName;//구매단위명
+  private BigDecimal price;//구매단위가격
 
 }

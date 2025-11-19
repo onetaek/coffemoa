@@ -1,8 +1,11 @@
 <script setup>
+import { useLayout } from '@/layout/composables/layout';
 import { useAuthStore } from '@/stores/authStore';
 import Button from 'primevue/button';
 import Popover from 'primevue/popover';
 import { ref } from 'vue';
+import AppConfigurator from './AppConfigurator.vue';
+const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
 
 const auth = useAuthStore();
 

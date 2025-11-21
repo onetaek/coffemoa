@@ -112,6 +112,42 @@ const router = createRouter({
                     path: '/documentation',
                     name: 'documentation',
                     component: () => import('@/views/pages/Documentation.vue')
+                },
+                // ===================== 추가 =====================
+                {
+                    path: '/finance/cafe-menu-cost',
+                    name: 'CafeMenuCost',
+                    component: () => import('@/views/pages/finance/CafeMenuCost.vue')
+                },
+                {
+                    path: '/standard/unit',
+                    name: 'Unit',
+                    component: () => import('@/views/pages/standard/Unit.vue')
+                },
+                {
+                    path: '/standard/unit-conversion',
+                    name: 'UnitConversion',
+                    component: () => import('@/views/pages/standard/UnitConversion.vue')
+                },
+                {
+                    path: '/standard/cafe-menu',
+                    name: 'CafeMenu',
+                    component: () => import('@/views/pages/standard/CafeMenu.vue')
+                },
+                {
+                    path: '/standard/cafe-menu-material',
+                    name: 'CafeMenuMaterial',
+                    component: () => import('@/views/pages/standard/CafeMenuMaterial.vue')
+                },
+                {
+                    path: '/standard/cafe-menu-price',
+                    name: 'CafeMenuPrice',
+                    component: () => import('@/views/pages/standard/CafeMenuPrice.vue')
+                },
+                {
+                    path: '/standard/material',
+                    name: 'Material',
+                    component: () => import('@/views/pages/standard/Material.vue')
                 }
             ]
         },
@@ -147,12 +183,22 @@ const router = createRouter({
 // =========================
 // 전역 라우터 가드
 // =========================
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     const auth = useAuthStore();
+    console.log('auth:', auth);
 
-    if (to.meta.requiresAuth && !auth.token) {
-        return next('/login');
+    // 로그인 페이지는 토큰 없이도 접근 허용
+    if (to.path === '/auth/login') {
+        return next();
     }
+
+    // 토큰이 없는 경우 → 로그인 페이지로 이동
+    if (!auth.token) {
+        return next('/auth/login');
+    }
+
+    // 토큰이 있지만 검증이 필요할 경우(백엔드에 validate API가 있다면)
+    // await auth.validateToken() 같은 함수 추가 가능
 
     next();
 });

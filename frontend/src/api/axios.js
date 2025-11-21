@@ -28,7 +28,7 @@ api.interceptors.response.use(
         }
 
         // 🔥 인증 실패(401) → 자동 로그아웃 처리
-        if (error.response?.status === 401) {
+        if ([401, 403].includes(error.response?.status)) {
             const auth = useAuthStore();
             auth.logout();
             window.location.href = '/auth/login';

@@ -2,13 +2,13 @@
 
 <template>
     <div class="layout-footer">
-        SAKAI by
+        커피모아 by
         <a
-            href="https://primevue.org"
+            href="https://github.com/onetaek"
             target="_blank"
             rel="noopener noreferrer"
             class="text-primary font-bold hover:underline"
-            >PrimeVue</a
+            >onetaekoh</a
         >
     </div>
 </template>

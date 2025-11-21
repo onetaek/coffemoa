@@ -31,7 +31,7 @@
                             />
                         </g>
                     </svg>
-                    <h4 class="font-medium text-3xl text-surface-900 dark:text-surface-0">SAKAI</h4>
+                    <h4 class="font-medium text-3xl text-surface-900 dark:text-surface-0">커피모아</h4>
                 </a>
             </div>
 

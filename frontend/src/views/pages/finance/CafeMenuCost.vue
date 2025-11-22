@@ -4,7 +4,7 @@ import { FilterMatchMode } from '@primevue/core/api';
 import { onBeforeMount, ref } from 'vue';
 
 const 카페메뉴원가목록 = ref(null);
-
+const loading = ref(null);
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
@@ -51,14 +51,19 @@ function getCostRateSeverity(value) {
 }
 
 onBeforeMount(async () => {
-    const response = await api.get('/cafe-menu-costs');
-    카페메뉴원가목록.value = response?.data?.data || [];
+    try {
+        loading.value = true;
+        const response = await api.get('/cafe-menu-costs');
+        카페메뉴원가목록.value = response?.data?.data || [];
+    } finally {
+        loading.value = false;
+    }
 });
 </script>
 
 <template>
     <div class="card">
-        <DataTable :value="카페메뉴원가목록" :filters="filters" class="mt-6">
+        <DataTable :value="카페메뉴원가목록" :loading="loading" :filters="filters" class="mt-6">
             <template #header>
                 <div class="flex flex-wrap gap-2 items-center justify-between">
                     <h4 class="m-0">카페메뉴원가목록</h4>

@@ -20,7 +20,7 @@ const login = async () => {
             password: password.value
         });
 
-        router.push('/');
+        router.push('/finance/cafe-menu-cost');
     } catch (err) {
         toast.add({
             severity: 'error',

@@ -3,22 +3,31 @@ import { ref } from 'vue';
 
 import AppMenuItem from './AppMenuItem.vue';
 
-const model = ref([
+const appEnv = import.meta.env.VITE_MODE; // dev / prod
+
+const devModel = [
     {
         label: '수익관리',
-        items: [{ label: '카페메뉴원가목록', icon: 'pi pi-fw pi-home', to: '/finance/cafe-menu-cost' }]
+        items: [
+            {
+                label: '카페메뉴원가목록',
+                icon: 'pi pi-wallet',
+                to: '/finance/cafe-menu-cost'
+            }
+        ]
     },
     {
         label: '기초정보관리',
         items: [
-            { label: '단위관리', icon: 'pi pi-fw pi-home', to: '/standard/unit' },
-            { label: '단위환산관리', icon: 'pi pi-fw pi-home', to: '/standard/unit-conversion' },
-            { label: '원자재가격관리', icon: 'pi pi-fw pi-home', to: '/standard/material' },
-            { label: '메뉴관리', icon: 'pi pi-fw pi-home', to: '/standard/cafe-menu' },
-            { label: '메뉴옵션/가격관리', icon: 'pi pi-fw pi-home', to: '/standard/cafe-menu-price' },
-            { label: '레시피관리', icon: 'pi pi-fw pi-home', to: '/standard/cafe-menu-material' }
+            { label: '단위관리', icon: 'pi pi-sliders-h', to: '/standard/unit' },
+            { label: '단위환산관리', icon: 'pi pi-sync', to: '/standard/unit-conversion' },
+            { label: '원자재가격관리', icon: 'pi pi-box', to: '/standard/material' },
+            { label: '메뉴관리', icon: 'pi pi-list', to: '/standard/cafe-menu' },
+            { label: '메뉴옵션/가격관리', icon: 'pi pi-cog', to: '/standard/cafe-menu-price' },
+            { label: '레시피관리', icon: 'pi pi-bookmark', to: '/standard/cafe-menu-material' }
         ]
     },
+
     {
         label: 'Home',
         items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
@@ -168,7 +177,27 @@ const model = ref([
             }
         ]
     }
-]);
+];
+
+const prodModel = [
+    {
+        label: '수익관리',
+        items: [{ label: '카페메뉴원가목록', icon: 'pi pi-fw pi-home', to: '/finance/cafe-menu-cost' }]
+    },
+    {
+        label: '기초정보관리',
+        items: [
+            { label: '단위관리', icon: 'pi pi-fw pi-home', to: '/standard/unit' },
+            { label: '단위환산관리', icon: 'pi pi-fw pi-home', to: '/standard/unit-conversion' },
+            { label: '원자재가격관리', icon: 'pi pi-fw pi-home', to: '/standard/material' },
+            { label: '메뉴관리', icon: 'pi pi-fw pi-home', to: '/standard/cafe-menu' },
+            { label: '메뉴옵션/가격관리', icon: 'pi pi-fw pi-home', to: '/standard/cafe-menu-price' },
+            { label: '레시피관리', icon: 'pi pi-fw pi-home', to: '/standard/cafe-menu-material' }
+        ]
+    }
+];
+
+const model = ref([...(appEnv === 'development' ? devModel : []), ...(appEnv === 'production' ? prodModel : [])]);
 </script>
 
 <template>

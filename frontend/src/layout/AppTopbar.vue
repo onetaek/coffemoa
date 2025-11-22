@@ -1,4 +1,5 @@
 <script setup>
+import AppConfigurator from '@/layout/AppConfigurator.vue';
 import { useLayout } from '@/layout/composables/layout';
 import { useAuthStore } from '@/stores/authStore';
 import { useToast } from 'primevue/usetoast';
@@ -28,7 +29,7 @@ function logout() {
             </button>
             <router-link to="/" class="layout-topbar-logo">
                 <img src="@/assets/logo.png" alt="Coffemoa Logo" class="mx-auto" style="width: 1.6rem" />
-                <span>커피모아</span>
+                <span class="text-xl">커피모아</span>
             </router-link>
         </div>
 

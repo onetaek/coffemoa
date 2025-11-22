@@ -5,6 +5,10 @@ import AppMenuItem from './AppMenuItem.vue';
 
 const model = ref([
     {
+        label: '수익관리',
+        items: [{ label: '카페메뉴원가목록', icon: 'pi pi-fw pi-home', to: '/finance/cafe-menu-cost' }]
+    },
+    {
         label: '기초정보관리',
         items: [
             { label: '단위관리', icon: 'pi pi-fw pi-home', to: '/standard/unit' },

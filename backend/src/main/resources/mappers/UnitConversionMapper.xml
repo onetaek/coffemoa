@@ -12,8 +12,8 @@
     `환산값`
     )
     VALUES (
-    #{standardUnitName},
-    #{conversionUnitName},
+    #{standardUnitId},
+    #{conversionUnitId},
     #{conversionQuantity}
     )
   </insert>
@@ -22,16 +22,16 @@
   <select id="select" parameterType="map"
     resultType="com.coffemoa.domain.standard.entity.UnitConversion">
     SELECT
-    `기준단위명` AS standardUnitName,
-    `변환단위명` AS conversionUnitName,
+    `기준단위명` AS standardUnitId,
+    `변환단위명` AS conversionUnitId,
     `환산값` AS conversionQuantity
     FROM `단위환산`
     <where>
-      <if test="standardUnitName != null and standardUnitName != ''">
-        AND `기준단위명` = #{standardUnitName}
+      <if test="standardUnitId != null and standardUnitId != ''">
+        AND `기준단위명` = #{standardUnitId}
       </if>
-      <if test="conversionUnitName != null and conversionUnitName != ''">
-        AND `변환단위명` = #{conversionUnitName}
+      <if test="conversionUnitId != null and conversionUnitId != ''">
+        AND `변환단위명` = #{conversionUnitId}
       </if>
     </where>
   </select>
@@ -40,19 +40,19 @@
   <update id="update" parameterType="map">
     UPDATE `단위환산`
     SET `환산값` = #{conversionQuantity}
-    WHERE `기준단위명` = #{standardUnitName}
-    AND `변환단위명` = #{conversionUnitName}
+    WHERE `기준단위명` = #{standardUnitId}
+    AND `변환단위명` = #{conversionUnitId}
   </update>
 
   <!-- ✅ 단위 환산 삭제 -->
   <delete id="delete" parameterType="map">
     DELETE FROM `단위환산`
     <where>
-      <if test="standardUnitName != null and standardUnitName != ''">
-        AND `기준단위명` = #{standardUnitName}
+      <if test="standardUnitId != null and standardUnitId != ''">
+        AND `기준단위명` = #{standardUnitId}
       </if>
-      <if test="conversionUnitName != null and conversionUnitName != ''">
-        AND `변환단위명` = #{conversionUnitName}
+      <if test="conversionUnitId != null and conversionUnitId != ''">
+        AND `변환단위명` = #{conversionUnitId}
       </if>
     </where>
   </delete>

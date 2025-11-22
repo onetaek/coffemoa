@@ -14,7 +14,7 @@
     )
     VALUES (
     #{materialName},
-    #{unitName},
+    #{unitId},
     #{quantity},
     #{price}
     )
@@ -25,15 +25,15 @@
     SELECT
     `원재료명` AS materialName,
     `구매단위수량` AS quantity,
-    `구매단위명` AS unitName,
+    `구매단위명` AS unitId,
     `구매단위가격` AS price
     FROM `원재료`
     <where>
       <if test="materialName != null and materialName != ''">
         AND `원재료명` = #{materialName}
       </if>
-      <if test="unitName != null and unitName != ''">
-        AND `구매단위명` = #{unitName}
+      <if test="unitId != null and unitId != ''">
+        AND `구매단위명` = #{unitId}
       </if>
     </where>
   </select>
@@ -42,7 +42,7 @@
   <update id="update" parameterType="map">
     UPDATE `원재료`
     SET
-    `구매단위명` = #{unitName},
+    `구매단위명` = #{unitId},
     `구매단위수량` = #{quantity},
     `구매단위가격` = #{price}
     WHERE `원재료명` = #{materialName}

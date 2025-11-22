@@ -7,7 +7,7 @@ import lombok.Getter;
 @Builder
 public class Unit {
 
-  private String unitName;//단위명
+  private String unitId;//단위명
   private String description;//설명
 
 }

@@ -42,3 +42,4 @@ out/
 /src/main/resources/keys/*.pem
 /src/main/resources/sql/*.sql
 *.ps1
+Dockerfile

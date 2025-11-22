@@ -8,8 +8,8 @@ import lombok.Getter;
 @Builder
 public class UnitConversion {
 
-  private String standardUnitName;//기준단위명
-  private String conversionUnitName;//변환단위명
+  private String standardUnitId;//기준단위명
+  private String conversionUnitId;//변환단위명
   private BigDecimal conversionQuantity;//환산값
 
 }

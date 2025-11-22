@@ -20,7 +20,7 @@
     #{size},
     #{materialName},
     #{quantity},
-    #{unitName}
+    #{unitId}
     )
   </insert>
 
@@ -33,7 +33,7 @@
     `사이즈구분` AS size,
     `원재료명` AS materialName,
     `사용량` AS quantity,
-    `단위명` AS unitName
+    `단위명` AS unitId
     FROM `메뉴원재료`
     <where>
       <if test="cafeMenuName != null and cafeMenuName != ''">
@@ -56,7 +56,7 @@
     UPDATE `메뉴원재료`
     SET
     `사용량` = #{quantity},
-    `단위명` = #{unitName}
+    `단위명` = #{unitId}
     WHERE `메뉴명` = #{cafeMenuName}
     AND `온도구분` = #{temperature}
     AND `사이즈구분` = #{size}

@@ -11,7 +11,7 @@
     `설명`
     )
     VALUES (
-    #{unitName},
+    #{unitId},
     #{description}
     )
   </insert>
@@ -19,12 +19,12 @@
   <!-- ✅ 단위 조회 -->
   <select id="select" parameterType="map" resultType="com.coffemoa.domain.standard.entity.Unit">
     SELECT
-    `단위명` AS unitName,
+    `단위명` AS unitId,
     `설명` AS description
     FROM `단위`
     <where>
-      <if test="unitName != null and unitName != ''">
-        AND `단위명` = #{unitName}
+      <if test="unitId != null and unitId != ''">
+        AND `단위명` = #{unitId}
       </if>
     </where>
   </select>
@@ -33,15 +33,15 @@
   <update id="update" parameterType="map">
     UPDATE `단위`
     SET `설명` = #{description}
-    WHERE `단위명` = #{unitName}
+    WHERE `단위명` = #{unitId}
   </update>
 
   <!-- ✅ 단위 삭제 -->
   <delete id="delete" parameterType="map">
     DELETE FROM `단위`
     <where>
-      <if test="unitName != null and unitName != ''">
-        `단위명` = #{unitName}
+      <if test="unitId != null and unitId != ''">
+        `단위명` = #{unitId}
       </if>
     </where>
   </delete>

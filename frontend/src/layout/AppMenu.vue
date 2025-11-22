@@ -13,10 +13,10 @@ const model = ref([
         items: [
             { label: '단위관리', icon: 'pi pi-fw pi-home', to: '/standard/unit' },
             { label: '단위환산관리', icon: 'pi pi-fw pi-home', to: '/standard/unit-conversion' },
+            { label: '원자재가격관리', icon: 'pi pi-fw pi-home', to: '/standard/material' },
             { label: '메뉴관리', icon: 'pi pi-fw pi-home', to: '/standard/cafe-menu' },
-            { label: '레시피관리', icon: 'pi pi-fw pi-home', to: '/standard/cafe-menu-material' },
             { label: '메뉴옵션/가격관리', icon: 'pi pi-fw pi-home', to: '/standard/cafe-menu-price' },
-            { label: '원자재가격관리', icon: 'pi pi-fw pi-home', to: '/standard/material' }
+            { label: '레시피관리', icon: 'pi pi-fw pi-home', to: '/standard/cafe-menu-material' }
         ]
     },
     {

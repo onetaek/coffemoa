@@ -27,7 +27,7 @@ function logout() {
                 <i class="pi pi-bars"></i>
             </button>
             <router-link to="/" class="layout-topbar-logo">
-                <img src="@/assets/logo.png" alt="Coffemoa Logo" class="mx-auto" style="width: 30px" />
+                <img src="@/assets/logo.png" alt="Coffemoa Logo" class="mx-auto" style="width: 1.6rem" />
                 <span>커피모아</span>
             </router-link>
         </div>

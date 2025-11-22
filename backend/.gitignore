@@ -35,6 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### custom ###
 /src/main/resources/application-*.yml
 /src/main/resources/keys/*.pem
 /src/main/resources/sql/*.sql
+*.ps1

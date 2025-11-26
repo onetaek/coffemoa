@@ -87,8 +87,8 @@ onBeforeMount(async () => {
                 </template>
             </Column>
             <Column field="recipe" header="레시피" sortable style="min-width: 250px"></Column>
-            <Column field="totalCost" header="판매가" sortable style="min-width: 150px"></Column>
-            <Column field="price" header="가격" sortable style="min-width: 150px"></Column>
+            <Column field="totalCost" header="원재료가격" sortable style="min-width: 150px"></Column>
+            <Column field="price" header="판매가" sortable style="min-width: 150px"></Column>
             <Column field="costRate" header="원가율(%)" sortable style="min-width: 100px">
                 <template #body="{ data }">
                     <Tag :value="data.costRate" :severity="getCostRateSeverity(data.costRate)" />

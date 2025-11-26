@@ -135,11 +135,6 @@ const router = createRouter({
                     component: () => import('@/views/pages/standard/CafeMenu.vue')
                 },
                 {
-                    path: '/standard/cafe-menu-material',
-                    name: 'CafeMenuMaterial',
-                    component: () => import('@/views/pages/standard/CafeMenuMaterial.vue')
-                },
-                {
                     path: '/standard/cafe-menu-price',
                     name: 'CafeMenuPrice',
                     component: () => import('@/views/pages/standard/CafeMenuPrice.vue')

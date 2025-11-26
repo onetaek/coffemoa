@@ -27,7 +27,8 @@ function logout() {
             <button class="layout-menu-button layout-topbar-action" @click="toggleMenu">
                 <i class="pi pi-bars"></i>
             </button>
-            <router-link to="/" class="layout-topbar-logo">
+            <!-- 대시보드 작업 후 link to 수정 -->
+            <router-link to="/finance/cafe-menu-cost" class="layout-topbar-logo">
                 <img src="@/assets/logo.png" alt="Coffemoa Logo" class="mx-auto" style="width: 1.6rem" />
                 <span class="text-xl">커피모아</span>
             </router-link>

@@ -69,11 +69,11 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(DataIntegrityViolationException.class)
   public ResponseEntity<ApiErrorResponse> handleDataIntegrity(DataIntegrityViolationException ex,
       HttpServletRequest req) {
-    // 유니크 키(예: username) 충돌 시
+    // 유니크 키 충돌 시
     var code = ErrorCode.DUPLICATE_USERNAME;
     return ResponseEntity
         .status(code.getHttpStatus())
-        .body(ApiErrorResponse.of(code, req.getRequestURI(), null, code.getMessage()));
+        .body(ApiErrorResponse.of(code, req.getRequestURI(), null, ex.getMessage()));
   }
 
   @ExceptionHandler(Exception.class)

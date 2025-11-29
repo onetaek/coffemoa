@@ -22,6 +22,10 @@ public class ApiResponse<T> {
     return ApiResponse.<T>builder().code(HttpStatus.SC_OK).message("OK").data(data).build();
   }
 
+  public static ApiResponse<Void> ok() {
+    return ApiResponse.<Void>builder().code(HttpStatus.SC_OK).message("OK").build();
+  }
+
   public static <T> ApiResponse<T> error(int code, String message) {
     return ApiResponse.<T>builder().code(code).message(message).data(null).build();
   }

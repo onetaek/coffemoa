@@ -6,6 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -43,11 +46,17 @@ import org.hibernate.annotations.Where;
 @Builder
 public class Menu extends BaseAuditEntity {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
   @Enumerated(EnumType.STRING)
   @Column(name = "type", length = 20, nullable = false)
   private MenuType type = MenuType.MENU;   // 0=目录 → DIRECTORY, 1=菜单 → MENU
 
-  /** 계층 */
+  /**
+   * 계층
+   */
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "parent_id")
   private Menu parent;
@@ -63,7 +72,9 @@ public class Menu extends BaseAuditEntity {
   @Column(name = "sort_order", nullable = false)
   private Integer sortOrder = 0;
 
-  /** vue-router 필드 */
+  /**
+   * vue-router 필드
+   */
   @Column(name = "path", length = 200)
   private String path;                 // 'analysis' | '/authorization' 등
 
@@ -76,7 +87,9 @@ public class Menu extends BaseAuditEntity {
   @Column(name = "redirect", length = 200)
   private String redirect;
 
-  /** meta */
+  /**
+   * meta
+   */
   @Column(name = "meta_icon", length = 100)
   private String icon;
 
@@ -107,17 +120,20 @@ public class Menu extends BaseAuditEntity {
   @Column(name = "meta_can_to")
   private Boolean canTo = false;
 
-  /** 외부 링크 여부 */
+  /**
+   * 외부 링크 여부
+   */
   @Column(name = "external_link")
   private Boolean externalLink = false;
 
-  /** 상태(0/1) */
+  /**
+   * 상태(0/1)
+   */
   @Column(name = "status", nullable = false)
   private Integer status = 1;
 
   /**
-   * 권한 prefix: ex) "example:dialog"
-   * 버튼(action)과 합쳐서 "example:dialog:add" 형태의 서버 권한키 생성에 사용
+   * 권한 prefix: ex) "example:dialog" 버튼(action)과 합쳐서 "example:dialog:add" 형태의 서버 권한키 생성에 사용
    */
   @Column(name = "authority_prefix", length = 120)
   private String authorityPrefix;

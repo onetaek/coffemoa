@@ -5,6 +5,9 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -30,13 +33,17 @@ import org.hibernate.annotations.Where;
     },
     uniqueConstraints = @UniqueConstraint(name = "uk_user_account", columnNames = {"account"})
 )
-@SQLDelete(sql = "UPDATE auth_user SET is_active=false, deleted_at=now() WHERE id=?")
+@SQLDelete(sql = "UPDATE auth_user SET is_active= false, deleted_at=now() WHERE id=?")
 @Where(clause = "is_active = true")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class User extends BaseAuditEntity {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @Column(name = "username", length = 120, nullable = false)
   private String username;
@@ -50,11 +57,15 @@ public class User extends BaseAuditEntity {
   @Column(name = "email", length = 200)
   private String email;
 
-  /** 비밀번호 해시(별도 API로 관리 권장) */
+  /**
+   * 비밀번호 해시(별도 API로 관리 권장)
+   */
   @Column(name = "password_hash", length = 200)
   private String passwordHash;
 
-  /** 0/1 */
+  /**
+   * 0/1
+   */
   @Column(name = "status", nullable = false)
   private Integer status = 1;
 

@@ -20,7 +20,7 @@ public class RoleQueryRepository {
         .selectFrom(r)
         .where(
             r.code.eq(code),
-            r.isActive.isTrue()
+            r.deletedAt.isNull()
         )
         .fetchOne();
 

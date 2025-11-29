@@ -16,7 +16,6 @@ import com.coffemoa.domain.auth.repository.UserRepository;
 import com.coffemoa.domain.auth.repository.UserRoleRepository;
 import com.coffemoa.global.BusinessException;
 import com.coffemoa.global.ErrorCode;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -99,21 +98,21 @@ public class AuthService {
 
     String token = jwtTokenProvider.createToken(user.getUsername());
 
-    Set<String> permissions = userQueryRepository
-        .findAuthorityStringsByUserId(user.getId()); // 비어있으면 빈 Set
+//    Set<String> permissions = userQueryRepository
+//        .findAuthorityStringsByUserId(user.getId()); // 비어있으면 빈 Set
 
-    String primaryRoleName = user.getUserRoles().stream()
-        .findFirst().map(ur -> ur.getRole().getCode()).orElse(null);
+//    String primaryRoleName = user.getUserRoles().stream()
+//        .findFirst().map(ur -> ur.getRole().getCode()).orElse(null);
 
-    String primaryRoleId = user.getUserRoles().stream()
-        .findFirst().map(ur -> String.valueOf(ur.getRole().getId())).orElse(null);
+//    String primaryRoleId = user.getUserRoles().stream()
+//        .findFirst().map(ur -> String.valueOf(ur.getRole().getId())).orElse(null);
 
     return LoginResponse.builder()
         .token(token)
         .username(user.getUsername())
-        .role(primaryRoleName)
-        .roleId(primaryRoleId)
-        .permissions(permissions)
+//        .role(primaryRoleName)
+//        .roleId(primaryRoleId)
+//        .permissions(permissions)
         .build();
   }
 }

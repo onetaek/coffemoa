@@ -3,6 +3,9 @@ package com.coffemoa.domain.auth.entity;
 import com.coffemoa.global.BaseAuditEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,7 +22,8 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(
     name = "auth_user_role",
-    uniqueConstraints = @UniqueConstraint(name = "uk_user_role", columnNames = {"user_id","role_id"}),
+    uniqueConstraints = @UniqueConstraint(name = "uk_user_role", columnNames = {"user_id",
+        "role_id"}),
     indexes = {
         @Index(name = "ix_user_role_user", columnList = "user_id"),
         @Index(name = "ix_user_role_role", columnList = "role_id")
@@ -32,6 +36,10 @@ import org.hibernate.annotations.Where;
 @AllArgsConstructor
 @Builder
 public final class UserRole extends BaseAuditEntity {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "user_id", nullable = false)

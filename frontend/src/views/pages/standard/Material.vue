@@ -12,19 +12,20 @@ const dt = ref();
 const materials = ref([]);
 const selectedMaterials = ref(null);
 const materialDialog = ref(false);
-const deleteMaterialDialog = ref(false);
+const deleteDialog = ref(false);
 const deleteManyDialog = ref(false);
 const submitted = ref(false);
 
-/* PK: materialName */
+/* 단일 Material 객체 */
 const material = ref({
-    materialName: '',
-    quantity: null,
-    unitId: '',
-    price: null
+    id: null,
+    name: '',
+    purchaseQuantity: null,
+    purchaseUnitId: null,
+    purchasePrice: null
 });
 
-/* 단위 SelectBox */
+/* SelectBox: 단위 목록 */
 const unitOptions = ref([]);
 
 const filters = ref({
@@ -32,39 +33,41 @@ const filters = ref({
 });
 
 /* -----------------------------------------------------
-    조회 (목록 + 단위)
+    🔥 초기 데이터 조회
 ----------------------------------------------------- */
-onMounted(async () => {
+async function loadData() {
     try {
         const res = await api.get('/materials');
-        materials.value = res.data.data || [];
+        materials.value = res.data.data;
 
         const unitRes = await api.get('/units');
         unitOptions.value = unitRes.data.data.map((u) => ({
-            label: u.unitId,
-            value: u.unitId
+            label: u.name,
+            value: u.id
         }));
-    } catch {
+    } catch (e) {
         toast.add({
             severity: 'error',
             summary: '오류',
-            detail: '데이터를 불러오는 데 실패했습니다.',
+            detail: '데이터 조회 실패',
             life: 3000
         });
     }
-});
+}
+
+onMounted(loadData);
 
 /* -----------------------------------------------------
-    Dialog
+    Dialog 제어
 ----------------------------------------------------- */
 function openNew() {
     material.value = {
-        materialName: '',
-        quantity: null,
-        unitId: '',
-        price: null
+        id: null,
+        name: '',
+        purchaseQuantity: null,
+        purchaseUnitId: null,
+        purchasePrice: null
     };
-
     submitted.value = false;
     materialDialog.value = true;
 }
@@ -75,59 +78,62 @@ function hideDialog() {
 }
 
 function isEditMode() {
-    return materials.value.some((m) => m.materialName === material.value.materialName);
+    return material.value.id != null;
 }
 
 /* -----------------------------------------------------
-    저장 (등록 / 수정)
+    🔥 저장 (등록 / 수정)
 ----------------------------------------------------- */
 async function saveMaterial() {
     submitted.value = true;
 
-    if (!material.value.materialName?.trim()) return;
+    if (!material.value.name?.trim()) return;
 
     try {
+        const payload = [];
+
         if (isEditMode()) {
-            // 수정
-            await api.put('/materials', material.value);
-
-            const idx = materials.value.findIndex((m) => m.materialName === material.value.materialName);
-
-            materials.value[idx] = { ...material.value };
-
-            toast.add({
-                severity: 'success',
-                summary: '수정 완료',
-                detail: '원자재 정보가 수정되었습니다.',
-                life: 3000
+            payload.push({
+                id: material.value.id,
+                name: material.value.name,
+                purchaseQuantity: material.value.purchaseQuantity,
+                purchaseUnitId: material.value.purchaseUnitId,
+                purchasePrice: material.value.purchasePrice,
+                flag: 'U'
             });
         } else {
-            // 등록
-            await api.post('/materials', material.value);
-
-            materials.value.push({ ...material.value });
-
-            toast.add({
-                severity: 'success',
-                summary: '등록 완료',
-                detail: '원자재가 등록되었습니다.',
-                life: 3000
+            payload.push({
+                name: material.value.name,
+                purchaseQuantity: material.value.purchaseQuantity,
+                purchaseUnitId: material.value.purchaseUnitId,
+                purchasePrice: material.value.purchasePrice,
+                flag: 'C'
             });
         }
 
+        await api.post('/materials/cud', payload);
+
+        toast.add({
+            severity: 'success',
+            summary: '성공',
+            detail: isEditMode() ? '수정되었습니다.' : '등록되었습니다.',
+            life: 2500
+        });
+
         materialDialog.value = false;
-    } catch {
+        await loadData();
+    } catch (e) {
         toast.add({
             severity: 'error',
             summary: '오류',
-            detail: '저장 중 오류가 발생했습니다.',
+            detail: '저장 중 오류 발생',
             life: 3000
         });
     }
 }
 
 /* -----------------------------------------------------
-    수정
+    수정 버튼 클릭
 ----------------------------------------------------- */
 function editMaterial(m) {
     material.value = { ...m };
@@ -135,64 +141,70 @@ function editMaterial(m) {
 }
 
 /* -----------------------------------------------------
-    단건 삭제
+    🔥 단건 삭제
 ----------------------------------------------------- */
-function confirmDeleteMaterial(m) {
-    material.value = m;
-    deleteMaterialDialog.value = true;
+function confirmDeleteMaterial(data) {
+    material.value = data;
+    deleteDialog.value = true;
 }
 
 async function deleteMaterial() {
     try {
-        await api.delete('/materials', {
-            params: { materialName: material.value.materialName }
-        });
+        const payload = [
+            {
+                id: material.value.id,
+                flag: 'D'
+            }
+        ];
 
-        materials.value = materials.value.filter((m) => m.materialName !== material.value.materialName);
+        await api.post('/materials/cud', payload);
 
         toast.add({
             severity: 'success',
             summary: '삭제 완료',
             detail: '원자재가 삭제되었습니다.',
-            life: 3000
+            life: 2500
         });
-    } catch {
+
+        await loadData();
+    } catch (e) {
         toast.add({
             severity: 'error',
             summary: '오류',
-            detail: '삭제 중 오류가 발생했습니다.',
+            detail: '삭제 중 오류 발생',
             life: 3000
         });
     }
 
-    deleteMaterialDialog.value = false;
+    deleteDialog.value = false;
 }
 
 /* -----------------------------------------------------
-    선택 삭제
+    🔥 선택 삭제
 ----------------------------------------------------- */
 async function deleteSelectedMaterials() {
     try {
-        for (const m of selectedMaterials.value) {
-            await api.delete('/materials', {
-                params: { materialName: m.materialName }
-            });
-        }
+        const payload = selectedMaterials.value.map((m) => ({
+            id: m.id,
+            flag: 'D'
+        }));
 
-        materials.value = materials.value.filter((m) => !selectedMaterials.value.includes(m));
-        selectedMaterials.value = null;
+        await api.post('/materials/cud', payload);
 
         toast.add({
             severity: 'success',
             summary: '삭제 완료',
             detail: '선택한 원자재가 삭제되었습니다.',
-            life: 3000
+            life: 2500
         });
-    } catch {
+
+        await loadData();
+        selectedMaterials.value = null;
+    } catch (e) {
         toast.add({
             severity: 'error',
             summary: '오류',
-            detail: '선택 삭제 중 오류가 발생했습니다.',
+            detail: '선택 삭제 중 오류 발생',
             life: 3000
         });
     }
@@ -221,26 +233,27 @@ async function deleteSelectedMaterials() {
                 ref="dt"
                 v-model:selection="selectedMaterials"
                 :value="materials"
-                dataKey="materialName"
+                dataKey="id"
                 paginator
                 :rows="10"
                 :filters="filters"
             >
                 <template #header>
                     <div class="flex justify-between items-center">
-                        <h4>원자재 자격 관리</h4>
+                        <h4>원자재 관리</h4>
                         <IconField>
                             <InputIcon><i class="pi pi-search" /></InputIcon>
-                            <InputText v-model="filters.global.value" placeholder="검색어를 입력하세요..." />
+                            <InputText v-model="filters.global.value" placeholder="검색어 입력..." />
                         </IconField>
                     </div>
                 </template>
 
                 <Column selectionMode="multiple" style="width: 3rem" />
-                <Column field="materialName" header="원자재명" sortable />
-                <Column field="quantity" header="수량" sortable />
-                <Column field="unitId" header="단위" sortable />
-                <Column field="price" header="가격" sortable />
+
+                <Column field="name" header="원자재명" sortable />
+                <Column field="purchaseQuantity" header="수량" sortable />
+                <Column field="purchaseUnitId" header="단위" sortable />
+                <Column field="purchasePrice" header="가격" sortable />
 
                 <Column style="min-width: 10rem">
                     <template #body="{ data }">
@@ -258,29 +271,20 @@ async function deleteSelectedMaterials() {
         </div>
 
         <!-- 등록/수정 Dialog -->
-        <Dialog v-model:visible="materialDialog" :style="{ width: '450px' }" header="원자재 정보" :modal="true">
+        <Dialog v-model:visible="materialDialog" :style="{ width: '450px' }" header="원자재 등록 / 수정" :modal="true">
             <div class="flex flex-col gap-6">
                 <div>
                     <label class="block font-bold mb-2">원자재명</label>
-                    <InputText
-                        v-model="material.materialName"
-                        required="true"
-                        autofocus
-                        fluid
-                        :disabled="isEditMode()"
-                    />
-                    <small v-if="submitted && !material.materialName" class="text-red-500">
-                        원자재명은 필수 값입니다.
-                    </small>
+                    <InputText v-model="material.name" required fluid />
+                    <small v-if="submitted && !material.name" class="text-red-500">원자재명은 필수입니다.</small>
                 </div>
 
                 <div>
                     <label class="block font-bold mb-2">수량</label>
                     <InputNumber
-                        v-model="material.quantity"
+                        v-model="material.purchaseQuantity"
                         :minFractionDigits="0"
                         :maxFractionDigits="4"
-                        placeholder="예: 1000"
                         fluid
                     />
                 </div>
@@ -288,7 +292,7 @@ async function deleteSelectedMaterials() {
                 <div>
                     <label class="block font-bold mb-2">단위</label>
                     <Select
-                        v-model="material.unitId"
+                        v-model="material.purchaseUnitId"
                         :options="unitOptions"
                         optionLabel="label"
                         optionValue="value"
@@ -299,13 +303,7 @@ async function deleteSelectedMaterials() {
 
                 <div>
                     <label class="block font-bold mb-2">가격</label>
-                    <InputNumber
-                        v-model="material.price"
-                        :minFractionDigits="0"
-                        :maxFractionDigits="0"
-                        placeholder="예: 5000"
-                        fluid
-                    />
+                    <InputNumber v-model="material.purchasePrice" :minFractionDigits="0" :maxFractionDigits="0" fluid />
                 </div>
             </div>
 
@@ -316,16 +314,17 @@ async function deleteSelectedMaterials() {
         </Dialog>
 
         <!-- 단건 삭제 Dialog -->
-        <Dialog v-model:visible="deleteMaterialDialog" :style="{ width: '400px' }" header="삭제 확인" :modal="true">
+        <Dialog v-model:visible="deleteDialog" :style="{ width: '400px' }" header="삭제 확인" :modal="true">
             <div class="flex items-center gap-4">
                 <i class="pi pi-exclamation-triangle text-3xl" />
-                <span>
-                    원자재 <b>{{ material.materialName }}</b> 을(를) 삭제하시겠습니까?
-                </span>
+                <span
+                    >원자재 <b>{{ material.name }}</b
+                    >을(를) 삭제하시겠습니까?</span
+                >
             </div>
 
             <template #footer>
-                <Button label="취소" icon="pi pi-times" text @click="deleteMaterialDialog = false" />
+                <Button label="취소" icon="pi pi-times" text @click="deleteDialog = false" />
                 <Button label="삭제" icon="pi pi-check" severity="danger" @click="deleteMaterial" />
             </template>
         </Dialog>

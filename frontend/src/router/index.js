@@ -180,7 +180,6 @@ const router = createRouter({
 // =========================
 router.beforeEach(async (to, from, next) => {
     const auth = useAuthStore();
-    console.log('auth:', auth);
 
     // 로그인 페이지는 토큰 없이도 접근 허용
     if (to.path === '/auth/login') {

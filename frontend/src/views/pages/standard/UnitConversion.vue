@@ -1,3 +1,4 @@
+<!-- UnitConversion.vue (Refactored for CUD API) -->
 <script setup>
 import api from '@/api/axios';
 import { useToast } from 'primevue/usetoast';
@@ -16,11 +17,12 @@ const deleteDialog = ref(false);
 const deleteManyDialog = ref(false);
 const submitted = ref(false);
 
-/* 복합키 객체 */
+/* 단일 객체 */
 const conversion = ref({
-    standardUnitId: '',
-    conversionUnitId: '',
-    conversionQuantity: null
+    id: null,
+    baseUnitId: null,
+    targetUnitId: null,
+    ratio: null
 });
 
 /* 단위 목록 SelectBox 옵션 */
@@ -33,24 +35,20 @@ const filters = ref({
 /* -----------------------------------------------------
     단위환산 & 단위 목록 조회
 ----------------------------------------------------- */
-onMounted(async () => {
+async function loadData() {
     try {
-        // 단위 환산 목록 조회
         const res = await api.get('/unit-conversions');
-        conversions.value = res.data.data.map((c) => ({
-            ...c,
-            uniqueKey: `${c.standardUnitId}__${c.conversionUnitId}`
-        }));
+        conversions.value = res.data.data;
 
-        // 단위 목록 조회 (SelectBox 용)
         const unitsRes = await api.get('/units');
-        const units = unitsRes.data.data || [];
+        const units = unitsRes.data.data;
 
         unitOptions.value = units.map((u) => ({
-            label: u.unitId,
-            value: u.unitId
+            label: u.name,
+            value: u.id
         }));
     } catch (e) {
+        console.error(e);
         toast.add({
             severity: 'error',
             summary: '오류',
@@ -58,16 +56,19 @@ onMounted(async () => {
             life: 3000
         });
     }
-});
+}
+
+onMounted(loadData);
 
 /* -----------------------------------------------------
     Dialog
 ----------------------------------------------------- */
 function openNew() {
     conversion.value = {
-        standardUnitId: '',
-        conversionUnitId: '',
-        conversionQuantity: null
+        id: null,
+        baseUnitId: null,
+        targetUnitId: null,
+        ratio: null
     };
     submitted.value = false;
     conversionDialog.value = true;
@@ -79,11 +80,7 @@ function hideDialog() {
 }
 
 function isEditMode() {
-    return conversions.value.some(
-        (v) =>
-            v.standardUnitId === conversion.value.standardUnitId &&
-            v.conversionUnitId === conversion.value.conversionUnitId
-    );
+    return conversion.value.id != null;
 }
 
 /* -----------------------------------------------------
@@ -92,44 +89,39 @@ function isEditMode() {
 async function saveConversion() {
     submitted.value = true;
 
-    if (!conversion.value.standardUnitId || !conversion.value.conversionUnitId) {
-        return;
-    }
+    if (!conversion.value.baseUnitId || !conversion.value.targetUnitId) return;
 
     try {
+        const payload = [];
+
         if (isEditMode()) {
-            // 🔥 PUT으로 수정
-            await api.put('/unit-conversions', conversion.value);
-
-            const idx = conversions.value.findIndex(
-                (v) =>
-                    v.standardUnitId === conversion.value.standardUnitId &&
-                    v.conversionUnitId === conversion.value.conversionUnitId
-            );
-
-            conversions.value[idx] = { ...conversion.value };
-
-            toast.add({
-                severity: 'success',
-                summary: '수정 완료',
-                detail: '단위 환산 정보가 수정되었습니다.',
-                life: 3000
+            payload.push({
+                id: conversion.value.id,
+                baseUnitId: conversion.value.baseUnitId,
+                targetUnitId: conversion.value.targetUnitId,
+                ratio: conversion.value.ratio,
+                flag: 'U'
             });
         } else {
-            // 🔥 신규 등록
-            await api.post('/unit-conversions', conversion.value);
-
-            conversions.value.push({ ...conversion.value });
-
-            toast.add({
-                severity: 'success',
-                summary: '등록 완료',
-                detail: '단위 환산 정보가 등록되었습니다.',
-                life: 3000
+            payload.push({
+                baseUnitId: conversion.value.baseUnitId,
+                targetUnitId: conversion.value.targetUnitId,
+                ratio: conversion.value.ratio,
+                flag: 'C'
             });
         }
 
+        await api.post('/unit-conversions/cud', payload);
+
+        toast.add({
+            severity: 'success',
+            summary: '성공',
+            detail: isEditMode() ? '수정되었습니다.' : '등록되었습니다.',
+            life: 2500
+        });
+
         conversionDialog.value = false;
+        await loadData();
     } catch (e) {
         toast.add({
             severity: 'error',
@@ -141,7 +133,7 @@ async function saveConversion() {
 }
 
 /* -----------------------------------------------------
-    수정 Dialog 표시
+    수정 Dialog
 ----------------------------------------------------- */
 function editConversion(data) {
     conversion.value = { ...data };
@@ -158,27 +150,23 @@ function confirmDeleteConversion(data) {
 
 async function deleteConversion() {
     try {
-        await api.delete('/unit-conversions', {
-            params: {
-                standardUnitId: conversion.value.standardUnitId,
-                conversionUnitId: conversion.value.conversionUnitId
+        const payload = [
+            {
+                id: conversion.value.id,
+                flag: 'D'
             }
-        });
+        ];
 
-        conversions.value = conversions.value.filter(
-            (v) =>
-                !(
-                    v.standardUnitId === conversion.value.standardUnitId &&
-                    v.conversionUnitId === conversion.value.conversionUnitId
-                )
-        );
+        await api.post('/unit-conversions/cud', payload);
 
         toast.add({
             severity: 'success',
             summary: '삭제 완료',
             detail: '단위 환산 정보가 삭제되었습니다.',
-            life: 3000
+            life: 2500
         });
+
+        await loadData();
     } catch {
         toast.add({
             severity: 'error',
@@ -196,30 +184,27 @@ async function deleteConversion() {
 ----------------------------------------------------- */
 async function deleteSelectedConversions() {
     try {
-        for (const item of selectedConversions.value) {
-            await api.delete('/unit-conversions', {
-                params: {
-                    standardUnitId: item.standardUnitId,
-                    conversionUnitId: item.conversionUnitId
-                }
-            });
-        }
+        const payload = selectedConversions.value.map((item) => ({
+            id: item.id,
+            flag: 'D'
+        }));
 
-        conversions.value = conversions.value.filter((v) => !selectedConversions.value.includes(v));
-
-        selectedConversions.value = null;
+        await api.post('/unit-conversions/cud', payload);
 
         toast.add({
             severity: 'success',
             summary: '삭제 완료',
-            detail: '선택한 단위 환산 정보가 삭제되었습니다.',
-            life: 3000
+            detail: '선택한 항목이 삭제되었습니다.',
+            life: 2500
         });
+
+        await loadData();
+        selectedConversions.value = null;
     } catch {
         toast.add({
             severity: 'error',
             summary: '오류',
-            detail: '선택 삭제 처리 중 오류가 발생했습니다.',
+            detail: '선택 삭제 오류가 발생했습니다.',
             life: 3000
         });
     }
@@ -248,7 +233,7 @@ async function deleteSelectedConversions() {
                 ref="dt"
                 v-model:selection="selectedConversions"
                 :value="conversions"
-                dataKey="uniqueKey"
+                dataKey="id"
                 paginator
                 :rows="10"
                 :filters="filters"
@@ -258,15 +243,15 @@ async function deleteSelectedConversions() {
                         <h4>단위 환산 관리</h4>
                         <IconField>
                             <InputIcon><i class="pi pi-search" /></InputIcon>
-                            <InputText v-model="filters.global.value" placeholder="검색어를 입력하세요..." />
+                            <InputText v-model="filters.global.value" placeholder="검색어 입력" />
                         </IconField>
                     </div>
                 </template>
 
                 <Column selectionMode="multiple" style="width: 3rem" />
-                <Column field="standardUnitId" header="기준 단위" sortable />
-                <Column field="conversionUnitId" header="변환 단위" sortable />
-                <Column field="conversionQuantity" header="환산 수량" sortable />
+                <Column field="baseUnitId" header="기준 단위" sortable />
+                <Column field="targetUnitId" header="변환 단위" sortable />
+                <Column field="ratio" header="환산 비율" sortable />
 
                 <Column style="min-width: 8rem">
                     <template #body="{ data }">
@@ -289,7 +274,7 @@ async function deleteSelectedConversions() {
                 <div>
                     <label class="block font-bold mb-2">기준 단위</label>
                     <Select
-                        v-model="conversion.standardUnitId"
+                        v-model="conversion.baseUnitId"
                         :options="unitOptions"
                         optionLabel="label"
                         optionValue="value"
@@ -302,7 +287,7 @@ async function deleteSelectedConversions() {
                 <div>
                     <label class="block font-bold mb-2">변환 단위</label>
                     <Select
-                        v-model="conversion.conversionUnitId"
+                        v-model="conversion.targetUnitId"
                         :options="unitOptions"
                         optionLabel="label"
                         optionValue="value"
@@ -313,12 +298,12 @@ async function deleteSelectedConversions() {
                 </div>
 
                 <div>
-                    <label class="block font-bold mb-2">환산 수량</label>
+                    <label class="block font-bold mb-2">환산 비율</label>
                     <InputNumber
-                        v-model="conversion.conversionQuantity"
+                        v-model="conversion.ratio"
                         :minFractionDigits="0"
                         :maxFractionDigits="6"
-                        placeholder="환산 수량을 입력하세요"
+                        placeholder="예: 10 (1샷 → 10g)"
                         fluid
                     />
                 </div>
@@ -334,12 +319,7 @@ async function deleteSelectedConversions() {
         <Dialog v-model:visible="deleteDialog" :style="{ width: '400px' }" header="삭제 확인" :modal="true">
             <div class="flex items-center gap-4">
                 <i class="pi pi-exclamation-triangle text-3xl" />
-                <span>
-                    <b>{{ conversion.standardUnitId }}</b>
-                    단위에서
-                    <b>{{ conversion.conversionUnitId }}</b>
-                    로의 단위 환산 정보를 삭제하시겠습니까?
-                </span>
+                <span>정말 삭제하시겠습니까?</span>
             </div>
 
             <template #footer>

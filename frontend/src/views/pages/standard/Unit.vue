@@ -1,3 +1,4 @@
+<!-- Unit.vue (Refactored for CUD API) -->
 <script setup>
 import api from '@/api/axios';
 import { useToast } from 'primevue/usetoast';
@@ -13,9 +14,9 @@ const deleteUnitDialog = ref(false);
 const deleteUnitsDialog = ref(false);
 const submitted = ref(false);
 
-// 🔥 unitId = PK
 const unit = ref({
-    unitId: '',
+    id: null,
+    name: '',
     description: ''
 });
 
@@ -23,13 +24,10 @@ const filters = ref({
     global: { value: null, matchMode: 'contains' }
 });
 
-/* -----------------------------------------------------
-    🔥 1) 조회 API
------------------------------------------------------ */
-onMounted(async () => {
+async function loadUnits() {
     try {
         const res = await api.get('/units');
-        units.value = res.data.data || [];
+        units.value = res.data.data;
     } catch (e) {
         console.error(e);
         toast.add({
@@ -39,13 +37,12 @@ onMounted(async () => {
             life: 3000
         });
     }
-});
+}
 
-/* -----------------------------------------------------
-    다이얼로그
------------------------------------------------------ */
+onMounted(loadUnits);
+
 function openNew() {
-    unit.value = { unitId: '', description: '' };
+    unit.value = { id: null, name: '', description: '' };
     submitted.value = false;
     unitDialog.value = true;
 }
@@ -56,46 +53,43 @@ function hideDialog() {
 }
 
 function isEditMode() {
-    return units.value.some((u) => u.unitId === unit.value.unitId);
+    return unit.value.id != null;
 }
 
-/* -----------------------------------------------------
-    🔥 2) 저장 (등록 / 수정)
------------------------------------------------------ */
 async function saveUnit() {
     submitted.value = true;
 
-    if (!unit.value.unitId?.trim()) return;
+    if (!unit.value.name.trim()) return;
 
     try {
+        const payload = [];
+
         if (isEditMode()) {
-            // 수정
-            await api.put('/units', unit.value);
-
-            const idx = units.value.findIndex((u) => u.unitId === unit.value.unitId);
-            units.value[idx] = { ...unit.value };
-
-            toast.add({
-                severity: 'success',
-                summary: '수정 완료',
-                detail: '단위 정보가 수정되었습니다.',
-                life: 3000
+            payload.push({
+                id: unit.value.id,
+                name: unit.value.name,
+                description: unit.value.description,
+                flag: 'U'
             });
         } else {
-            // 등록
-            await api.post('/units', unit.value);
-
-            units.value.push({ ...unit.value });
-
-            toast.add({
-                severity: 'success',
-                summary: '등록 완료',
-                detail: '단위가 성공적으로 등록되었습니다.',
-                life: 3000
+            payload.push({
+                name: unit.value.name,
+                description: unit.value.description,
+                flag: 'C'
             });
         }
 
+        await api.post('/units/cud', payload);
+
+        toast.add({
+            severity: 'success',
+            summary: '성공',
+            detail: isEditMode() ? '수정되었습니다.' : '등록되었습니다.',
+            life: 3000
+        });
+
         unitDialog.value = false;
+        await loadUnits();
     } catch (e) {
         console.error(e);
         toast.add({
@@ -107,9 +101,6 @@ async function saveUnit() {
     }
 }
 
-/* -----------------------------------------------------
-    수정 / 삭제
------------------------------------------------------ */
 function editUnit(u) {
     unit.value = { ...u };
     unitDialog.value = true;
@@ -120,16 +111,16 @@ function confirmDeleteUnit(u) {
     deleteUnitDialog.value = true;
 }
 
-/* -----------------------------------------------------
-    🔥 3) 단건 삭제
------------------------------------------------------ */
 async function deleteUnit() {
     try {
-        await api.delete('/units', {
-            params: { unitId: unit.value.unitId }
-        });
+        const payload = [
+            {
+                id: unit.value.id,
+                flag: 'D'
+            }
+        ];
 
-        units.value = units.value.filter((u) => u.unitId !== unit.value.unitId);
+        await api.post('/units/cud', payload);
 
         toast.add({
             severity: 'success',
@@ -137,12 +128,14 @@ async function deleteUnit() {
             detail: '단위가 삭제되었습니다.',
             life: 3000
         });
+
+        await loadUnits();
     } catch (e) {
         console.error(e);
         toast.add({
             severity: 'error',
             summary: '오류',
-            detail: '단위를 삭제하는 중 오류가 발생했습니다.',
+            detail: '삭제 중 오류가 발생했습니다.',
             life: 3000
         });
     }
@@ -151,32 +144,30 @@ async function deleteUnit() {
     unit.value = {};
 }
 
-/* -----------------------------------------------------
-    🔥 4) 선택 삭제
------------------------------------------------------ */
 async function deleteSelectedUnits() {
     try {
-        for (const u of selectedUnits.value) {
-            await api.delete('/units', {
-                params: { unitId: u.unitId }
-            });
-        }
+        const payload = selectedUnits.value.map((u) => ({
+            id: u.id,
+            flag: 'D'
+        }));
 
-        units.value = units.value.filter((u) => !selectedUnits.value.includes(u));
-        selectedUnits.value = null;
+        await api.post('/units/cud', payload);
 
         toast.add({
             severity: 'success',
             summary: '삭제 완료',
-            detail: '선택한 단위가 모두 삭제되었습니다.',
+            detail: '선택한 단위가 삭제되었습니다.',
             life: 3000
         });
+
+        await loadUnits();
+        selectedUnits.value = null;
     } catch (e) {
         console.error(e);
         toast.add({
             severity: 'error',
             summary: '오류',
-            detail: '선택 삭제 처리 중 오류가 발생했습니다.',
+            detail: '선택 삭제 중 오류가 발생했습니다.',
             life: 3000
         });
     }
@@ -205,7 +196,7 @@ async function deleteSelectedUnits() {
                 ref="dt"
                 v-model:selection="selectedUnits"
                 :value="units"
-                dataKey="unitId"
+                dataKey="id"
                 :paginator="true"
                 :rows="10"
                 :filters="filters"
@@ -215,13 +206,13 @@ async function deleteSelectedUnits() {
                         <h4>단위 관리</h4>
                         <IconField>
                             <InputIcon><i class="pi pi-search" /></InputIcon>
-                            <InputText v-model="filters.global.value" placeholder="검색어를 입력하세요" />
+                            <InputText v-model="filters.global.value" placeholder="검색어 입력" />
                         </IconField>
                     </div>
                 </template>
 
                 <Column selectionMode="multiple" style="width: 3rem" />
-                <Column field="unitId" header="단위 ID" sortable style="min-width: 12rem" />
+                <Column field="name" header="단위명" sortable style="min-width: 12rem" />
                 <Column field="description" header="설명" sortable style="min-width: 16rem" />
 
                 <Column :exportable="false" style="min-width: 10rem">
@@ -239,18 +230,18 @@ async function deleteSelectedUnits() {
             </DataTable>
         </div>
 
-        <!-- 단위 등록/수정 Dialog -->
-        <Dialog v-model:visible="unitDialog" :style="{ width: '450px' }" header="단위 등록 / 수정" :modal="true">
+        <!-- 등록/수정 Dialog -->
+        <Dialog v-model:visible="unitDialog" header="단위 등록 / 수정" :modal="true" :style="{ width: '450px' }">
             <div class="flex flex-col gap-6">
                 <div>
-                    <label class="block font-bold mb-2">단위 ID</label>
-                    <InputText v-model="unit.unitId" required="true" autofocus fluid :disabled="isEditMode()" />
-                    <small v-if="submitted && !unit.unitId" class="text-red-500"> 단위 ID는 필수 값입니다. </small>
+                    <label class="block font-bold mb-2">단위명</label>
+                    <InputText v-model="unit.name" required autofocus fluid />
+                    <small v-if="submitted && !unit.name" class="text-red-500"> 단위명은 필수 값입니다. </small>
                 </div>
 
                 <div>
                     <label class="block font-bold mb-2">설명</label>
-                    <InputText fluid v-model="unit.description" />
+                    <InputText v-model="unit.description" fluid />
                 </div>
             </div>
 
@@ -260,12 +251,12 @@ async function deleteSelectedUnits() {
             </template>
         </Dialog>
 
-        <!-- 단건 삭제 Dialog -->
-        <Dialog v-model:visible="deleteUnitDialog" :style="{ width: '400px' }" header="삭제 확인" :modal="true">
+        <!-- 단건 삭제 -->
+        <Dialog v-model:visible="deleteUnitDialog" header="삭제 확인" :modal="true" :style="{ width: '400px' }">
             <div class="flex items-center gap-4">
                 <i class="pi pi-exclamation-triangle text-3xl" />
                 <span>
-                    <b>{{ unit?.unitId }}</b> 단위를 삭제하시겠습니까?
+                    <b>{{ unit?.name }}</b> 단위를 삭제하시겠습니까?
                 </span>
             </div>
 
@@ -275,8 +266,8 @@ async function deleteSelectedUnits() {
             </template>
         </Dialog>
 
-        <!-- 선택 삭제 Dialog -->
-        <Dialog v-model:visible="deleteUnitsDialog" :style="{ width: '400px' }" header="선택 삭제 확인" :modal="true">
+        <!-- 선택 삭제 -->
+        <Dialog v-model:visible="deleteUnitsDialog" header="선택 삭제 확인" :modal="true" :style="{ width: '400px' }">
             <div class="flex items-center gap-4">
                 <i class="pi pi-exclamation-triangle text-3xl" />
                 <span>선택한 단위를 삭제하시겠습니까?</span>

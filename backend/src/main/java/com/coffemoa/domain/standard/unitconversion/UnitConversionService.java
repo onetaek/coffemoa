@@ -18,15 +18,8 @@ public class UnitConversionService {
   @Transactional(readOnly = true)
   public List<UnitConversionResponse> getList(UnitConversionSearchRequest request) {
     return unitConversionRepository.search(request).stream()
-        .map(uc -> UnitConversionResponse.builder()
-            .id(uc.getId())
-            .baseUnitId(uc.getBaseUnit().getId())
-            .targetUnitId(uc.getTargetUnit().getId())
-            .ratio(uc.getRatio())
-            .createdAt(uc.getCreatedAt())
-            .updatedAt(uc.getUpdatedAt())
-            .build()
-        ).toList();
+        .map(UnitConversionResponse::fromEntity)
+        .toList();
   }
 
   public void process(List<UnitConversionCUDRequest> list) {

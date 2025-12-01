@@ -22,6 +22,14 @@ const conversion = ref({
     id: null,
     baseUnitId: null,
     targetUnitId: null,
+    baseUnit: {
+        id: null,
+        name: null
+    },
+    targetUnit: {
+        id: null,
+        name: null
+    },
     ratio: null
 });
 
@@ -249,8 +257,8 @@ async function deleteSelectedConversions() {
                 </template>
 
                 <Column selectionMode="multiple" style="width: 3rem" />
-                <Column field="baseUnitId" header="기준 단위" sortable />
-                <Column field="targetUnitId" header="변환 단위" sortable />
+                <Column field="baseUnit.name" header="기준 단위" sortable />
+                <Column field="targetUnit.name" header="변환 단위" sortable />
                 <Column field="ratio" header="환산 비율" sortable />
 
                 <Column style="min-width: 8rem">
@@ -279,7 +287,6 @@ async function deleteSelectedConversions() {
                         optionLabel="label"
                         optionValue="value"
                         placeholder="기준 단위를 선택하세요"
-                        :disabled="isEditMode()"
                         fluid
                     />
                 </div>
@@ -292,7 +299,6 @@ async function deleteSelectedConversions() {
                         optionLabel="label"
                         optionValue="value"
                         placeholder="변환 단위를 선택하세요"
-                        :disabled="isEditMode()"
                         fluid
                     />
                 </div>

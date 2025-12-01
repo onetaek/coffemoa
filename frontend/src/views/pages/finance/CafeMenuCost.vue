@@ -76,19 +76,19 @@ onBeforeMount(async () => {
                 </div>
             </template>
             <Column field="menuName" header="메뉴" sortable style="min-width: 180px" frozen class="font-bold"></Column>
-            <Column field="temperatureType" header="온도" sortable style="min-width: 80px">
+            <Column field="temperature" header="온도" sortable style="min-width: 80px">
                 <template #body="{ data }">
-                    <Tag :value="data.temperatureType" :severity="getTemperatureTypeSeverity(data.temperatureType)" />
+                    <Tag :value="data.temperature" :severity="getTemperatureTypeSeverity(data.temperature)" />
                 </template>
             </Column>
-            <Column field="sizeType" header="사이즈" sortable style="min-width: 80px">
+            <Column field="size" header="사이즈" sortable style="min-width: 80px">
                 <template #body="{ data }">
-                    <Tag :value="data.sizeType" :severity="getSizeTypeSeverity(data.sizeType)" />
+                    <Tag :value="data.size" :severity="getSizeTypeSeverity(data.size)" />
                 </template>
             </Column>
-            <Column field="recipe" header="레시피" sortable style="min-width: 250px"></Column>
-            <Column field="totalCost" header="원재료가격" sortable style="min-width: 150px"></Column>
-            <Column field="price" header="판매가" sortable style="min-width: 150px"></Column>
+            <Column field="recipeListFlat" header="레시피" sortable style="min-width: 250px"></Column>
+            <Column field="totalCost" header="원재료가격(원)" sortable style="min-width: 150px"></Column>
+            <Column field="menuPrice" header="판매가(원)" sortable style="min-width: 150px"></Column>
             <Column field="costRate" header="원가율(%)" sortable style="min-width: 100px">
                 <template #body="{ data }">
                     <Tag :value="data.costRate" :severity="getCostRateSeverity(data.costRate)" />

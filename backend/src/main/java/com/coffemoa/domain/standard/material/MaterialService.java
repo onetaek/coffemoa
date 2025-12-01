@@ -19,16 +19,7 @@ public class MaterialService {
   public List<MaterialResponse> getList(MaterialSearchRequest request) {
 
     return materialRepository.search(request).stream()
-        .map(m -> MaterialResponse.builder()
-            .id(m.getId())
-            .name(m.getName())
-            .purchaseUnitId(m.getPurchaseUnit() != null ? m.getPurchaseUnit().getId() : null)
-            .purchaseQuantity(m.getPurchaseQuantity())
-            .purchasePrice(m.getPurchasePrice())
-            .createdAt(m.getCreatedAt())
-            .updatedAt(m.getUpdatedAt())
-            .build()
-        ).toList();
+        .map(MaterialResponse::fromEntity).toList();
   }
 
   public void process(List<MaterialCUDRequest> list) {

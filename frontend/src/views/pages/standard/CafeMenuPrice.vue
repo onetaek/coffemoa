@@ -475,7 +475,7 @@ async function deleteRecipe(row) {
                     </template>
                 </Column>
 
-                <Column field="price" header="가격" sortable />
+                <Column field="price" header="가격(원)" sortable />
 
                 <Column header="관리" style="min-width: 12rem">
                     <template #body="{ data }">
@@ -554,7 +554,7 @@ async function deleteRecipe(row) {
                 </div>
 
                 <div>
-                    <label class="block font-bold mb-2">가격</label>
+                    <label class="block font-bold mb-2">가격(원)</label>
                     <InputNumber v-model="priceItem.price" :minFractionDigits="0" :maxFractionDigits="0" fluid />
                 </div>
             </div>

@@ -259,7 +259,7 @@ async function deleteSelectedConversions() {
                 <Column selectionMode="multiple" style="width: 3rem" />
                 <Column field="baseUnit.name" header="기준 단위" sortable />
                 <Column field="targetUnit.name" header="변환 단위" sortable />
-                <Column field="ratio" header="환산 비율" sortable />
+                <Column field="ratio" header="환산 비" sortable />
 
                 <Column style="min-width: 8rem">
                     <template #body="{ data }">
@@ -304,7 +304,7 @@ async function deleteSelectedConversions() {
                 </div>
 
                 <div>
-                    <label class="block font-bold mb-2">환산 비율</label>
+                    <label class="block font-bold mb-2">환산 비</label>
                     <InputNumber
                         v-model="conversion.ratio"
                         :minFractionDigits="0"

@@ -252,8 +252,8 @@ async function deleteSelectedMaterials() {
 
                 <Column field="name" header="원자재명" sortable />
                 <Column field="purchaseQuantity" header="수량" sortable />
-                <Column field="purchaseUnitId" header="단위" sortable />
-                <Column field="purchasePrice" header="가격" sortable />
+                <Column field="purchaseUnit.name" header="단위" sortable />
+                <Column field="purchasePrice" header="가격(원)" sortable />
 
                 <Column style="min-width: 10rem">
                     <template #body="{ data }">

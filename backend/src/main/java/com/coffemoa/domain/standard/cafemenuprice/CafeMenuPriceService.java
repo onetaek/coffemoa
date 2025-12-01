@@ -42,6 +42,7 @@ public class CafeMenuPriceService {
         .temperature(req.getTemperature())
         .size(req.getSize())
         .price(req.getPrice())
+        .code(req.getCode())
         .build();
 
     priceRepository.save(price);
@@ -59,6 +60,7 @@ public class CafeMenuPriceService {
     price.setTemperature(req.getTemperature());
     price.setSize(req.getSize());
     price.setPrice(req.getPrice());
+    price.setCode(req.getCode());
   }
 
   private void delete(CafeMenuPriceCUDRequest req) {

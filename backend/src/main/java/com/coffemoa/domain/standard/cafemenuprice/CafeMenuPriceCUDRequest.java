@@ -20,6 +20,7 @@ public class CafeMenuPriceCUDRequest {
   private String temperature;
   private String size;
   private BigDecimal price;
+  private String code;
 
   private CUDFlag flag;
 

@@ -21,6 +21,7 @@ public class CafeMenuPriceResponse {
   private TemperatureOption temperature;
   private SizeOption size;
   private BigDecimal price;
+  private String code;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
@@ -33,6 +34,7 @@ public class CafeMenuPriceResponse {
         .price(entity.getPrice())
         .createdAt(entity.getCreatedAt())
         .updatedAt(entity.getUpdatedAt())
+        .code(entity.getCode())
         .build();
   }
 }

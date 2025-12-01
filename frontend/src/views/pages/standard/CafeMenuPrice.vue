@@ -31,7 +31,8 @@ const initPriceItem = () => {
         },
         temperature: '',
         size: '',
-        price: null
+        price: null,
+        code: ''
     };
 };
 const priceItem = ref(initPriceItem());
@@ -169,6 +170,7 @@ async function savePrice() {
                     temperature: priceItem.value.temperature,
                     size: priceItem.value.size,
                     price: priceItem.value.price,
+                    code: priceItem.value.code,
                     flag: 'U'
                 }
             ]);
@@ -189,6 +191,7 @@ async function savePrice() {
                     temperature: priceItem.value.temperature,
                     size: priceItem.value.size,
                     price: priceItem.value.price,
+                    code: priceItem.value.code,
                     flag: 'C'
                 }
             ]);
@@ -477,6 +480,8 @@ async function deleteRecipe(row) {
 
                 <Column field="price" header="가격(원)" sortable />
 
+                <Column field="code" header="코드" sortable />
+
                 <Column header="관리" style="min-width: 12rem">
                     <template #body="{ data }">
                         <Button
@@ -557,6 +562,11 @@ async function deleteRecipe(row) {
                     <label class="block font-bold mb-2">가격(원)</label>
                     <InputNumber v-model="priceItem.price" :minFractionDigits="0" :maxFractionDigits="0" fluid />
                 </div>
+
+                <div>
+                    <label class="block font-bold mb-2">코드</label>
+                    <InputText v-model="priceItem.code" fluid />
+                </div>
             </div>
 
             <template #footer>
@@ -608,7 +618,7 @@ async function deleteRecipe(row) {
             </div>
 
             <!-- 레시피 테이블 -->
-            <DataTable :value="recipes" v-model:selection="selectedRecipes" dataKey="id" paginator :rows="8">
+            <DataTable :value="recipes" v-model:selection="selectedRecipes" dataKey="id" :rows="8">
                 <Column selectionMode="multiple" style="width: 3rem" />
                 <Column field="material.name" header="원재료" sortable>
                     <template #body="{ data }">

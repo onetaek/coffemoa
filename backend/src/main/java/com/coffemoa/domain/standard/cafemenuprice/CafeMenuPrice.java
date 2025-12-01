@@ -66,5 +66,8 @@ public class CafeMenuPrice extends BaseAuditEntity {
    */
   @Column(name = "price", nullable = false)
   private BigDecimal price;
+
+  @Column(name = "code")
+  private String code;
 }
 

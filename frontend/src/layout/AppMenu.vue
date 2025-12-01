@@ -13,6 +13,16 @@ const devModel = [
                 label: '카페메뉴원가목록',
                 icon: 'pi pi-wallet',
                 to: '/finance/cafe-menu-cost'
+            },
+            {
+                label: '영수증업로드',
+                icon: 'pi pi-receipt',
+                to: '/finance/receipt-upload'
+            },
+            {
+                label: '영수증목록',
+                icon: 'pi pi-receipt',
+                to: '/finance/receipt-view'
             }
         ]
     },
@@ -48,7 +58,8 @@ const devModel = [
             { label: 'File', icon: 'pi pi-fw pi-file', to: '/uikit/file' },
             { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/charts' },
             { label: 'Timeline', icon: 'pi pi-fw pi-calendar', to: '/uikit/timeline' },
-            { label: 'Misc', icon: 'pi pi-fw pi-circle', to: '/uikit/misc' }
+            { label: 'Misc', icon: 'pi pi-fw pi-circle', to: '/uikit/misc' },
+            { label: 'Excel', icon: 'pi pi-fw pi-clone', to: '/uikit/excel-upload' }
         ]
     },
     {

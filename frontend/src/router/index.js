@@ -91,6 +91,11 @@ const router = createRouter({
                     component: () => import('@/views/uikit/TimelineDoc.vue')
                 },
                 {
+                    path: '/uikit/excel-upload',
+                    name: 'excelUpload',
+                    component: () => import('@/views/uikit/ExcelUploadDoc.vue')
+                },
+                {
                     path: '/blocks',
                     name: 'blocks',
                     meta: {
@@ -118,6 +123,16 @@ const router = createRouter({
                     path: '/finance/cafe-menu-cost',
                     name: 'CafeMenuCost',
                     component: () => import('@/views/pages/finance/CafeMenuCost.vue')
+                },
+                {
+                    path: '/finance/receipt-upload',
+                    name: 'receiptUoload',
+                    component: () => import('@/views/pages/finance/ReceiptUpload.vue')
+                },
+                {
+                    path: '/finance/receipt-view',
+                    name: 'receiptView',
+                    component: () => import('@/views/pages/finance/ReceiptView.vue')
                 },
                 {
                     path: '/standard/unit',

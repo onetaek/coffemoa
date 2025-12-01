@@ -1,7 +1,5 @@
-package com.coffemoa.domain.finance.controller;
+package com.coffemoa.domain.finance.cafemenucost;
 
-import com.coffemoa.domain.finance.entity.CafeMenuCost;
-import com.coffemoa.domain.finance.mapper.CafeMenuCostMapper;
 import com.coffemoa.global.dto.ApiResponse;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/cafe-menu-costs")
 public class CafeMenuCostController {
 
-  private final CafeMenuCostMapper mapper;
+  private final CafeMenuCostService cafeMenuCostService;
 
   @GetMapping
-  public ApiResponse<List<CafeMenuCost>> select(@RequestParam Map<String, String> param) {
-    return ApiResponse.ok(mapper.select(param));
+  public ApiResponse<List<CafeMenuCostResponse>> select(@RequestParam Map<String, String> param) {
+    return ApiResponse.ok(cafeMenuCostService.getMenuCostList());
   }
 
 }

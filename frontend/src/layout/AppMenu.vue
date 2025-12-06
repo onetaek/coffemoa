@@ -33,7 +33,13 @@ const devModel = [
             { label: '단위환산관리', icon: 'pi pi-sync', to: '/standard/unit-conversion' },
             { label: '원자재가격관리', icon: 'pi pi-box', to: '/standard/material' },
             { label: '메뉴관리', icon: 'pi pi-list', to: '/standard/cafe-menu' },
-            { label: '레시피관리', icon: 'pi pi-cog', to: '/standard/cafe-menu-price' }
+            { label: '레시피관리', icon: 'pi pi-cog', to: '/standard/cafe-menu-price' },
+            {
+                label: '엑셀레시피관리',
+                icon: 'pi pi-file-excel',
+                url: 'https://docs.google.com/spreadsheets/d/1tMEwpQQBYdepYCstC1ZHTWjVB37SNAlfygxLh9OH6bY/edit?usp=sharing',
+                target: '_blank'
+            }
         ]
     },
 
@@ -207,7 +213,13 @@ const prodModel = [
             { label: '단위환산관리', icon: 'pi pi-sync', to: '/standard/unit-conversion' },
             { label: '원자재가격관리', icon: 'pi pi-box', to: '/standard/material' },
             { label: '메뉴관리', icon: 'pi pi-list', to: '/standard/cafe-menu' },
-            { label: '레시피관리', icon: 'pi pi-cog', to: '/standard/cafe-menu-price' }
+            { label: '레시피관리', icon: 'pi pi-cog', to: '/standard/cafe-menu-price' },
+            {
+                label: '엑셀레시피관리',
+                icon: 'pi pi-file-excel',
+                url: 'https://docs.google.com/spreadsheets/d/1tMEwpQQBYdepYCstC1ZHTWjVB37SNAlfygxLh9OH6bY/edit?usp=sharing',
+                target: '_blank'
+            }
         ]
     }
 ];

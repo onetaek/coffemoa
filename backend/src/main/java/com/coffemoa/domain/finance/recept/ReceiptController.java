@@ -21,6 +21,11 @@ public class ReceiptController {
     return ApiResponse.ok(receiptService.search(request));
   }
 
+  @GetMapping("cost")
+  public ApiResponse<ReceiptCostResponse> searchCost(ReceiptSearchRequest request) {
+    return ApiResponse.ok(receiptService.searchCost(request));
+  }
+
   @PostMapping("/upload")
   public ApiResponse<Void> upload(@RequestBody ReceiptUploadRequest request) {
     receiptService.uploadReceipt(request);

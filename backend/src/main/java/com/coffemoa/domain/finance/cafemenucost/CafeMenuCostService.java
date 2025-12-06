@@ -65,6 +65,7 @@ public class CafeMenuCostService {
           .collect(Collectors.joining(" + "));
 
       CafeMenuCostResponse dto = CafeMenuCostResponse.builder()
+          .menuCode(master.getCafeMenuCode())
           .menuName(master.getMenuName())
           .temperature(master.getTemperature())
           .size(master.getSize())

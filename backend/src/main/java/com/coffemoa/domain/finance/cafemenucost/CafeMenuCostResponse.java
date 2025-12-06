@@ -14,12 +14,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CafeMenuCostResponse {
 
+  private String menuCode;
   private String menuName;
   private String temperature;
   private String size;
-  private String totalCost;
-  private String menuPrice;
-  private String costRate;
+  private String totalCost;// 총원가
+  private String menuPrice;// 메뉴가격
+  private String costRate;// 원가율(총원가/메뉴가격)
 
   private List<CafeMenuCostDetail> recipeList;
   private String recipeListFlat;

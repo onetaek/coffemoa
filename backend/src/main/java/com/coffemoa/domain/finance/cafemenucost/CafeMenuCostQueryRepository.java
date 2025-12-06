@@ -32,11 +32,11 @@ public class CafeMenuCostQueryRepository {
         .select(Projections.fields(
             CafeMenuCostRow.class,
             mp.id.as("cafeMenuPriceId"),
+            mp.code.as("cafeMenuCode"),
             cm.name.as("menuName"),
             mp.temperature.stringValue().as("temperature"),
             mp.size.stringValue().as("size"),
             mp.price.as("menuPrice"),
-
             mat.name.as("materialName"),
             mr.usageAmount.as("usageAmount"),
             u.name.as("unitName"),

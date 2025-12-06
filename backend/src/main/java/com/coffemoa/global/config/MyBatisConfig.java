@@ -5,11 +5,10 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-@Configuration
+//@Configuration
 @MapperScan(basePackages = "com.coffemoa.domain.**.mapper") // ✅ MyBatis Mapper 위치
 public class MyBatisConfig {
 

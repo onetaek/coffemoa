@@ -14,6 +14,7 @@ public class CafeMenuCostRow {
 
   // Master 필드
   private Long cafeMenuPriceId;
+  private String cafeMenuCode;
   private String menuName;
   private String temperature;
   private String size;

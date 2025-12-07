@@ -1,21 +1,11 @@
-package com.coffemoa.domain.auth.service;
+package com.coffemoa.global.domain.user;
 
-import com.coffemoa.domain.auth.AuthConstants;
-import com.coffemoa.domain.auth.dto.LoginRequest;
-import com.coffemoa.domain.auth.dto.LoginResponse;
-import com.coffemoa.domain.auth.dto.SignupRequest;
-import com.coffemoa.domain.auth.dto.SignupResponse;
-import com.coffemoa.domain.auth.entity.Role;
-import com.coffemoa.domain.auth.entity.User;
-import com.coffemoa.domain.auth.entity.UserRole;
-import com.coffemoa.domain.auth.jwt.JwtTokenProvider;
-import com.coffemoa.domain.auth.repository.RoleQueryRepository;
-import com.coffemoa.domain.auth.repository.RoleRepository;
-import com.coffemoa.domain.auth.repository.UserQueryRepository;
-import com.coffemoa.domain.auth.repository.UserRepository;
-import com.coffemoa.domain.auth.repository.UserRoleRepository;
 import com.coffemoa.global.BusinessException;
 import com.coffemoa.global.ErrorCode;
+import com.coffemoa.global.domain.role.Role;
+import com.coffemoa.global.domain.role.RoleQueryRepository;
+import com.coffemoa.global.domain.role.RoleRepository;
+import com.coffemoa.global.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;

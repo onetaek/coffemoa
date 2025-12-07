@@ -1,6 +1,7 @@
-package com.coffemoa.domain.auth.entity;
+package com.coffemoa.global.domain.user;
 
 import com.coffemoa.global.BaseAuditEntity;
+import com.coffemoa.global.domain.role.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

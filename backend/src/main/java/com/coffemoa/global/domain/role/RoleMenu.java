@@ -1,6 +1,7 @@
-package com.coffemoa.domain.auth.entity;
+package com.coffemoa.global.domain.role;
 
 import com.coffemoa.global.BaseAuditEntity;
+import com.coffemoa.global.domain.menu.Menu;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,21 +22,21 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(
-    name = "auth_role_menu_permission",
-    uniqueConstraints = @UniqueConstraint(name = "uk_role_menu_perm", columnNames = {"role_id",
-        "menu_permission_id"}),
+    name = "auth_role_menu",
+    uniqueConstraints = @UniqueConstraint(name = "uk_role_menu", columnNames = {"role_id",
+        "menu_id"}),
     indexes = {
-        @Index(name = "ix_role_menu_perm_role", columnList = "role_id"),
-        @Index(name = "ix_role_menu_perm_perm", columnList = "menu_permission_id")
+        @Index(name = "ix_role_menu_role", columnList = "role_id"),
+        @Index(name = "ix_role_menu_menu", columnList = "menu_id")
     }
 )
-@SQLDelete(sql = "UPDATE auth_role_menu_permission SET is_active=false, deleted_at=now() WHERE id=?")
+@SQLDelete(sql = "UPDATE auth_role_menu SET is_active=false, deleted_at=now() WHERE id=?")
 @Where(clause = "is_active = true")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class RoleMenuPermission extends BaseAuditEntity {
+public class RoleMenu extends BaseAuditEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +47,6 @@ public class RoleMenuPermission extends BaseAuditEntity {
   private Role role;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "menu_permission_id", nullable = false)
-  private MenuPermission menuPermission;
+  @JoinColumn(name = "menu_id", nullable = false)
+  private Menu menu;
 }

@@ -1,6 +1,5 @@
-package com.coffemoa.domain.auth.repository;
+package com.coffemoa.global.domain.user;
 
-import com.coffemoa.domain.auth.entity.QUser;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

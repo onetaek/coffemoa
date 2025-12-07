@@ -1,8 +1,8 @@
 package com.coffemoa.global.config;
 
-import com.coffemoa.domain.auth.jwt.JwtAuthenticationFilter;
-import com.coffemoa.domain.auth.jwt.JwtTokenProvider;
-import com.coffemoa.domain.auth.service.CustomUserDetailsService;
+import com.coffemoa.global.domain.user.CustomUserDetailsService;
+import com.coffemoa.global.jwt.JwtAuthenticationFilter;
+import com.coffemoa.global.jwt.JwtTokenProvider;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

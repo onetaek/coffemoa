@@ -1,4 +1,4 @@
-package com.coffemoa.domain.auth.dto;
+package com.coffemoa.global.domain.user;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,10 +1,5 @@
-package com.coffemoa.domain.auth.controller;
+package com.coffemoa.global.domain.user;
 
-import com.coffemoa.domain.auth.dto.LoginRequest;
-import com.coffemoa.domain.auth.dto.LoginResponse;
-import com.coffemoa.domain.auth.dto.SignupRequest;
-import com.coffemoa.domain.auth.dto.SignupResponse;
-import com.coffemoa.domain.auth.service.AuthService;
 import com.coffemoa.global.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,6 +1,6 @@
-package com.coffemoa.domain.auth.jwt;
+package com.coffemoa.global.jwt;
 
-import com.coffemoa.domain.auth.service.CustomUserDetailsService;
+import com.coffemoa.global.domain.user.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

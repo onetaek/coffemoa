@@ -1,4 +1,4 @@
-package com.coffemoa.domain.auth.dto;
+package com.coffemoa.global.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class SignupResponse {
+
   private Long id;
   private String username;
   private String email;

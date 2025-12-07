@@ -1,4 +1,4 @@
-package com.coffemoa.domain.auth.entity;
+package com.coffemoa.global.domain.menu;
 
 import com.coffemoa.global.BaseAuditEntity;
 import jakarta.persistence.Column;

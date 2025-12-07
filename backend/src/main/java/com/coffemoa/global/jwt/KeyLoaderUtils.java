@@ -1,4 +1,4 @@
-package com.coffemoa.domain.auth.jwt;
+package com.coffemoa.global.jwt;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,12 +12,12 @@ import java.util.Base64;
 public class KeyLoaderUtils {
 
   /**
-   * RSA 개인키 로드
-   * - PEM 파일 경로가 비어 있으면 null 반환
-   * - 파일이 있으면 PKCS8 포맷으로 로드
+   * RSA 개인키 로드 - PEM 파일 경로가 비어 있으면 null 반환 - 파일이 있으면 PKCS8 포맷으로 로드
    */
   public static PrivateKey loadPrivateKey(String path) {
-    if (path == null || path.isBlank()) return null;
+    if (path == null || path.isBlank()) {
+      return null;
+    }
 
     try {
       String key = new String(Files.readAllBytes(Paths.get(path)))
@@ -34,12 +34,12 @@ public class KeyLoaderUtils {
   }
 
   /**
-   * RSA 공개키 로드
-   * - PEM 파일 경로가 비어 있으면 null 반환
-   * - 파일이 있으면 X.509 포맷으로 로드
+   * RSA 공개키 로드 - PEM 파일 경로가 비어 있으면 null 반환 - 파일이 있으면 X.509 포맷으로 로드
    */
   public static PublicKey loadPublicKey(String path) {
-    if (path == null || path.isBlank()) return null;
+    if (path == null || path.isBlank()) {
+      return null;
+    }
 
     try {
       String key = new String(Files.readAllBytes(Paths.get(path)))

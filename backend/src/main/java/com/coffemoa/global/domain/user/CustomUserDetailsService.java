@@ -1,7 +1,5 @@
-package com.coffemoa.domain.auth.service;
+package com.coffemoa.global.domain.user;
 
-import com.coffemoa.domain.auth.entity.User;
-import com.coffemoa.domain.auth.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

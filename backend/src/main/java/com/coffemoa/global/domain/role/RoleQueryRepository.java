@@ -1,7 +1,5 @@
-package com.coffemoa.domain.auth.repository;
+package com.coffemoa.global.domain.role;
 
-import com.coffemoa.domain.auth.entity.QRole;
-import com.coffemoa.domain.auth.entity.Role;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

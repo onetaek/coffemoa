@@ -1,4 +1,4 @@
-package com.coffemoa.domain.auth.jwt;
+package com.coffemoa.global.jwt;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -52,7 +52,9 @@ public class JwtTokenProvider {
     }
   }
 
-  /** 토큰 생성 */
+  /**
+   * 토큰 생성
+   */
   public String createToken(String username) {
     Date now = new Date();
     Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -65,7 +67,9 @@ public class JwtTokenProvider {
         .compact();
   }
 
-  /** 토큰 검증 */
+  /**
+   * 토큰 검증
+   */
   public boolean validateToken(String token) {
     try {
       Jwts.parser()
@@ -79,7 +83,9 @@ public class JwtTokenProvider {
     }
   }
 
-  /** username 추출 */
+  /**
+   * username 추출
+   */
   public String getUsername(String token) {
     return Jwts.parser()
         .verifyWith(publicKey)

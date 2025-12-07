@@ -1,4 +1,4 @@
-package com.coffemoa.domain.auth.dto;
+package com.coffemoa.global.domain.user;
 
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class LoginResponse {
+
   private String token;          // JWT
   private String username;
   private String role;           // 대표 역할명 (필요시)

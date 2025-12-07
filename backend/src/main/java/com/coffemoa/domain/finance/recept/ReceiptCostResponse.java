@@ -20,6 +20,7 @@ public class ReceiptCostResponse {
   private Double costPrice;//재료비
   private Double profitPrice;//수익금
   private List<Detail> detailList;
+  private List<FixedCostSummary> fixedCostList;
 
   @Getter
   @Setter
@@ -40,5 +41,20 @@ public class ReceiptCostResponse {
     private Double actualPrice;
     private Double costPrice;//재료비
     private Double profitPrice;// 수익금
+  }
+
+  @Getter
+  @Setter
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class FixedCostSummary {
+
+    private Long fixedCostId;
+    private String costName;      // 월세, 알바비 등
+    private String periodTypeCode;// YEARLY / MONTHLY / DAILY
+    private String periodValue;   // 2025 / 2025-12 / 2025-12-11
+    private Double amount;        // 전체 금액
+    private Double appliedAmount; // 조회기간에 실제로 반영되는 금액
   }
 }

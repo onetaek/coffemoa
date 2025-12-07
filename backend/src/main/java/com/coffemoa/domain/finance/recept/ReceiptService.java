@@ -2,8 +2,12 @@ package com.coffemoa.domain.finance.recept;
 
 import com.coffemoa.domain.finance.cafemenucost.CafeMenuCostResponse;
 import com.coffemoa.domain.finance.cafemenucost.CafeMenuCostService;
+import com.coffemoa.domain.finance.fixedcostrecord.FixedCostRecord;
+import com.coffemoa.domain.finance.fixedcostrecord.FixedCostRecordService;
 import io.micrometer.common.util.StringUtils;
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReceiptService {
 
   private final CafeMenuCostService cafeMenuCostService;
+  private final FixedCostRecordService fixedCostRecordService;
 
   private final ReceiptRepository receiptRepository;
 
@@ -63,11 +68,17 @@ public class ReceiptService {
         .toList();
   }
 
+  @Transactional(readOnly = true)
   public ReceiptCostResponse searchCost(ReceiptSearchRequest request) {
 
+    LocalDate from = request.getFromDate();
+    LocalDate to = request.getToDate();
+
+    /* ================================
+       1) 영수증 조회 + 원가 계산
+       ================================ */
     List<Receipt> receipts = receiptRepository.searchByDateRange(request);
 
-    // 메뉴코드 → 원가정보 맵
     List<CafeMenuCostResponse> menuCostList = cafeMenuCostService.getMenuCostList();
     Map<String, CafeMenuCostResponse> menuCodeMap = menuCostList.stream()
         .filter(v -> StringUtils.isNotBlank(v.getMenuCode()))
@@ -75,65 +86,163 @@ public class ReceiptService {
 
     List<ReceiptCostResponse.Detail> detailList = new ArrayList<>();
 
-    // 총합 계산 변수(Double)
     double totalTotalPrice = 0.0;
     double totalDiscountPrice = 0.0;
     double totalCostPrice = 0.0;
 
     for (Receipt r : receipts) {
+
       CafeMenuCostResponse cost = menuCodeMap.get(r.getProductCode());
 
-      // 원가 계산
       double costPrice = 0.0;
       if (cost != null) {
-        // 예: "1216.67원" → 1216.67
         String numeric = cost.getTotalCost().replaceAll("[^0-9.]", "");
         double costPerUnit = Double.parseDouble(numeric);
-
         costPrice = costPerUnit * r.getQuantity();
       }
 
-      // 수익금 계산
       double profit = r.getActualPrice() - costPrice;
 
-      // 전체 합계 누적
       totalTotalPrice += r.getTotalPrice();
       totalDiscountPrice += r.getDiscountPrice();
       totalCostPrice += costPrice;
 
-      // Detail 생성
-      ReceiptCostResponse.Detail detail = ReceiptCostResponse.Detail.builder()
-          .id(r.getId())
-          .salesDate(r.getSalesDate())
-          .receiptNumber(r.getReceiptNumber())
-          .orderTime(r.getOrderTime())
-          .productCode(r.getProductCode())
-          .productName(r.getProductName())
-          .quantity(r.getQuantity().doubleValue())
-          .totalPrice(r.getTotalPrice().doubleValue())
-          .discountPrice(r.getDiscountPrice().doubleValue())
-          .actualPrice(r.getActualPrice().doubleValue())
-          .costPrice(r.getCost().doubleValue())
-          .profitPrice(profit)
-          .build();
-
-      detailList.add(detail);
+      detailList.add(
+          ReceiptCostResponse.Detail.builder()
+              .id(r.getId())
+              .salesDate(r.getSalesDate())
+              .receiptNumber(r.getReceiptNumber())
+              .orderTime(r.getOrderTime())
+              .productCode(r.getProductCode())
+              .productName(r.getProductName())
+              .quantity(r.getQuantity().doubleValue())
+              .totalPrice(r.getTotalPrice().doubleValue())
+              .discountPrice(r.getDiscountPrice().doubleValue())
+              .actualPrice(r.getActualPrice().doubleValue())
+              .costPrice(costPrice)
+              .profitPrice(profit)
+              .build()
+      );
     }
 
-    // 전체 수익금 계산 = 전체 실매출 - 전체 원가
+    /* ================================
+       2) 조회기간에 해당하는 고정비 가져오기
+       ================================ */
+    List<FixedCostRecord> fixedCosts =
+        fixedCostRecordService.getApplicableFixedCosts(from, to);
+
+    /* ================================
+       3) 고정비 일할 계산
+       ================================ */
+    List<ReceiptCostResponse.FixedCostSummary> fixedCostList =
+        fixedCosts.stream()
+            .map(rec ->
+                ReceiptCostResponse.FixedCostSummary.builder()
+                    .fixedCostId(rec.getFixedCost().getId())
+                    .costName(rec.getFixedCost().getCostName())
+                    .periodTypeCode(rec.getFixedCost().getPeriodType().getCode())
+                    .periodValue(rec.getPeriodValue())
+                    .amount(rec.getAmount())
+                    .appliedAmount(calculateAppliedCost(rec, from, to))
+                    .build()
+            )
+            .toList();
+
+    double totalFixedCost = fixedCostList.stream()
+        .mapToDouble(ReceiptCostResponse.FixedCostSummary::getAppliedAmount)
+        .sum();
+
+    /* ================================
+       4) 최종 수익 = 실매출 - 재료비 - 고정비
+       ================================ */
     double totalActualPrice = receipts.stream()
         .mapToDouble(r -> r.getActualPrice().doubleValue())
         .sum();
 
-    double totalProfit = totalActualPrice - totalCostPrice;
+    double totalProfit = totalActualPrice - totalCostPrice - totalFixedCost;
 
+    /* ================================
+       5) Response 구성
+       ================================ */
     return ReceiptCostResponse.builder()
         .totalPrice(totalTotalPrice)
         .discountPrice(totalDiscountPrice)
         .costPrice(totalCostPrice)
         .profitPrice(totalProfit)
         .detailList(detailList)
+        .fixedCostList(fixedCostList)
         .build();
   }
+
+  /**
+   * 고정비 일할 계산
+   */
+  private double calculateAppliedCost(FixedCostRecord rec, LocalDate from, LocalDate to) {
+
+    String type = rec.getFixedCost().getPeriodType().getCode(); // YEARLY / MONTHLY / DAILY
+    String pv = rec.getPeriodValue();
+    double amount = rec.getAmount();
+
+    switch (type) {
+
+      case "DAILY":
+        LocalDate day = LocalDate.parse(pv);
+        return (day.isBefore(from) || day.isAfter(to)) ? 0 : amount;
+
+      case "MONTHLY":
+        return calculateMonthly(rec, from, to);
+
+      case "YEARLY":
+        return calculateYearly(rec, from, to);
+
+      default:
+        return 0;
+    }
+  }
+
+  /**
+   * 월 단위 고정비
+   */
+  private double calculateMonthly(FixedCostRecord rec, LocalDate from, LocalDate to) {
+
+    YearMonth ym = YearMonth.parse(rec.getPeriodValue()); // ex) 2025-07
+    LocalDate monthStart = ym.atDay(1);
+    LocalDate monthEnd = ym.atEndOfMonth();
+
+    LocalDate start = from.isAfter(monthStart) ? from : monthStart;
+    LocalDate end = to.isBefore(monthEnd) ? to : monthEnd;
+
+    if (end.isBefore(start)) {
+      return 0;
+    }
+
+    long usedDays = ChronoUnit.DAYS.between(start, end.plusDays(1));
+    long totalDays = monthEnd.getDayOfMonth();
+
+    return rec.getAmount() * ((double) usedDays / totalDays);
+  }
+
+  /**
+   * 연 단위 고정비
+   */
+  private double calculateYearly(FixedCostRecord rec, LocalDate from, LocalDate to) {
+
+    int year = Integer.parseInt(rec.getPeriodValue());
+    LocalDate yearStart = LocalDate.of(year, 1, 1);
+    LocalDate yearEnd = LocalDate.of(year, 12, 31);
+
+    LocalDate start = from.isAfter(yearStart) ? from : yearStart;
+    LocalDate end = to.isBefore(yearEnd) ? to : yearEnd;
+
+    if (end.isBefore(start)) {
+      return 0;
+    }
+
+    long usedDays = ChronoUnit.DAYS.between(start, end.plusDays(1));
+    long totalDays = yearStart.lengthOfYear();
+
+    return rec.getAmount() * ((double) usedDays / totalDays);
+  }
+
 
 }

@@ -119,6 +119,7 @@ const router = createRouter({
                     component: () => import('@/views/pages/development/Documentation.vue')
                 },
                 // ===================== 추가 =====================
+                // ===================== finance =====================
                 {
                     path: '/finance/cafe-menu-cost',
                     name: 'CafeMenuCost',
@@ -134,6 +135,17 @@ const router = createRouter({
                     name: 'receiptView',
                     component: () => import('@/views/pages/finance/ReceiptView.vue')
                 },
+                {
+                    path: '/finance/fixed-cost',
+                    name: 'fixedCost',
+                    component: () => import('@/views/pages/finance/FixedCost.vue')
+                },
+                {
+                    path: '/finance/fixed-cost-record',
+                    name: 'FixedCostRecord',
+                    component: () => import('@/views/pages/finance/FixedCostRecord.vue')
+                },
+                // ===================== standard =====================
                 {
                     path: '/standard/unit',
                     name: 'Unit',

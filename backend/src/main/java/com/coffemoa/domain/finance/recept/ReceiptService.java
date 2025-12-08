@@ -245,4 +245,12 @@ public class ReceiptService {
   }
 
 
+  public List<ReceiptDailyCountResponse> getMonthlyUploadSummary(int year, int month) {
+
+    YearMonth ym = YearMonth.of(year, month);
+    LocalDate start = ym.atDay(1);
+    LocalDate end = ym.atEndOfMonth();
+
+    return receiptRepository.findDailyUploadCount(start, end);
+  }
 }

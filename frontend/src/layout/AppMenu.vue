@@ -24,18 +24,13 @@ const devModel = [
                 icon: 'pi pi-hammer',
                 to: '/finance/fixed-cost-record'
             },
-            // {
-            //     label: '고정비일정별관리',
-            //     icon: 'pi pi-receipt',
-            //     to: '/finance/fixed-cost'
-            // },
             {
                 label: '영수증업로드',
                 icon: 'pi pi-receipt',
                 to: '/finance/receipt-upload'
             },
             {
-                label: '영수증목록',
+                label: '매출/수익현황',
                 icon: 'pi pi-receipt',
                 to: '/finance/receipt-view'
             }
@@ -218,6 +213,26 @@ const prodModel = [
                 label: '카페메뉴원가목록',
                 icon: 'pi pi-wallet',
                 to: '/finance/cafe-menu-cost'
+            },
+            {
+                label: '고정비항목관리',
+                icon: 'pi pi-hammer',
+                to: '/finance/fixed-cost'
+            },
+            {
+                label: '고정비관리',
+                icon: 'pi pi-hammer',
+                to: '/finance/fixed-cost-record'
+            },
+            {
+                label: '영수증업로드',
+                icon: 'pi pi-receipt',
+                to: '/finance/receipt-upload'
+            },
+            {
+                label: '매출/수익현황',
+                icon: 'pi pi-receipt',
+                to: '/finance/receipt-view'
             }
         ]
     },

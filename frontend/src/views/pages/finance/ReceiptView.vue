@@ -272,18 +272,45 @@ async function search() {
             :rows="20"
             responsiveLayout="scroll"
         >
-            <Column field="salesDate" header="일자" sortable />
+            <template #header>
+                <div class="flex justify-between items-center">
+                    <h4 class="m-0">영수증 상세 조회</h4>
+
+                    <IconField>
+                        <InputIcon>
+                            <i class="pi pi-search" />
+                        </InputIcon>
+                        <InputText v-model="filters['global'].value" placeholder="Search..." />
+                    </IconField>
+                </div>
+            </template>
+
+            <Column field="salesDate" header="일자" sortable style="min-width: 120px" />
             <Column field="receiptNumber" header="영수증번호" sortable />
+            <Column field="orderTime" header="주문시각" sortable />
+            <Column field="productCode" header="상품코드" sortable />
             <Column field="productName" header="상품명" sortable />
-            <Column field="actualPrice" header="실매출">
-                <template #body="{ data }">
-                    {{ formatCurrency(data.actualPrice) }}
-                </template>
+
+            <Column field="quantity" header="수량" sortable />
+
+            <Column field="totalPrice" header="총매출" sortable>
+                <template #body="{ data }"> {{ formatCurrency(data.totalPrice) }}</template>
             </Column>
-            <Column field="profitPrice" header="수익">
-                <template #body="{ data }">
-                    {{ formatCurrency(data.profitPrice) }}
-                </template>
+
+            <Column field="discountPrice" header="할인액" sortable>
+                <template #body="{ data }"> {{ formatCurrency(data.discountPrice) }}</template>
+            </Column>
+
+            <Column field="actualPrice" header="실매출" sortable>
+                <template #body="{ data }"> {{ formatCurrency(data.actualPrice) }}</template>
+            </Column>
+
+            <Column field="costPrice" header="재료비" sortable>
+                <template #body="{ data }"> {{ formatCurrency(data.costPrice) }}</template>
+            </Column>
+
+            <Column field="profitPrice" header="수익금" sortable>
+                <template #body="{ data }"> {{ formatCurrency(data.profitPrice) }}</template>
             </Column>
         </DataTable>
     </div>

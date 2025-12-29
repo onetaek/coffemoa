@@ -3,8 +3,9 @@ import api from '@/api/axios';
 import { today } from '@/utils/DateUtil';
 import { formatCurrency } from '@/utils/NumberUtil';
 import { FilterMatchMode } from '@primevue/core/api';
+import Chart from 'primevue/chart';
 import { useToast } from 'primevue/usetoast';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const toast = useToast();
 
@@ -37,6 +38,106 @@ const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
 
+/* =====================================================
+   📊 Doughnut Chart (고정비 상세 포함)
+===================================================== */
+const doughnutData = computed(() => {
+    const labels = [];
+    const data = [];
+    const colors = [];
+
+    // 재료비
+    labels.push('재료비');
+    data.push(summary.value.costPrice);
+    colors.push('#fb923c');
+
+    // 할인액
+    labels.push('할인액');
+    data.push(summary.value.discountPrice);
+    colors.push('#60a5fa');
+
+    // 고정비 상세
+    const fixedCostColors = ['#ef4444', '#f87171', '#dc2626', '#b91c1c'];
+    fixedCostList.value.forEach((fc, idx) => {
+        labels.push(`고정비 - ${fc.costName}`);
+        data.push(fc.appliedAmount ?? 0);
+        colors.push(fixedCostColors[idx % fixedCostColors.length]);
+    });
+
+    // 순수익
+    labels.push('순수익');
+    data.push(summary.value.profitPrice);
+    colors.push('#22c55e');
+
+    return {
+        labels,
+        datasets: [
+            {
+                data,
+                backgroundColor: colors
+            }
+        ]
+    };
+});
+
+const doughnutOptions = {
+    cutout: '65%',
+    plugins: {
+        legend: {
+            position: 'bottom',
+            labels: {
+                usePointStyle: true
+            }
+        },
+        tooltip: {
+            callbacks: {
+                label: (ctx) => {
+                    const value = ctx.raw ?? 0;
+                    return `${ctx.label}: ${formatCurrency(value)}`;
+                }
+            }
+        }
+    }
+};
+
+/* =====================================================
+   📋 Doughnut 옆 요약 테이블 데이터
+===================================================== */
+const donutTableRows = computed(() => {
+    const rows = [];
+
+    const total =
+        summary.value.costPrice + summary.value.discountPrice + summary.value.fixedTotal + summary.value.profitPrice;
+
+    rows.push({
+        name: '재료비',
+        amount: summary.value.costPrice,
+        ratio: total > 0 ? (summary.value.costPrice / total) * 100 : 0
+    });
+
+    rows.push({
+        name: '할인액',
+        amount: summary.value.discountPrice,
+        ratio: total > 0 ? (summary.value.discountPrice / total) * 100 : 0
+    });
+
+    fixedCostList.value.forEach((fc) => {
+        rows.push({
+            name: `고정비 - ${fc.costName}`,
+            amount: fc.appliedAmount ?? 0,
+            ratio: total > 0 ? ((fc.appliedAmount ?? 0) / total) * 100 : 0
+        });
+    });
+
+    rows.push({
+        name: '순수익',
+        amount: summary.value.profitPrice,
+        ratio: total > 0 ? (summary.value.profitPrice / total) * 100 : 0
+    });
+
+    return rows;
+});
+
 /* -----------------------------
    🔍 검색 실행
 ------------------------------ */
@@ -63,13 +164,9 @@ async function search() {
 
         const data = res.data.data;
 
-        /* 상세 목록 */
         detailList.value = data.detailList ?? [];
-
-        /* 고정비 목록 */
         fixedCostList.value = data.fixedCostList ?? [];
 
-        /* Summary */
         const fixedTotal = fixedCostList.value.reduce((sum, fc) => sum + (fc.appliedAmount ?? 0), 0);
 
         summary.value = {
@@ -77,7 +174,7 @@ async function search() {
             discountPrice: data.discountPrice ?? 0,
             costPrice: data.costPrice ?? 0,
             profitPrice: data.profitPrice ?? 0,
-            fixedTotal: fixedTotal
+            fixedTotal
         };
 
         toast.add({
@@ -119,69 +216,52 @@ async function search() {
             </div>
         </div>
 
-        <!-- 📊 Summary Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <Card>
-                <template #title>총 매출액</template>
-                <template #content>
-                    <div class="text-2xl font-bold text-green-600">{{ formatCurrency(summary.totalPrice) }}원</div>
-                </template>
-            </Card>
+        <!-- 📊 도넛 차트 + 테이블 -->
+        <Card class="mb-6">
+            <template #title>기간별 재무 요약</template>
 
-            <Card>
-                <template #title>총 할인액</template>
-                <template #content>
-                    <div class="text-2xl font-bold text-blue-600">{{ formatCurrency(summary.discountPrice) }}원</div>
-                </template>
-            </Card>
+            <template #content>
+                <!-- 
+                  grid-cols-1  : 모바일 → 세로
+                  md:grid-cols-2 : PC → 좌/우
+                -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <!-- 도넛 차트 -->
+                    <div class="flex justify-center">
+                        <Chart
+                            type="doughnut"
+                            :data="doughnutData"
+                            :options="doughnutOptions"
+                            class="w-full max-w-[360px]"
+                        />
+                    </div>
 
-            <Card>
-                <template #title>총 원가(재료비)</template>
-                <template #content>
-                    <div class="text-2xl font-bold text-orange-600">{{ formatCurrency(summary.costPrice) }}원</div>
-                </template>
-            </Card>
-
-            <Card>
-                <template #title>총 수익금</template>
-                <template #content>
-                    <div class="text-2xl font-bold text-red-600">{{ formatCurrency(summary.profitPrice) }}원</div>
-                </template>
-            </Card>
-        </div>
-
-        <!-- 🧾 고정비 Summary -->
-        <div v-if="fixedCostList.length > 0" class="mb-6">
-            <h3 class="text-lg font-semibold mb-2">고정비</h3>
-
-            <!-- 총 고정비 카드 -->
-            <Card class="mb-4 bg-red-50">
-                <template #title>총 고정비</template>
-                <template #content>
-                    <div class="text-2xl font-bold text-red-600">{{ formatCurrency(summary.fixedTotal) }}원</div>
-                </template>
-            </Card>
-
-            <!-- 개별 고정비 카드들 -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                <Card v-for="fc in fixedCostList" :key="fc.fixedCostId" class="border border-gray-200">
-                    <template #title>{{ fc.costName }}</template>
-
-                    <template #content>
-                        <div
-                            class="text-xl font-semibold"
-                            :class="fc.appliedAmount > 0 ? 'text-blue-600' : 'text-gray-400'"
-                        >
-                            {{ formatCurrency(fc.appliedAmount) }}원
-                        </div>
-
-                        <div class="text-xs text-gray-400 mt-1">
-                            {{ fc.periodValue }}
-                        </div>
-                    </template>
-                </Card>
-            </div>
-        </div>
+                    <!-- 요약 테이블 -->
+                    <div class="mx-auto w-full max-w-[420px]">
+                        <table class="w-full text-sm border-collapse">
+                            <thead>
+                                <tr class="border-b">
+                                    <th class="text-left py-2">항목명</th>
+                                    <th class="text-right py-2">금액</th>
+                                    <th class="text-right py-2">비율</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="row in donutTableRows" :key="row.name" class="border-b last:border-0">
+                                    <td class="py-2">
+                                        {{ row.name }}
+                                    </td>
+                                    <td class="py-2 text-right font-medium">
+                                        {{ formatCurrency(row.amount) }}
+                                    </td>
+                                    <td class="py-2 text-right text-gray-600">{{ row.ratio.toFixed(1) }}%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+        </Card>
 
         <!-- 📄 영수증 상세 테이블 -->
         <DataTable
@@ -192,45 +272,18 @@ async function search() {
             :rows="20"
             responsiveLayout="scroll"
         >
-            <template #header>
-                <div class="flex justify-between items-center">
-                    <h4 class="m-0">영수증 상세 조회</h4>
-
-                    <IconField>
-                        <InputIcon>
-                            <i class="pi pi-search" />
-                        </InputIcon>
-                        <InputText v-model="filters['global'].value" placeholder="Search..." />
-                    </IconField>
-                </div>
-            </template>
-
-            <Column field="salesDate" header="일자" sortable style="min-width: 120px" />
+            <Column field="salesDate" header="일자" sortable />
             <Column field="receiptNumber" header="영수증번호" sortable />
-            <Column field="orderTime" header="주문시각" sortable />
-            <Column field="productCode" header="상품코드" sortable />
             <Column field="productName" header="상품명" sortable />
-
-            <Column field="quantity" header="수량" sortable />
-
-            <Column field="totalPrice" header="총매출" sortable>
-                <template #body="{ data }"> {{ formatCurrency(data.totalPrice) }}원 </template>
+            <Column field="actualPrice" header="실매출">
+                <template #body="{ data }">
+                    {{ formatCurrency(data.actualPrice) }}
+                </template>
             </Column>
-
-            <Column field="discountPrice" header="할인액" sortable>
-                <template #body="{ data }"> {{ formatCurrency(data.discountPrice) }}원 </template>
-            </Column>
-
-            <Column field="actualPrice" header="실매출" sortable>
-                <template #body="{ data }"> {{ formatCurrency(data.actualPrice) }}원 </template>
-            </Column>
-
-            <Column field="costPrice" header="재료비" sortable>
-                <template #body="{ data }"> {{ formatCurrency(data.costPrice) }}원 </template>
-            </Column>
-
-            <Column field="profitPrice" header="수익금" sortable>
-                <template #body="{ data }"> {{ formatCurrency(data.profitPrice) }}원 </template>
+            <Column field="profitPrice" header="수익">
+                <template #body="{ data }">
+                    {{ formatCurrency(data.profitPrice) }}
+                </template>
             </Column>
         </DataTable>
     </div>
